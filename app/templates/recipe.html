@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <a href="{{ url_for('add_recipe') }}">Add Recipe</a>
+
+    {% if recipes %}
+    <table>
+        <tr>
+            <td>Recipe title</td>
+            <td>author</td>
+            <td>link</td>
+            <td>ingredients</td>
+            <td>rating</td>
+            <td>difficulty</td>
+            <td>tried_recipe</td>
+
+        </tr>
+
+        {% for recipe in recipes %}
+        <tr>
+            <td>{{ recipe.title }}</td>
+            <td>{{ recipe.author }}</td>
+            <td>{{ recipe.link }}</td>
+            <td>{{ recipe.ingredients }}</td>
+            <td>{{ recipe.rating }}</td>
+            <td>{{ recipe.difficulty }}</td>
+            <td>{{ recipe.tried_recipe }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+{% endblock %}

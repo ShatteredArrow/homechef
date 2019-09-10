@@ -8,5 +8,11 @@ class LoginForm(FlaskForm):
     remember_me = BooleanField('Remember Me')
     submit = SubmitField('Sign In')
 
+class AddRecipe(FlaskForm):
+    title = StringField('Title', validators=[DataRequired()])
+    author = StringField('Author', validators=[DataRequired()])
+    link = StringField('Link', validators=[DataRequired()])
+    ingredients = StringField('Ingredients', validators=[DataRequired()])
+    submit = SubmitField('Add Recipe')
 
 

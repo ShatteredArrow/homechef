@@ -17,3 +17,28 @@ class User(UserMixin, db.Model):
     
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
+
+class Meal(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64))
+    category = db.Column(db.String(64))
+
+    def __repr__(self):
+        return '<Meal {}>'.format(self.name)
+
+
+
+class Recipe(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64))
+    author = db.Column(db.String(64))
+    link = db.Column(db.String(128))
+    ingredients = db.Column(db.String(254))
+    rating = db.Column(db.Integer)
+    difficulty = db.Column(db.Integer)
+    tried_recipe = db.Column(db.Boolean)
+    meal_id = db.Column(db.Integer, db.ForeignKey('meal.id'))
+    
+    def __repr__(self):
+        return '<Recipe {}>'.format(self.name)
+

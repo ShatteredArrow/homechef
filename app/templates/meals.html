@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if meals %}
+    <table>
+        <tr>
+            <td>meal name</td>
+            <td>Type</td>
+        </tr>
+        {% for meal in meals %}
+        <tr>
+            <td>{{ meal.name }}</td>
+            <td>{{ meal.type }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+{% endblock %}
