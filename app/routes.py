@@ -1,21 +1,12 @@
-from app import app
+from app import app, db
 from flask import render_template, flash, redirect, url_for
-from app.forms import LoginForm, AddRecipe
+from app.forms import LoginForm, AddRecipe, AddTag
+from app.models import Recipe, Tag
 
 @app.route('/')
 @app.route('/index')
 def index():
     user = {'username': 'chook'}
-    recipes = [
-        {
-            'name': 'Fried Chicken',
-            'type': 'Entree'
-        },
-        {
-            'name': 'Green Beans',
-            'name': 'Side'
-        }
-    ]
     return render_template('index.html', title='Home', user=user)
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -28,50 +19,42 @@ def login():
     return render_template('login.html', title='Sign In', form=form)
 
 
-@app.route('/meal')
-def meal():
-    meals = [
-        {
-            'name': 'Fried Chicken',
-            'type': 'Entree'
-        },
-        {
-            'name': 'Green Beans',
-            'type': 'Side'
-        }
-    ]
-    return render_template('meal.html', title='Meal', meals=meals)
+@app.route('/recipe_index')
+def recipe_index():
+    tags = Tag.query.all()
+    return render_template('recipe_index.html', title='Recipe Index', tags=tags)
+
+@app.route('/add_tag', methods=['GET', 'POST'])
+def add_tag():
+    form = AddTag()
+    if form.validate_on_submit():
+        tag = Tag(
+            name=form.name.data,
+        )
+        db.session.add(tag)
+        db.session.commit()
+        flash('Successfully added tag: {}'.format(
+            form.name.data))
+        return redirect(url_for('recipe_index'))
+    return render_template('add_tag.html', title='Add Tag', form=form)
 
 @app.route('/recipe')
 def recipe():
-    recipes = [
-        {
-            'title': 'Country Fried Chicken',
-            'author': 'Chookiee',
-            'link': 'https://www.google.com',
-            'ingredients': "1 egg, 1 chicken, bread crumbs",
-            'rating': 3,
-            'difficulty': 4,
-            'tried_recipe': False,
-            'meal_id': 0
-        },
-        {
-            'title': 'Vegan Fried Chicken',
-            'author': 'Chookiee',
-            'link': 'https://www.google.com',
-            'ingredients': "greens, bread crumbs, ",
-            'rating': 1,
-            'difficulty': 5,
-            'tried_recipe': True,
-            'meal_id': 0
-        }
-    ]
+    recipes = Recipe.query.all()
     return render_template('recipe.html', title='Recipe', recipes=recipes)
 
 @app.route('/add_recipe', methods=['GET', 'POST'])
 def add_recipe():
     form = AddRecipe()
     if form.validate_on_submit():
+        recipe = Recipe(
+            title=form.title.data,
+            author=form.author.data,
+            link=form.link.data,
+            ingredients=form.ingredients.data
+        )
+        db.session.add(recipe)
+        db.session.commit()
         flash('Successfully added recipe: {}'.format(
             form.title.data))
         return redirect(url_for('recipe'))

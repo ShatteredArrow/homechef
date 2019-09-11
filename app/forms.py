@@ -15,4 +15,6 @@ class AddRecipe(FlaskForm):
     ingredients = StringField('Ingredients', validators=[DataRequired()])
     submit = SubmitField('Add Recipe')
 
-
+class AddTag(FlaskForm):
+    name = StringField('Name', validators=[DataRequired()])
+    submit = SubmitField('Add Tag')
