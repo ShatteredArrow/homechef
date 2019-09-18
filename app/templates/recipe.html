@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <a href="{{ url_for('add_recipe') }}">Add Recipe</a>
+    <a href="{{ url_for('add_recipe', tag_id=tag_id) }}">Add Recipe</a>
 
     {% if recipes %}
     <table>

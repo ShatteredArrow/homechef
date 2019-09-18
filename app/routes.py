@@ -38,13 +38,13 @@ def add_tag():
         return redirect(url_for('recipe_index'))
     return render_template('add_tag.html', title='Add Tag', form=form)
 
-@app.route('/recipe')
-def recipe():
-    recipes = Recipe.query.all()
-    return render_template('recipe.html', title='Recipe', recipes=recipes)
+@app.route('/recipe/<tag_id>')
+def recipe(tag_id):
+    tag = Tag.query.filter_by(id=tag_id).first_or_404()
+    return render_template('recipe.html', title='Recipe', recipes=tag.recipes, tag_id=tag.id)
 
-@app.route('/add_recipe', methods=['GET', 'POST'])
-def add_recipe():
+@app.route('/add_recipe/<tag_id>', methods=['GET', 'POST'])
+def add_recipe(tag_id):
     form = AddRecipe()
     if form.validate_on_submit():
         recipe = Recipe(
@@ -53,9 +53,11 @@ def add_recipe():
             link=form.link.data,
             ingredients=form.ingredients.data
         )
+        print(Tag.query.filter_by(id=tag_id).all())
+        recipe.tags.extend(Tag.query.filter_by(id=tag_id).all())
         db.session.add(recipe)
         db.session.commit()
         flash('Successfully added recipe: {}'.format(
             form.title.data))
-        return redirect(url_for('recipe'))
-    return render_template('add_recipe.html', title='Add Recipe', form=form)
+        return redirect(url_for('recipe', tag_id=tag_id))
+    return render_template('add_recipe.html', title='Add Recipe', tag_id=tag_id, form=form)

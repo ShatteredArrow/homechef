@@ -18,10 +18,19 @@ class User(UserMixin, db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
+recipeTag = db.Table(
+    'recipeTag',
+    db.Column('recipe_id', db.Integer, db.ForeignKey('recipe.id'), primary_key=True),
+    db.Column('tag_id', db.Integer, db.ForeignKey('tag.id'), primary_key=True)
+
+)
 class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64))
-    
+    #recipe = db.relationship('Recipe', backref=db.backref#('recipes', lazy='dynamic'), secondary=recipeTag,) 
+    def __repr__(self):
+        return '{}'.format(self.id)
+
 class Recipe(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(64))
@@ -31,8 +40,28 @@ class Recipe(db.Model):
     rating = db.Column(db.Integer)
     difficulty = db.Column(db.Integer)
     tried_recipe = db.Column(db.Boolean)
-    tag_id = db.Column(db.Integer, db.ForeignKey('tag.id'))
-    
+    tags = db.relationship('Tag', secondary=recipeTag,
+        backref='recipes')
+    # tag = db.relationship('Tag', secondary=recipeTag, backref=db.backref('recipeTag', lazy='dynamic')) 
+
+
     def __repr__(self):
-        return '<Recipe {}>'.format(self.title)
+       return '{}'.format(self.id)
+
+""" 
+    def get_tags(self):
+        return tag
+
+    def tag(self, tag):
+        if not self.is_tagged(tag):
+            self.taged.append(tag)
+
+    def untag(self, tag):
+        if self.is_tagged(tag):
+            self.tagged.remove(tag)
+
+    def is_tagged(self,tag):
+        return self.tagged.filter(
+            (recipeTag.c.tag_id == tag.id).count() > 0
+        ) """
 
