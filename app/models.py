@@ -27,7 +27,6 @@ recipeTag = db.Table(
 class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64))
-    #recipe = db.relationship('Recipe', backref=db.backref#('recipes', lazy='dynamic'), secondary=recipeTag,) 
     def __repr__(self):
         return '{}'.format(self.id)
 
@@ -40,10 +39,7 @@ class Recipe(db.Model):
     rating = db.Column(db.Integer)
     difficulty = db.Column(db.Integer)
     tried_recipe = db.Column(db.Boolean)
-    tags = db.relationship('Tag', secondary=recipeTag,
-        backref='recipes')
-    # tag = db.relationship('Tag', secondary=recipeTag, backref=db.backref('recipeTag', lazy='dynamic')) 
-
+    tags = db.relationship('Tag', secondary=recipeTag, backref='recipes')
 
     def __repr__(self):
        return '{}'.format(self.id)

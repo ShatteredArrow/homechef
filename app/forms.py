@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import DataRequired
+from wtforms import SelectField, SelectMultipleField
 
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
@@ -18,3 +19,7 @@ class AddRecipe(FlaskForm):
 class AddTag(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
     submit = SubmitField('Add Tag')
+
+class SelectTag(FlaskForm):
+    tag = SelectMultipleField('Tag',choices=[], coerce=int)
+
