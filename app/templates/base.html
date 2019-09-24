@@ -1,18 +1,26 @@
 <html>
     <head>
+        {%block head%}
+        <link type="text/css" rel="stylesheet" href="static/css/base.css">
+
+
         {% if title %}
         <title>{{ title }} - Home Chef</title>
         {% else %}
         <title>Welcome to Home Chef</title>
         {% endif %}
+        {%endblock%}
     </head>
     <body>
-        <div>Home Chef:
-            <a href="{{ url_for('index') }}">Home</a>
-            <a href="{{ url_for('recipe_index') }}">Recipe Index</a>
-            <a href="{{ url_for('login') }}">Login</a>
+        <div class="navbar">
+            <ul>
+                    <li><a class="active" href="{{ url_for('index') }}">Home</a></li>
+                    <li><a class="active" href="{{ url_for('recipe_index') }}">Recipe Index</a></li>
+                    <li><a class="active" href="{{ url_for('login') }}">Login</a></li>
+            </ul>
+            
         </div>
-        <hr>
+        
         {% with messages = get_flashed_messages() %}
         {% if messages %}
         <ul>
