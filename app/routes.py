@@ -34,9 +34,7 @@ def recipe_index():
         for tag_id in tags_id:
             match=db.session.query(Recipe).filter(Recipe.tags.any(id=tag_id)).all()
             recipes += match
-       
-    else:
-        recipes = Recipe.query.all()
+    recipes = Recipe.query.all()
 
 
 

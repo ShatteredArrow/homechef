@@ -38,7 +38,8 @@ select option {
 	font-weight:normal;
 }
 .create_new_tag{
-    float: right;;
+	float: right;
+	margin-top:5px;
 }
 
 #recipie {
@@ -63,3 +64,24 @@ select option {
     background-color: #4CAF50;
     color: white;
   }
+  .btn {
+	 margin-top:5px;
+  }
+
+  form a {
+    background-color: red;
+  box-shadow: 0 5px 0 darkred;
+  color: white;
+  padding: 1em 1.5em;
+  position: relative;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+form a:hover {
+  background-color: #ce0606;
+}
+
+form a:active {
+  box-shadow: none;
+  top: 5px;}
