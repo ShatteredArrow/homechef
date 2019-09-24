@@ -27,11 +27,16 @@
         </p>
         <p>
             {{ form.ingredients.label }}<br>
-            {{ form.ingredients(size=254) }}
+            {{ form.ingredients(size=100) }}
             {% for error in form.ingredients.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
+        {{ form.tags.label }}<br>
+        {{ form.tags(size=100) }}
+        {% for error in form.tags.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
         <p>
             {{ form.submit() }}
         </p>

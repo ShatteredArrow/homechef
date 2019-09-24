@@ -2,6 +2,7 @@
     <head>
         {%block head%}
         <link type="text/css" rel="stylesheet" href="static/css/base.css">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.png') }}">
 
 
         {% if title %}
@@ -30,7 +31,10 @@
         </ul>
         {% endif %}
         {% endwith %}
-        {% block content %}{% endblock %}
+        <div class="content_container">
+            {% block content %}{% endblock %}
+        </div>
+        
     </body>
 </html>
 

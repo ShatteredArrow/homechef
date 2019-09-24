@@ -1,5 +1,12 @@
+
+select::-webkit-scrollbar {display:none;}
+select::-moz-scrollbar {display:none;}
+select::-o-scrollbar {display:none;}
+select::-google-ms-scrollbar {display:none;}
+select::-khtml-scrollbar {display:none;}
 select{
-    display: block;
+  overflow-y: auto;
+  display: block;
 	font-size: 16px;
 	font-family: sans-serif;
 	font-weight: 700;
@@ -14,12 +21,17 @@ select{
 	box-shadow: 0 1px 0 1px rgba(0,0,0,.04);
 	border-radius: .5em;
 	appearance: none;
-	background-color: #fff;
+	background-color: #D7E6FA;
 	background-repeat: no-repeat, repeat;
 	background-position: right .7em top 50%, 0 0;
-    background-size: .65em auto, 100%;
+  background-size: .65em auto, 100%;
+
+
 
 }
+.select::-webkit-scrollbar { width: 0 !important }
+.select { overflow: -moz-scrollbars-none; }
+.select { -ms-overflow-style: none; }
 
 select::-ms-expand {
 	display: none;
@@ -46,32 +58,41 @@ select option {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
     width: 100%;
+    background-color: rgb(115, 153, 202);
   }
   
-  #recipie td, #customers th {
-    border: 1px solid #ddd;
+#recipie td {
+    border: 1px solid black;
     padding: 8px;
   }
   
   #recipie tr:nth-child(even){background-color: #f2f2f2;}
   
   #recipie tr:hover {background-color: #ddd;}
+
   
-  #recipie th {
+  #recipie th  {
+    border: 1px solid black;
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
-    background-color: #4CAF50;
-    color: white;
+    
+    color: black;
   }
   .btn {
-	 margin-top:5px;
+   margin-top:5px;
+   color: black;
+   padding: 1em 1.5em;
+   position: relative;
+   text-decoration: none;
+   text-transform: uppercase;
   }
 
   form a {
-    background-color: red;
-  box-shadow: 0 5px 0 darkred;
-  color: white;
+  background-color: buttonface;
+  -webkit-appearance: button;
+
+  color: black;
   padding: 1em 1.5em;
   position: relative;
   text-decoration: none;
@@ -79,7 +100,7 @@ select option {
 }
 
 form a:hover {
-  background-color: #ce0606;
+  background-color: #D7E6FA;;
 }
 
 form a:active {

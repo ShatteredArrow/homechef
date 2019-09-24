@@ -1,6 +1,14 @@
 
 body{
-  background-color: antiquewhite;
+  background-color: #faebd7;
+  margin:0px;
+}
+.navbar{
+  width: 100%;
+	
+}
+.content_container{
+  margin:8px;
 }
 .navbar ul {
     list-style-type: none;
@@ -23,9 +31,7 @@ body{
   }
   
 .navbar li a:hover {
-    background-color: green;
+    background-color: #D7E6FA;
+    color:black;
   }
 
-  .navbar{
-    padding:5px;
-  }

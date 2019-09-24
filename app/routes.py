@@ -1,20 +1,25 @@
-from app import app, db
+'''Recipie Saver'''
+import os
 from flask import render_template, flash, redirect, url_for, request
+from sqlalchemy.orm import sessionmaker
+from app import app, db
 from app.forms import LoginForm, AddRecipe, AddTag, SelectTag
 from app.models import Recipe, Tag, recipeTag
-from sqlalchemy.orm import sessionmaker
 from app import Config
-import os
-basedir= os.path.abspath(os.path.dirname(__file__))
+
+
+BASEDIR = os.path.abspath(os.path.dirname(__file__))
 
 @app.route('/')
 @app.route('/index')
 def index():
+    """Return URL for index.html"""
     user = {'username': 'chook'}
     return render_template('index.html', title='Home', user=user)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    """Return URL for login.html"""
     form = LoginForm()
     if form.validate_on_submit():
         flash('Login requested for user={}, remember_me={}'.format(
@@ -23,25 +28,26 @@ def login():
     return render_template('login.html', title='Sign In', form=form)
 
 
-@app.route('/recipe_index',  methods=['GET', 'POST'])
+@app.route('/recipe_index', methods=['GET', 'POST'])
 def recipe_index():
+    """Return URL for recipie_index.html"""
     categories = [(c.id, c.name) for c in Tag.query.all()]
     form = SelectTag(request.form)
     form.tags.choices = categories
-    recipes=[]
+    recipes = []
     if form.validate():
         tags_id = form.tags.data
         for tag_id in tags_id:
-            match=db.session.query(Recipe).filter(Recipe.tags.any(id=tag_id)).all()
+            match = db.session.query(Recipe).filter(Recipe.tags.any(id=tag_id)).all()
             recipes += match
+        return render_template('recipe_index.html', title='Recipe Index', form=form, recipes=recipes)
+    
     recipes = Recipe.query.all()
-
-
-
     return render_template('recipe_index.html', title='Recipe Index', form=form, recipes=recipes)
 
 @app.route('/add_tag', methods=['GET', 'POST'])
 def add_tag():
+    """Return URL for add_tag.html"""
     form = AddTag()
     if form.validate_on_submit():
         tag = Tag(
@@ -67,7 +73,7 @@ def add_recipe():
             title=form.title.data,
             author=form.author.data,
             link=form.link.data,
-            ingredients=form.ingredients.data
+            #ingredients=form.ingredients.data,
         )
         #recipe.tags.extend(Tag.query.filter_by(id=tag_id).all())
         db.session.add(recipe)

@@ -5,9 +5,12 @@
 {% endblock %}
 {% block content %}    
     <form action="" method="post" novalidate>
-        {{ form.hidden_tag() }}
-        {{ form.tags(size = 5) }}
-        <button type="submit" class="btn">Submit</button>
+        <div class="bloc">
+                {{ form.hidden_tag() }}
+        {{ form.tags(size = 5) }}    
+        </div>
+
+        <button type="submit" class="btn">Search</button>
         <a class="create_new_tag" href="{{ url_for('add_tag') }}">Create New Tag</a>   
     </form>
 
@@ -16,23 +19,30 @@
     {% if recipes %}
     <table id="recipie">
         <tr>
-            <td>Recipe title</td>
-            <td>author</td>
-            <td>link</td>
-            <td>ingredients</td>
-            <td>rating</td>
-            <td>difficulty</td>
-            <td>tried_recipe</td>
+            <th>Recipe Title</th>
+            <th>Author</th>
+            <th>Link</th>
+            <th>Ingredients</td>
+            <th>Rating</th>
+            <th>Difficulty</th>
+            <th>Tried_recipe</th>
+            <th>Tags</td>
         </tr>
         {% for recipe in recipes %}
         <tr>
             <td>{{ recipe.title }}</td>
             <td>{{ recipe.author }}</td>
-            <td>{{ recipe.link }}</td>
+            <td><a href="#">{{ recipe.link }}</a></td>
             <td>{{ recipe.ingredients }}</td>
             <td>{{ recipe.rating }}</td>
             <td>{{ recipe.difficulty }}</td>
             <td>{{ recipe.tried_recipe }}</td>
+            <td>
+                {%for tags in recipe.tags%}
+                    <span>{{tags.name}} </span>
+                {% endfor %}
+            </td>
+
         </tr>
         {% endfor %}
     </table>
