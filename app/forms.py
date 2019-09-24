@@ -2,6 +2,8 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import DataRequired
 from wtforms import SelectField, SelectMultipleField
+from app import app
+from app.models import Tag
 
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
@@ -21,5 +23,5 @@ class AddTag(FlaskForm):
     submit = SubmitField('Add Tag')
 
 class SelectTag(FlaskForm):
-    tag = SelectMultipleField('Tag',choices=[], coerce=int)
+    tags = SelectMultipleField('Tag',choices=[], coerce=int)
 
