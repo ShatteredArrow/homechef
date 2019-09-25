@@ -98,7 +98,7 @@ def update_recipe(recipe_id):
 
         db.session.commit()
         return redirect(url_for('recipe', recipe_id=recipe.id))
-    return render_template('add_recipe.html', title='Update Recipe', form=form)
+    return render_template('add_recipe.html', title='Update Recipe', form=form,recipes=recipe)
 
 
 
