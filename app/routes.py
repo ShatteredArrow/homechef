@@ -90,7 +90,7 @@ def add_recipe():
 @app.route('/<recipe_id>/update_recipe', methods=['GET', 'POST'])
 def update_recipe(recipe_id):
     
-    recipe=Recipe.query.filter_by(id=recipe_id).first_or_404()
+    recipe = Recipe.query.filter_by(id=recipe_id).first_or_404()
 
     form = AddRecipe(obj=recipe)
     if form.validate_on_submit():
@@ -98,7 +98,7 @@ def update_recipe(recipe_id):
 
         db.session.commit()
         return redirect(url_for('recipe'), recipe_id=recipe.id)
-    return render_template('add_recipe.html', title='Update Recipe', form=form)
+    return render_template('add_recipe.html', title='Update Recipe', form=form,recipes=recipe)
 
 
 

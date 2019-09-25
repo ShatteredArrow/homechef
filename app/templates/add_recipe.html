@@ -33,8 +33,11 @@
             {% endfor %}
         </p>
         <div>
-            {{ form.hidden_tag() }}
-            {{ form.tags(size = 5) }}    
+               
+                {%for tags in recipes.tags%}
+                    <p>{{tags.id}} : {{tags.name}} </p>
+                {% endfor %}
+                
         </div>
         <p>
             {{ form.submit() }}
