@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Add Recipe</h1>
+    <h1>Update Recipe</h1>
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
         <p>
@@ -32,10 +32,21 @@
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
+
+        <h5>Tags</h5>
+        <ul>
+            {%for item in form.tags.object_data%}
+                <li>{{item.name}} </li>
+            {% endfor %}  
+        </ul>
+
         <div class="bloc">
                 {{ form.hidden_tag() }}
-                {{ form.tags(size = 5) }}    
+                {{ form.tags(size=5) }}    
         </div>
+
+
+
         <p>
             {{ form.submit() }}
         </p>

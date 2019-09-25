@@ -14,7 +14,7 @@
         <a class="create_new_tag" href="{{ url_for('add_tag') }}">Create New Tag</a>   
     </form>
 
-    <a href="{{ url_for('add_recipe', tag_id=tag_id) }}">Add Recipe</a>
+    <a href="{{ url_for('add_recipe')}}">Add Recipe</a>
 
     {% if recipes %}
     <table id="recipie">
