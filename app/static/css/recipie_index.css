@@ -76,7 +76,6 @@ select option {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
-    
     color: black;
   }
   .btn {
@@ -86,15 +85,16 @@ select option {
    position: relative;
    text-decoration: none;
    text-transform: uppercase;
+   cursor: pointer;
   }
 
   form a {
   background-color: buttonface;
   -webkit-appearance: button;
-
   color: black;
-  padding: 1em 1.5em;
   position: relative;
+  font: 400 13.3333px Arial;
+  padding: 1em 1.5em;
   text-decoration: none;
   text-transform: uppercase;
 }
@@ -105,4 +105,5 @@ form a:hover {
 
 form a:active {
   box-shadow: none;
-  top: 5px;}
+  top: 5px;
+}
