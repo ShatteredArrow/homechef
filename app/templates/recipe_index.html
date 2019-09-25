@@ -6,8 +6,8 @@
 {% block content %}    
     <form action="" method="post" novalidate>
         <div class="bloc">
-                {{ form.hidden_tag() }}
-        {{ form.tags(size = 5) }}    
+            {{ form.hidden_tag() }}
+            {{ form.tags(size = 5) }}    
         </div>
 
         <button type="submit" class="btn">Search</button>
@@ -30,7 +30,7 @@
         </tr>
         {% for recipe in recipes %}
         <tr>
-            <td>{{ recipe.title }}</td>
+            <td><a href="{{ url_for('recipe', recipe_id=recipe.id) }}">{{ recipe.title }}</a></td>
             <td>{{ recipe.author }}</td>
             <td><a href="#">URL</a></td>
             <td>{{ recipe.ingredients }}</td>

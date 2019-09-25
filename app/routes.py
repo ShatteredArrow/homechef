@@ -8,8 +8,6 @@ from app.models import Recipe, Tag, recipeTag
 from app import Config
 
 
-BASEDIR = os.path.abspath(os.path.dirname(__file__))
-
 @app.route('/')
 @app.route('/index')
 def index():
@@ -63,29 +61,45 @@ def add_tag():
 @app.route('/recipe/<recipe_id>')
 def recipe(recipe_id):
     recipe = Recipe.query.filter_by(id=recipe_id).first_or_404()
-    return render_template('recipe.html', title='Recipe', recipes=recipe)
+    return render_template('recipe.html', title='Recipe', recipe=recipe)
 
 @app.route('/add_recipe', methods=['GET', 'POST'])
 def add_recipe():
+    categories = [(c.id, c.name) for c in Tag.query.all()]
     form = AddRecipe()
+    form.tags.choices = categories
+
     if form.validate_on_submit():
+        print(type(form.tags.data))
         recipe = Recipe(
             title=form.title.data,
             author=form.author.data,
             link=form.link.data,
-            #ingredients=form.ingredients.data,
+            ingredients=form.ingredients.data,
+            
         )
-        #recipe.tags.extend(Tag.query.filter_by(id=tag_id).all())
+        tags = Tag.query.filter(Tag.id.in_(form.tags.data))
+        recipe.tags.extend(tags)
         db.session.add(recipe)
         db.session.commit()
         flash('Successfully added recipe: {}'.format(
             form.title.data))
-        return redirect(url_for('recipe'))
+        return redirect(url_for('recipe_index'))
     return render_template('add_recipe.html', title='Add Recipe', form=form)
 
+@app.route('/<recipe_id>/update_recipe', methods=['GET', 'POST'])
+def update_recipe(recipe_id):
+    
+    recipe=Recipe.query.filter_by(id=recipe_id).first_or_404()
+
+    form = AddRecipe(obj=recipe)
+    if form.validate_on_submit():
+        form.populate_obj(recipe)
+
+        db.session.commit()
+        return redirect(url_for('recipe'), recipe_id=recipe.id)
+    return render_template('add_recipe.html', title='Update Recipe', form=form)
 
 
-def select_tag(request, id):
-    tag = Tag.query.get(id)
-    form = SelectTag(request.POST, obj=tag)
-    form.tag_id.choices = [(g.id, g.name) for g in Tag.query.order_by('name')]
+
+

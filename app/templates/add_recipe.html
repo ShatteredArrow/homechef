@@ -32,14 +32,17 @@
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
-        {{ form.tags.label }}<br>
-        {{ form.tags(size=100) }}
-        {% for error in form.tags.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
+        <div>
+            {{ form.hidden_tag() }}
+            {{ form.tags(size = 5) }}    
+        </div>
         <p>
             {{ form.submit() }}
         </p>
     </form>
+    <div>
+        <a class="create_new_tag" href="{{ url_for('add_tag') }}">Create New Tag</a>   
+    </div>
+
 {% endblock %}
 

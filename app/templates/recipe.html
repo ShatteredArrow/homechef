@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <a href="{{ url_for('add_recipe') }}">Add Recipe</a>
+    <a href="{{ url_for('update_recipe', recipe_id=recipe.id) }}">Update Recipe</a>
 
-    {% if recipes %}
+    {% if recipe %}
     <table>
         <tr>
             <td>Recipe title</td>
@@ -14,7 +14,6 @@
             <td>difficulty</td>
             <td>tried_recipe</td>
         </tr>
-        {% for recipe in recipes %}
         <tr>
             <td>{{ recipe.title }}</td>
             <td>{{ recipe.author }}</td>
@@ -24,7 +23,6 @@
             <td>{{ recipe.difficulty }}</td>
             <td>{{ recipe.tried_recipe }}</td>
         </tr>
-        {% endfor %}
     </table>
     {% endif %}
 {% endblock %}
