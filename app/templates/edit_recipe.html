@@ -1,5 +1,8 @@
 {% extends "base.html" %}
-
+{% block head %}
+  {{ super() }}
+  <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/recipie_index.css') }}">
+{% endblock %}
 {% block content %}
     <h1>Update Recipe</h1>
     <form action="" method="post" novalidate>
@@ -48,11 +51,12 @@
 
 
         <p>
-            {{ form.submit() }}
+            <button type="submit" class="btn">Update Recipe</button>
+            <a class="create_new_tag" href="{{ url_for('add_tag') }}">Create New Tag</a> 
         </p>
     </form>
     <div>
-        <a class="create_new_tag" href="{{ url_for('add_tag') }}">Create New Tag</a>   
+          
     </div>
 
 {% endblock %}

@@ -51,7 +51,16 @@ select option {
 }
 .create_new_tag{
 	float: right;
-	margin-top:5px;
+  margin-top:5px;
+  
+  background-color: buttonface;
+  -webkit-appearance: button;
+  color: black;
+  position: relative;
+  font: 400 13.3333px Arial;
+  padding: 1em 1.5em;
+  text-decoration: none;
+  text-transform: uppercase;
 }
 
 #recipie {
@@ -88,16 +97,6 @@ select option {
    cursor: pointer;
   }
 
-  form a {
-  background-color: buttonface;
-  -webkit-appearance: button;
-  color: black;
-  position: relative;
-  font: 400 13.3333px Arial;
-  padding: 1em 1.5em;
-  text-decoration: none;
-  text-transform: uppercase;
-}
 
 form a:hover {
   background-color: #D7E6FA;;
