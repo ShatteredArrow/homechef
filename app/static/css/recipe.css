@@ -1,0 +1,36 @@
+#recipe {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    background-color: rgb(115, 153, 202);
+  }
+  
+#recipe td {
+    border: 1px solid black;
+    padding: 8px;
+  }
+  
+#recipe tr:nth-child(even){background-color: #f2f2f2;}
+
+#recipe tr:hover {background-color: #ddd;}
+
+
+#recipe th  {
+border: 1px solid black;
+padding-top: 12px;
+padding-bottom: 12px;
+text-align: left;
+color: black;
+}
+
+.link_button {
+    margin-bottom:5px;
+    background-color: buttonface;
+    -webkit-appearance: button;
+    color: black;
+    position: relative;
+    font: 400 13.3333px Arial;
+    padding: 1em 1.5em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
