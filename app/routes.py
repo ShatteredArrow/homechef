@@ -70,7 +70,6 @@ def add_recipe():
     form.tags.choices = categories
 
     if form.validate_on_submit():
-        print(type(form.tags.data))
         recipe = Recipe(
             title=form.title.data,
             author=form.author.data,
@@ -91,24 +90,20 @@ def add_recipe():
 def update_recipe(recipe_id):
     
     categories = [(c.id, c.name) for c in Tag.query.all()]
-    
     recipe = Recipe.query.filter_by(id=recipe_id).first_or_404()
-    
-    
     form = AddRecipe(obj=recipe)
     form.tags.choices = categories
+
     if form.validate_on_submit():
-        
-        recipe.title=form.title.data,
-        recipe.author=form.author.data,
-        recipe.link=form.link.data,
-        recipe.ingredients=form.ingredients.data
+        recipe.title = form.title.data
+        recipe.author = form.author.data
+        recipe.link = form.link.data
+        recipe.ingredients = form.ingredients.data
         tags = Tag.query.filter(Tag.id.in_(form.tags.data))
         recipe.tags.extend(tags)
-        
-        #form.populate_obj(recipe)
         db.session.commit()
         return redirect(url_for('recipe', recipe_id=recipe_id))
+    
     return render_template('edit_recipe.html', title='Update Recipe', form=form,recipes=recipe)
 
 
