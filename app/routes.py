@@ -64,7 +64,7 @@ def add_tag():
 @app.route('/recipe/<recipe_id>',methods=['GET', 'POST'])
 def recipe(recipe_id):
     recipe = Recipe.query.filter_by(id=recipe_id).first_or_404()
-    return render_template('recipe.html', title='Recipe', recipe=recipe)
+    return render_template('recipe.html', title='Recipe', recipe=recipe, recipe_image=recipe.recipe_image)
 
 @app.route('/add_recipe', methods=['GET', 'POST'])
 def add_recipe():
@@ -73,11 +73,24 @@ def add_recipe():
     form.tags.choices = categories
 
     if form.validate_on_submit():
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+        file = request.files['file']
+        if file.filename == '':
+            flash('No selected file')
+            return redirect(request.url)
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            imageFile = app.config['UPLOAD_FOLDER']
+            file.save(os.path.join(imageFile, filename))
+
         recipe = Recipe(
             title=form.title.data,
             author=form.author.data,
             link=form.link.data,
             ingredients=form.ingredients.data,
+            recipe_image=filename
             
         )
         tags = Tag.query.filter(Tag.id.in_(form.tags.data))
@@ -122,25 +135,3 @@ def allowed_file(filename):
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
-
-@app.route('/upload_file', methods=['GET', 'POST'])
-def upload_file():
-    if request.method == 'POST':
-        # check if the post request has the file part
-        if 'file' not in request.files:
-            flash('No file part')
-            return redirect(request.url)
-        file = request.files['file']
-        # if user does not select file, browser also
-        # submit an empty part without filename
-        if file.filename == '':
-            flash('No selected file')
-            return redirect(request.url)
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            uploadedfiledebug = app.config['UPLOAD_FOLDER']
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return redirect(url_for('uploaded_file', filename=filename))
-    return render_template('image_upload.html')
-
-

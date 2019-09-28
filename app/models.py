@@ -43,6 +43,7 @@ class Recipe(db.Model):
     rating = db.Column(db.Integer)
     difficulty = db.Column(db.Integer)
     tried_recipe = db.Column(db.Boolean)
+    recipe_image = db.Column(db.String(128))
     tags = db.relationship('Tag', 
                             secondary=recipeTag, 
                             back_populates='recipes')

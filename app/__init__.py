@@ -5,7 +5,7 @@ from flask_migrate import Migrate
 from flask_login import LoginManager
 from os.path import join, dirname, realpath
 
-UPLOAD_FOLDER = join(dirname(realpath(__file__)), 'static')
+UPLOAD_FOLDER = join(dirname(realpath(__file__)), *['static', 'recipe_images'])
 
 
 app = Flask(__name__)

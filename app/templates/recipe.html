@@ -9,25 +9,31 @@
     <a class="link_button" href="{{ url_for('update_recipe', recipe_id=recipe.id) }}">Update Recipe</a>
     <a class="link_button" href="{{ url_for('delete_recipe',recipe_id=recipe.id) }}">Delete Recipe</a> 
     {% if recipe %}
-    <table id="recipe">
-        <tr>
-            <th>Recipe title</th>
-            <th>author</th>
-            <th>link</th>
-            <th>ingredients</th>
-            <th>rating</th>
-            <th>difficulty</th>
-            <th>tried_recipe</th>
-        </tr>
-        <tr>
-            <td>{{ recipe.title }}</td>
-            <td>{{ recipe.author }}</td>
-            <td>{{ recipe.link }}</td>
-            <td>{{ recipe.ingredients }}</td>
-            <td>{{ recipe.rating }}</td>
-            <td>{{ recipe.difficulty }}</td>
-            <td>{{ recipe.tried_recipe }}</td>
-        </tr>
-    </table>
+        <table id="recipe">
+            <tr>
+                <th>Recipe title</th>
+                <th>author</th>
+                <th>link</th>
+                <th>ingredients</th>
+                <th>rating</th>
+                <th>difficulty</th>
+                <th>tried_recipe</th>
+            </tr>
+            <tr>
+                <td>{{ recipe.title }}</td>
+                <td>{{ recipe.author }}</td>
+                <td>{{ recipe.link }}</td>
+                <td>{{ recipe.ingredients }}</td>
+                <td>{{ recipe.rating }}</td>
+                <td>{{ recipe.difficulty }}</td>
+                <td>{{ recipe.tried_recipe }}</td>
+            </tr>
+        </table>
+
+        {% if recipe_image %}
+        <div class='recipe_image'>
+            <img src="{{ url_for('uploaded_file', filename =recipe_image) }}" alt="recipeImage">
+        </div>
+        {% endif %}
     {% endif %}
 {% endblock %}
