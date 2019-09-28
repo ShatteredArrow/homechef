@@ -19,6 +19,7 @@ class AddRecipe(FlaskForm):
     tags = SelectMultipleField('Tag', choices=[], coerce=int)
     submit = SubmitField('Add Recipe')
 
+
 class AddTag(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
     submit = SubmitField('Add Tag')

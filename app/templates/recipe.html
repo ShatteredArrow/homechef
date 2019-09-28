@@ -4,8 +4,10 @@
   <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/recipe.css') }}">
 {% endblock %}
 {% block content %}
-    <a class="link_button" href="{{ url_for('update_recipe', recipe_id=recipe.id) }}">Update Recipe</a>
 
+      
+    <a class="link_button" href="{{ url_for('update_recipe', recipe_id=recipe.id) }}">Update Recipe</a>
+    <a class="link_button" href="{{ url_for('delete_recipe',recipe_id=recipe.id) }}">Delete Recipe</a> 
     {% if recipe %}
     <table id="recipe">
         <tr>

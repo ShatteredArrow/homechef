@@ -61,7 +61,7 @@ def add_tag():
         return redirect(url_for('recipe_index'))
     return render_template('add_tag.html', title='Add Tag', form=form)
 
-@app.route('/recipe/<recipe_id>')
+@app.route('/recipe/<recipe_id>',methods=['GET', 'POST'])
 def recipe(recipe_id):
     recipe = Recipe.query.filter_by(id=recipe_id).first_or_404()
     return render_template('recipe.html', title='Recipe', recipe=recipe)
@@ -109,15 +109,15 @@ def update_recipe(recipe_id):
     
     return render_template('edit_recipe.html', title='Update Recipe', form=form,recipes=recipe)
 
-
-
-
+@app.route('/<recipe_id>/delete_recipe', methods=['GET', 'POST'])
+def delete_recipe(recipe_id):
+    Recipe.query.filter_by(id=recipe_id).delete()
+    db.session.commit()
+    return redirect(url_for('recipe_index'))
 
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
@@ -142,4 +142,5 @@ def upload_file():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             return redirect(url_for('uploaded_file', filename=filename))
     return render_template('image_upload.html')
+
 
