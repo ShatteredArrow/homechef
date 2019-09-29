@@ -1,39 +1,42 @@
 {% extends "base.html" %}
 {% block head %}
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/recipe.css') }}">
+
   {{ super() }}
-  <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/recipe.css') }}">
+  
+  <!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 {% endblock %}
 {% block content %}
 
       
     <a class="link_button" href="{{ url_for('update_recipe', recipe_id=recipe.id) }}">Update Recipe</a>
     <a class="link_button" href="{{ url_for('delete_recipe',recipe_id=recipe.id) }}">Delete Recipe</a> 
-    {% if recipe %}
-        <table id="recipe">
-            <tr>
-                <th>Recipe title</th>
-                <th>author</th>
-                <th>link</th>
-                <th>ingredients</th>
-                <th>rating</th>
-                <th>difficulty</th>
-                <th>tried_recipe</th>
-            </tr>
-            <tr>
-                <td>{{ recipe.title }}</td>
-                <td>{{ recipe.author }}</td>
-                <td>{{ recipe.link }}</td>
-                <td>{{ recipe.ingredients }}</td>
-                <td>{{ recipe.rating }}</td>
-                <td>{{ recipe.difficulty }}</td>
-                <td>{{ recipe.tried_recipe }}</td>
-            </tr>
-        </table>
+    <div class="grid-container">
 
-        {% if recipe_image %}
-        <div class='recipe_image'>
-            <img src="{{ url_for('uploaded_file', filename =recipe_image) }}" alt="recipeImage">
+        <div class="left"></div>
+        <div class="middle">
+            <div class='recipe_info'>
+                <h2>{{ recipe.title }}</h2>
+                <p>Author: {{ recipe.author }}</p>
+                <a href="{{ recipe.link }}">Go to Website</a>
+                <p>Rating: {{ recipe.rating }}</p>
+                <p>Difficulty: {{ recipe.difficulty }}</p>
+            </div>
+            
+            <div class='recipe_image'>
+                {% if recipe_image %}
+                    <img src="{{ url_for('uploaded_file', filename =recipe_image) }}" alt="recipeImage">
+                {% endif %}
+            </div>
+
         </div>
-        {% endif %}
-    {% endif %}
+
+        <div class="right"></div>
+    </div>
+
+    <div class="footer">
+        <p>All hail the alpha powers</p>
+    </div>
 {% endblock %}

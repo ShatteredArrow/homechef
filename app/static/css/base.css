@@ -1,6 +1,6 @@
 
 body{
-  background-color: #faebd7;
+  background-color: #EAE7DC;
   margin:0px;
 }
 .navbar{
@@ -15,7 +15,7 @@ body{
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #333;
+    background-color: #E98074;
   }
   
 .navbar  li {
@@ -31,7 +31,7 @@ body{
   }
   
 .navbar li a:hover {
-    background-color: #D7E6FA;
+    background-color: #E85A4F;
     color:black;
   }
 

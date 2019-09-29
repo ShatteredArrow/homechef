@@ -3,28 +3,31 @@
     border-collapse: collapse;
     width: 100%;
     background-color: rgb(115, 153, 202);
-  }
-  
+}
+
 #recipe td {
     border: 1px solid black;
     padding: 8px;
-  }
-  
-#recipe tr:nth-child(even){background-color: #f2f2f2;}
+}
 
-#recipe tr:hover {background-color: #ddd;}
+#recipe tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
 
+#recipe tr:hover {
+    background-color: #ddd;
+}
 
-#recipe th  {
-border: 1px solid black;
-padding-top: 12px;
-padding-bottom: 12px;
-text-align: left;
-color: black;
+#recipe th {
+    border: 1px solid black;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    color: black;
 }
 
 .link_button {
-    margin-bottom:5px;
+    margin-bottom: 5px;
     background-color: buttonface;
     -webkit-appearance: button;
     color: black;
@@ -33,6 +36,71 @@ color: black;
     padding: 1em 1.5em;
     text-decoration: none;
     text-transform: uppercase;
-  }
+}
 
- 
+/* The grid container */
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-areas: 'left middle middle middle middle right' 'footer footer footer footer footer footer';
+    /* grid-column-gap: 10px; - if you want gap between the columns */
+}
+
+.left, .middle, .right {
+    padding: 10px;
+}
+
+/* Style the left column */
+
+.left {
+    grid-area: left;
+}
+
+/* Style the middle column */
+
+.middle {
+    grid-area: middle;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-areas: 'recipe_info  recipe_image';
+    background-color: #D8C3A5;
+}
+
+/* Style the right column */
+
+.right {
+    grid-area: right;
+}
+
+.recipe_info {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.recipe_image {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.recipe_image img {
+    object-fit: cover;
+    width: 100%;
+}
+
+/* Style the footer */
+
+.footer {
+    grid-area: footer;
+    background-color: #f1f1f1;
+    padding: 10px;
+    text-align: center;
+}
+
+/* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
+
+@media (max-width: 600px) {
+    .grid-container {
+        grid-template-areas: 'left left left left left left' 'middle middle middle middle middle middle' 'right right right right right right' 'footer footer footer footer footer footer';
+    }
+}

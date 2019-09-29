@@ -34,7 +34,7 @@
         <tr>
             <td><a href="{{ url_for('recipe', recipe_id=recipe.id) }}">{{ recipe.title }}</a></td>
             <td>{{ recipe.author }}</td>
-            <td><a href="#">URL</a></td>
+            <td><a href="{{ recipe.link }}">URL</a></td>
             <td>{{ recipe.ingredients }}</td>
             <td>{{ recipe.rating }}</td>
             <td>{{ recipe.difficulty }}</td>
