@@ -20,7 +20,7 @@
         <div>
             <p>Rating: {{ recipe.rating }}</p>
             {% for i in range(0, recipe.rating) %}
-                <span class="fas fa-star" style="color: var(--orange)"></span>
+                <span class="fas fa-star" style="color: var(--yellow)"></span>
             {% endfor %}
             {% for i in range(0, 5-recipe.rating) %}
                 <span class="fas fa-star"></span>
@@ -31,7 +31,7 @@
     
     <div class='recipe_image'>
         {% if recipe_image %}
-            <img src="{{ url_for('uploaded_file', filename =recipe_image) }}" alt="recipeImage">
+            <img src="{{ url_for('uploaded_file', filename=recipe_image) }}" alt="recipeImage">
         {% endif %}
     </div>
 

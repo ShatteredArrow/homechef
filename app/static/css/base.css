@@ -1,14 +1,59 @@
 @import "https://fonts.googleapis.com/css?family=Rancho&effect=fire-animation";
-
 :root {
     --white: rgb(255, 255, 255);
-    --green:   #7A9D96 ;
-    --light_orange: rgb(224, 199, 121);
-    --orange: #DCAE1D;
-    --dark_orange: rgb(248, 214, 104);
+    --mist: #7A9D96;
+    --light_yellow: rgb(224, 199, 121);
+    --yellow: #DCAE1D;
     --dark_blue: rgb(8, 71, 90);
     --blue: rgb(20, 83, 102);
     --light_blue: #CAE4DB;
+}
+
+* {
+    font-family: 'Alegreya', serif;
+}
+
+p {
+    font-size: 14px;
+}
+
+body {
+    background-color: #f3f0e6;
+    margin: 0px;
+    position: relative;
+}
+
+.navbar {
+    width: 100%;
+}
+
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: var(--dark_blue);
+}
+
+.navbar li {
+    float: left;
+}
+
+.navbar li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.navbar li a:hover {
+    background-color: var(--blue);
+    color: white;
+}
+
+.content_container {
+    margin: 8px;
 }
 
 .page-container {
@@ -17,30 +62,8 @@
 }
 
 .content-wrap {
-    padding-bottom: 2.5rem;    /* Footer height */
-}
-
-body {
-    background-color: #f3f0e6;
-    margin: 0px;
-    position: relative;
-
-}
-
-* th{
-    font-family: 'Alegreya', serif;
-}
-
-p{
-    font-size: 14px;
-}
-
-.navbar {
-    width: 100%;
-}
-
-.content_container {
-    margin: 8px;
+    padding-bottom: 2.5rem;
+    /* Footer height */
 }
 
 /* The grid container */
@@ -48,8 +71,7 @@ p{
 .grid-container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-    grid-template-areas: 'left middle middle middle middle right' 'footer footer footer footer footer footer';
-    /* grid-column-gap: 10px; - if you want gap between the columns */
+    grid-template-areas: 'left middle middle middle middle right';
 }
 
 /* Style the left column */
@@ -72,42 +94,19 @@ p{
     grid-area: right;
 }
 
-/* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
+/* Style the footer */
 
-@media (max-width: 600px) {
-    .grid-container {
-        grid-template-areas: 'left left left left left left' 'middle middle middle middle middle middle' 'right right right right right right' 'footer footer footer footer footer footer';
-    }
-}
-
-.navbar ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: var(--dark_blue);
-}
-
-.navbar li {
-    float: left;
-}
-
-
-.navbar li a {
-    display: block;
-    color: white;
+.footer {
+    background-color: var(--light_yellow);
     text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-}
-
-.navbar li a:hover {
-    background-color: var(--blue);
-    color: white;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 2.5rem;
 }
 
 .button {
-    background-color: var(--orange);
+    background-color: var(--yellow);
     border: none;
     color: black;
     padding: 15px 32px;
@@ -120,7 +119,7 @@ p{
 }
 
 .button:hover {
-    background-color: var(--light_orange);
+    background-color: var(--light_yellow);
 }
 
 .button:active {
@@ -128,12 +127,10 @@ p{
     top: 5px;
 }
 
-/* Style the footer */
-.footer {
-    background-color: var(--light_orange);
-    text-align: center;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 2.5rem;
+/* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
+
+@media (max-width: 600px) {
+    .grid-container {
+        grid-template-areas: 'left left left left left left' 'middle middle middle middle middle middle' 'right right right right right right' 'footer footer footer footer footer footer';
+    }
 }
