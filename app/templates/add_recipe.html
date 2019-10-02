@@ -44,8 +44,15 @@
             <h1>Upload new File</h1>
             <input type=file name=file>
         </div>
+        <select class="form-control" id="rating" name="rating">
+                <option value="5">5</option>
+                <option value="4">4</option>
+                <option value="3">3</option>
+                <option value="2">2</option>
+                <option value="1">1</option>
+            </select>
         <p>
-            <button type="submit" class="btn">Add Recipe</button>
+            <button type="submit" class="button">Add Recipe</button>
 
             
             <a class="create_new_tag" href="{{ url_for('add_tag') }}">Create New Tag</a> 

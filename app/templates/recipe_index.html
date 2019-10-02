@@ -5,18 +5,17 @@
 {% endblock %}
 {% block content %}    
     <form action="" method="post" novalidate>
+        <a class="button" href="{{ url_for('add_recipe')}}">Add Recipe</a>       
+        <button type="submit" class="button">Search</button>      
+        <a class="button" href="{{ url_for('add_tag') }}">Create New Tag</a>
+
         <div class="bloc">
             {{ form.hidden_tag() }}
             {{ form.tags(size = 5) }}    
         </div>
 
-        <button type="submit" class="btn">Search</button>
-
-        
-        <a class="create_new_tag" href="{{ url_for('add_tag') }}">Create New Tag</a>   
     </form>
 
-    <a href="{{ url_for('add_recipe')}}">Add Recipe</a>
 
     {% if recipes %}
     <table id="recipie">
@@ -34,7 +33,7 @@
         <tr>
             <td><a href="{{ url_for('recipe', recipe_id=recipe.id) }}">{{ recipe.title }}</a></td>
             <td>{{ recipe.author }}</td>
-            <td><a href="#">URL</a></td>
+            <td><a href="{{ recipe.link }}">URL</a></td>
             <td>{{ recipe.ingredients }}</td>
             <td>{{ recipe.rating }}</td>
             <td>{{ recipe.difficulty }}</td>
