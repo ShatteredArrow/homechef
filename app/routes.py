@@ -1,4 +1,4 @@
-'''Recipie Saver'''
+'''recipe Saver'''
 import os
 from flask import render_template, flash, redirect, url_for, request
 from sqlalchemy.orm import sessionmaker
@@ -31,7 +31,7 @@ def login():
 
 @app.route('/recipe_index', methods=['GET', 'POST'])
 def recipe_index():
-    """Return URL for recipie_index.html"""
+    """Return URL for recipe_index.html"""
     categories = [(c.id, c.name) for c in Tag.query.all()]
     form = SelectTag(request.form)
     form.tags.choices = categories

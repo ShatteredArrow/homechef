@@ -1,52 +1,49 @@
 {% extends "base.html" %}
 {% block head %}
-  {{ super() }}
-  <link type="text/css" rel="stylesheet" href="static/css/recipie_index.css">
+{{ super() }}
+<link type="text/css" rel="stylesheet" href="static/css/recipe_index.css">
 {% endblock %}
-{% block content %}    
-    <form action="" method="post" novalidate>
-        <a class="button" href="{{ url_for('add_recipe')}}">Add Recipe</a>       
-        <button type="submit" class="button">Search</button>      
-        <a class="button" href="{{ url_for('add_tag') }}">Create New Tag</a>
+{% block content %}
+<form action="" method="post" novalidate>
+    <a class="button" href="{{ url_for('add_recipe')}}">Add Recipe</a>
+    <button type="submit" class="button">Search</button>
+    <a class="button" href="{{ url_for('add_tag') }}">Create New Tag</a>
 
-        <div class="bloc">
-            {{ form.hidden_tag() }}
-            {{ form.tags(size = 5) }}    
-        </div>
+    <div class="bloc">
+        {{ form.hidden_tag() }}
+        {{ form.tags(size = 5) }}
+    </div>
+</form>
 
-    </form>
-
-
-    {% if recipes %}
-    <table id="recipie">
-        <tr>
-            <th>Recipe Title</th>
-            <th>Author</th>
-            <th>Link</th>
-            <th>Ingredients</td>
-            <th>Rating</th>
-            <th>Difficulty</th>
-            <th>Tried_recipe</th>
-            <th>Tags</td>
-        </tr>
-        {% for recipe in recipes %}
-        <tr>
-            <td><a href="{{ url_for('recipe', recipe_id=recipe.id) }}">{{ recipe.title }}</a></td>
-            <td>{{ recipe.author }}</td>
-            <td><a href="{{ recipe.link }}">URL</a></td>
-            <td>{{ recipe.ingredients }}</td>
-            <td>{{ recipe.rating }}</td>
-            <td>{{ recipe.difficulty }}</td>
-            <td>{{ recipe.tried_recipe }}</td>
-            <td>
-                {%for tags in recipe.tags%}
-                    <span>{{tags.name}} </span>
-                {% endfor %}
-            </td>
-
-        </tr>
-        {% endfor %}
-    </table>
-    {% endif %}
+{% if recipes %}
+<table id="recipe_table">
+    <tr>
+        <th>Recipe Title</th>
+        <th>Author</th>
+        <th>Link</th>
+        <th>Ingredients</td>
+        <th>Rating</th>
+        <th>Difficulty</th>
+        <th>Tried recipe</th>
+        <th>Tags</td>
+    </tr>
+    {% for recipe in recipes %}
+    <tr>
+        <td><a href="{{ url_for('recipe', recipe_id=recipe.id) }}">{{ recipe.title }}</a></td>
+        <td>{{ recipe.author }}</td>
+        <td><a href="{{ recipe.link }}">URL</a></td>
+        <td>{{ recipe.ingredients }}</td>
+        <td>{{ recipe.rating }}</td>
+        <td>{{ recipe.difficulty }}</td>
+        <td>{{ recipe.tried_recipe }}</td>
+        <td>
+            {%for tags in recipe.tags%}
+            <span>{{tags.name}} </span>
+            {% endfor %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
 
 {% endblock %}

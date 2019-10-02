@@ -1,49 +1,11 @@
-#recipe {
-    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-    background-color: rgb(115, 153, 202);
-}
-
-#recipe td {
-    border: 1px solid grey;
-    padding: 8px;
-}
-
-#recipe tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
-#recipe tr:hover {
-    background-color: #ddd;
-}
-
-#recipe th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    color: black;
-}
-
-.link_button {
-    margin-bottom: 5px;
-    -webkit-appearance: button;
-    color: black;
-    position: relative;
-    font: 400 13.3333px Arial;
-    padding: 1em 1.5em;
-    text-decoration: none;
-    text-transform: uppercase;
-}
-
 .recipe_details {
     display: grid;
     grid-template-columns: 50% 50%;
     grid-template-areas: 'recipe_info  recipe_image' 'recipe_ingredients recipe_ingredients';
     background-color: var(--white);
-    box-shadow: 0px 0px 4px 0px var(--blue);
+    box-shadow: 0px 0px 4px 0px grey;
     border-radius: 5px;
-    padding:10px
+    padding: 10px
 }
 
 .recipe_info {
@@ -56,7 +18,7 @@
     grid-row: 1;
 }
 
-.recipe_ingredients{
+.recipe_ingredients {
     grid-column-start: 1;
     grid-column-end: -1;
     grid-row: 2;

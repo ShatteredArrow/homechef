@@ -13,8 +13,8 @@ class LoginForm(FlaskForm):
 
 class AddRecipe(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
-    author = StringField('Author', validators=[DataRequired()])
-    link = StringField('Link', validators=[DataRequired()])
+    author = StringField('Author')
+    link = StringField('Link')
     ingredients = StringField('Ingredients', validators=[DataRequired()])
     tags = SelectMultipleField('Tag', choices=[], coerce=int)
     submit = SubmitField('Add Recipe')

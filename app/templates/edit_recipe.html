@@ -1,65 +1,57 @@
 {% extends "base.html" %}
 {% block head %}
-  {{ super() }}
-  <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/recipie_index.css') }}">
+{{ super() }}
+<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/recipe_index.css') }}">
 {% endblock %}
 {% block content %}
-    <h1>Update Recipe</h1>
-    <form action="" method="post" novalidate>
+<h1>Update Recipe</h1>
+<form action="" method="post" novalidate>
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.title.label }}<br>
+        {{ form.title(size = 32) }}
+        {% for error in form.title.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.author.label }}<br>
+        {{ form.author(size=32) }}
+        {% for error in form.author.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.link.label }}<br>
+        {{ form.link(size=32) }}
+        {% for error in form.link.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.ingredients.label }}<br>
+        {{ form.ingredients(size=100) }}
+        {% for error in form.ingredients.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <h5>Tags</h5>
+    <ul>
+        {%for item in form.tags.object_data%}
+        <li>{{item.name}} </li>
+        {% endfor %}
+    </ul>
+    <div class="bloc">
         {{ form.hidden_tag() }}
-        <p>
-            {{ form.title.label }}<br>
-            {{ form.title(size = 32) }}
-            {% for error in form.title.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-
-            
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.author.label }}<br>
-            {{ form.author(size=32) }}
-            {% for error in form.author.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.link.label }}<br>
-            {{ form.link(size=32) }}
-            {% for error in form.link.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.ingredients.label }}<br>
-            {{ form.ingredients(size=100) }}
-            {% for error in form.ingredients.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-
-        <h5>Tags</h5>
-        <ul>
-            {%for item in form.tags.object_data%}
-                <li>{{item.name}} </li>
-            {% endfor %}  
-        </ul>
-
-        <div class="bloc">
-                {{ form.hidden_tag() }}
-                {{ form.tags(size=5) }}    
-        </div>
-
-
-
-        <p>
-            <button type="submit" class="button">Update Recipe</button>
-            <a class="create_new_tag" href="{{ url_for('add_tag') }}">Create New Tag</a> 
-        </p>
-    </form>
-    <div>
-          
+        {{ form.tags(size=5) }}
     </div>
+    <p>
+        <button type="submit" class="button">Update Recipe</button>
+        <a class="create_new_tag" href="{{ url_for('add_tag') }}">Create New Tag</a>
+    </p>
+</form>
+<div>
+
+</div>
 
 {% endblock %}
-
