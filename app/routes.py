@@ -90,7 +90,8 @@ def add_recipe():
             author=form.author.data,
             link=form.link.data,
             ingredients=form.ingredients.data,
-            recipe_image=filename
+            recipe_image=filename,
+            rating=request.form.get('rating')
             
         )
         tags = Tag.query.filter(Tag.id.in_(form.tags.data))
