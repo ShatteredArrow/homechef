@@ -116,6 +116,7 @@ body {
     font-size: 16px;
     margin: 4px 2px;
     cursor: pointer;
+    border-radius: .5em;
 }
 
 .button:hover {
@@ -125,6 +126,41 @@ body {
 .button:active {
     box-shadow: none;
     top: 5px;
+}
+.star_rating {
+    float: left;
+    height: 46px;
+    padding: 0 10px;
+}
+.star_rating:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
+}
+.star_rating:not(:checked) > label {
+    float:right;
+    width:1em;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:30px;
+    color:#ccc;
+}
+.star_rating:not(:checked) > label:before {
+    /* content: '★ '; */
+}
+.star_rating > input:checked ~ label {
+    color: #ffc700;    
+}
+.star_rating:not(:checked) > label:hover,
+.star_rating:not(:checked) > label:hover ~ label {
+    color: #deb217;  
+}
+.star_rating > input:checked + label:hover,
+.star_rating > input:checked + label:hover ~ label,
+.star_rating > input:checked ~ label:hover,
+.star_rating > input:checked ~ label:hover ~ label,
+.star_rating > label:hover ~ input:checked ~ label {
+    color: #c59b08;
 }
 
 /* Responsive layout - makes the three columns stack on top of each other instead of next to each other */

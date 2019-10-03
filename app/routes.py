@@ -73,27 +73,25 @@ def add_recipe():
     form.tags.choices = categories
 
     if form.validate_on_submit():
-        if 'file' not in request.files:
-            flash('No file part')
-            return redirect(request.url)
-        file = request.files['file']
-        if file.filename == '':
+        file = form.recipe_image.data
+        filename = ''
+        if file == '':
             flash('No selected file')
             return redirect(request.url)
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
+        if file and allowed_file(file):
+            filename = secure_filename(file)
             imageFile = app.config['UPLOAD_FOLDER']
             file.save(os.path.join(imageFile, filename))
-
         recipe = Recipe(
             title=form.title.data,
             author=form.author.data,
             link=form.link.data,
             ingredients=form.ingredients.data,
             recipe_image=filename,
-            rating=request.form.get('rating')
-            
-        )
+            rating = request.form.get('rating')
+        )     
+        if not recipe.rating:
+            recipe.rating = 0
         tags = Tag.query.filter(Tag.id.in_(form.tags.data))
         recipe.tags.extend(tags)
         db.session.add(recipe)
@@ -116,6 +114,10 @@ def update_recipe(recipe_id):
         recipe.author = form.author.data
         recipe.link = form.link.data
         recipe.ingredients = form.ingredients.data
+        recipe.rating = request.form.get('rating')
+        if not recipe.rating:
+            recipe.rating = 0
+
         tags = Tag.query.filter(Tag.id.in_(form.tags.data))
         recipe.tags.extend(tags)
         db.session.commit()

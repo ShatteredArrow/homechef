@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import DataRequired
-from wtforms import SelectField, SelectMultipleField
+from wtforms import SelectField, SelectMultipleField, FileField
 from app import app
 from app.models import Tag
 
@@ -17,6 +17,7 @@ class AddRecipe(FlaskForm):
     link = StringField('Link')
     ingredients = StringField('Ingredients', validators=[DataRequired()])
     tags = SelectMultipleField('Tag', choices=[], coerce=int)
+    recipe_image = FileField('Image File')
     submit = SubmitField('Add Recipe')
 
 
