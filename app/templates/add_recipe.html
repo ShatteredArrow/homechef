@@ -33,21 +33,27 @@
         <span style="color: red;">[{{ error }}]</span>
         {% endfor %}
     </p>
+    <p>Rating:</p>
+    <div class="star_rating">
+        <input type="radio" id="star5" name="rating" value="5" />
+        <label class="fa fa-star" for="star5"></label>
+        <input type="radio" id="star4" name="rating" value="4" />
+        <label class="fa fa-star" for="star4"></label>
+        <input type="radio" id="star3" name="rating" value="3" />
+        <label class="fa fa-star" for="star3"></label>
+        <input type="radio" id="star2" name="rating" value="2" />
+        <label class="fa fa-star"for="star2"></label>
+        <input type="radio" id="star1" name="rating" value="1" />
+        <label class="fa fa-star" for="star1"></label>
+    </div>
     <div class="bloc">
         {{ form.hidden_tag() }}
         {{ form.tags(size = 5) }}
     </div>
     <div class="image_upload">
-        <h1>Upload new File</h1>
-        <input type=file name=file>
+        {{ form.recipe_image.label }}<br>
+        {{ form.recipe_image }}
     </div>
-    <select class="form-control" id="rating" name="rating">
-        <option value="5">5</option>
-        <option value="4">4</option>
-        <option value="3">3</option>
-        <option value="2">2</option>
-        <option value="1">1</option>
-    </select>
     <p>
         <button type="submit" class="button">Add Recipe</button>
         <a class="button" href="{{ url_for('add_tag') }}">Create New Tag</a>

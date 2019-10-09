@@ -6,7 +6,6 @@
   {{ super() }}
   
   <!-- Add icon library -->
-  {{ fontawesome_html() }}
 
 {% endblock %}
 {% block content %}
@@ -20,10 +19,10 @@
         <div>
             <p>Rating: {{ recipe.rating }}</p>
             {% for i in range(0, recipe.rating) %}
-                <span class="fas fa-star" style="color: var(--yellow)"></span>
+            <i class="fa fa-star" style="color: var(--yellow)"></i>
             {% endfor %}
             {% for i in range(0, 5-recipe.rating) %}
-                <span class="fas fa-star"></span>
+                <span class="fa fa-star"></span>
             {% endfor %}
         </div>
         <p>Difficulty: {{ recipe.difficulty }}</p>

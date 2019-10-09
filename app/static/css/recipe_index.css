@@ -45,6 +45,8 @@ select:focus {
     border-collapse: collapse;
     width: 100%;
     background-color: var(--white);
+    border-radius: .5em;
+
 }
 
 #recipe_table td {
