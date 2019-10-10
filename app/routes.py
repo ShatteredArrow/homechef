@@ -33,18 +33,37 @@ def login():
 def recipe_index():
     """Return URL for recipe_index.html"""
     categories = [(c.id, c.name) for c in Tag.query.all()]
-    form = SelectTag(request.form)
-    form.tags.choices = categories
-    recipes = []
-    if form.validate():
-        tags_id = form.tags.data
-        for tag_id in tags_id:
-            match = db.session.query(Recipe).filter(Recipe.tags.any(id=tag_id)).all()
-            recipes += match
-        return render_template('recipe_index.html', title='Recipe Index', form=form, recipes=recipes)
+
+    SelectTagform = SelectTag(request.form)
+    
+    SelectTagform.tags.choices = categories
+    
     
     recipes = Recipe.query.all()
-    return render_template('recipe_index.html', title='Recipe Index', form=form, recipes=recipes)
+    if request.method  == 'POST':
+        if SelectTagform.validate_on_submit() and SelectTagform.tags.data:
+            if request.form['btn'] =='search_tag':
+                print("SelectTagForm submitted")
+                tags_id = SelectTagform.tags.data
+                recipes = []
+                for tag_id in tags_id:
+                    match = db.session.query(Recipe).filter(Recipe.tags.any(id=tag_id)).all()
+                    recipes += match
+                return render_template('recipe_index.html', title='Recipe Index', form=SelectTagform, recipes=recipes)
+            if request.form['btn']== 'delete_tag':
+                print("DeleteTag")
+                
+                tags_id = SelectTagform.tags.data
+                for tag_id in tags_id:
+                    Tag.query.filter_by(id=tag_id).delete()
+                db.session.commit() 
+                categories = [(c.id, c.name) for c in Tag.query.all()]
+                SelectTagform.tags.choices = categories
+                return render_template('recipe_index.html', title='Recipe Index', form=SelectTagform, recipes=recipes)
+        else:
+            return render_template('recipe_index.html', title='Recipe Index', form=SelectTagform, recipes=recipes)
+
+    return render_template('recipe_index.html', title='Recipe Index', form=SelectTagform, recipes=recipes)
 
 @app.route('/add_tag', methods=['GET', 'POST'])
 def add_tag():

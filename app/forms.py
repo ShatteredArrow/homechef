@@ -26,5 +26,5 @@ class AddTag(FlaskForm):
     submit = SubmitField('Add Tag')
 
 class SelectTag(FlaskForm):
-    tags = SelectMultipleField('Tag', choices=[], coerce=int)
+    tags = SelectMultipleField('Tag', choices=[], coerce=int,)
 
