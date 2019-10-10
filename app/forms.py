@@ -25,6 +25,7 @@ class AddTag(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
     submit = SubmitField('Add Tag')
 
+
 class SelectTag(FlaskForm):
     tags = SelectMultipleField('Tag', choices=[], coerce=int,)
 
