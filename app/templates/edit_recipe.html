@@ -30,7 +30,7 @@
     </p>
     <p>
         {{ form.ingredients.label }}<br>
-        {{ form.ingredients(size=100) }}
+        {{ form.ingredients }}
         {% for error in form.ingredients.errors %}
         <span style="color: red;">[{{ error }}]</span>
         {% endfor %}
