@@ -4,18 +4,22 @@
 <link type="text/css" rel="stylesheet" href="static/css/recipe_index.css">
 {% endblock %}
 {% block content %}
-<a class="button" href="{{ url_for('add_recipe')}}">Add Recipe</a>
-<a class="button" href="{{ url_for('add_tag') }}">Create New Tag</a>
 
 <form method="post" novalidate>
-    
-    <button type="submit" name='btn' value="search_tag" class="button">Search</button>
-    <button type="submit" name='btn' value="delete_tag" class="button">Delete Tag</button>
+
+    {{ form.add(class_="button") }}
+    {{ form.name.label }}
+    {{ form.name(size = 32) }}
+    {% for error in form.name.errors %}
+    <span style="color: red;">[{{ error }}]</span>
+    {% endfor %}
+
+    {{ form.search(class_="button") }}
+    {{ form.delete(class_="button") }}
 
     <div class="bloc">
         {{ form.hidden_tag() }}
         {{ form.tags(size = 5) }}
-
     </div>
 </form>
 
@@ -31,6 +35,7 @@
         <th>Tried recipe</th>
         <th>Tags</td>
     </tr>
+    <a class="button" href="{{ url_for('add_recipe')}}">Add Recipe</a>
     {% for recipe in recipes %}
     <tr>
         <td><a href="{{ url_for('recipe', recipe_id=recipe.id) }}">{{ recipe.title }}</a></td>

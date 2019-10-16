@@ -3,7 +3,7 @@ import os
 from flask import render_template, flash, redirect, url_for, request
 from sqlalchemy.orm import sessionmaker
 from app import app, db
-from app.forms import LoginForm, AddRecipe, AddTag, SelectTag
+from app.forms import LoginForm, AddRecipe, TagList, UpdateRecipe
 from app.models import Recipe, Tag, recipeTag
 from app import Config
 from werkzeug.utils import secure_filename
@@ -34,51 +34,44 @@ def recipe_index():
     """Return URL for recipe_index.html"""
     categories = [(c.id, c.name) for c in Tag.query.all()]
 
-    SelectTagform = SelectTag(request.form)
+    TagForm = TagList(request.form)
     
-    SelectTagform.tags.choices = categories
+    TagForm.tags.choices = categories
     
     
     recipes = Recipe.query.all()
     if request.method  == 'POST':
-        if SelectTagform.validate_on_submit() and SelectTagform.tags.data:
-            if request.form['btn'] =='search_tag':
-                print("SelectTagForm submitted")
-                tags_id = SelectTagform.tags.data
+        if TagForm.validate_on_submit():
+            if TagForm.search.data:
+                print("TagForm submitted")
+                tags_id = TagForm.tags.data
                 recipes = []
                 for tag_id in tags_id:
                     match = db.session.query(Recipe).filter(Recipe.tags.any(id=tag_id)).all()
                     recipes += match
-                return render_template('recipe_index.html', title='Recipe Index', form=SelectTagform, recipes=recipes)
-            if request.form['btn']== 'delete_tag':
+                return render_template('recipe_index.html', title='Recipe Index', form=TagForm, recipes=recipes)
+            if TagForm.delete.data:
                 print("DeleteTag")
                 
-                tags_id = SelectTagform.tags.data
+                tags_id = TagForm.tags.data
                 for tag_id in tags_id:
                     Tag.query.filter_by(id=tag_id).delete()
                 db.session.commit() 
                 categories = [(c.id, c.name) for c in Tag.query.all()]
-                SelectTagform.tags.choices = categories
-                return render_template('recipe_index.html', title='Recipe Index', form=SelectTagform, recipes=recipes)
+                TagForm.tags.choices = categories
+                return render_template('recipe_index.html', title='Recipe Index', form=TagForm, recipes=recipes)
+            if TagForm.add.data:
+                add_tag(TagForm.name.data)
+                TagForm.name.data=""
+                categories = [(c.id, c.name) for c in Tag.query.all()]
+                TagForm.tags.choices = categories
+                return render_template('recipe_index.html', title='Recipe Index', form=TagForm, recipes=recipes)
+
+
         else:
-            return render_template('recipe_index.html', title='Recipe Index', form=SelectTagform, recipes=recipes)
+            return render_template('recipe_index.html', title='Recipe Index', form=TagForm, recipes=recipes)
 
-    return render_template('recipe_index.html', title='Recipe Index', form=SelectTagform, recipes=recipes)
-
-@app.route('/add_tag', methods=['GET', 'POST'])
-def add_tag():
-    """Return URL for add_tag.html"""
-    form = AddTag()
-    if form.validate_on_submit():
-        tag = Tag(
-            name=form.name.data,
-        )
-        db.session.add(tag)
-        db.session.commit()
-        flash('Successfully added tag: {}'.format(
-            form.name.data))
-        return redirect(url_for('recipe_index'))
-    return render_template('add_tag.html', title='Add Tag', form=form)
+    return render_template('recipe_index.html', title='Recipe Index', form=TagForm, recipes=recipes)
 
 @app.route('/recipe/<recipe_id>',methods=['GET', 'POST'])
 def recipe(recipe_id):
@@ -93,13 +86,13 @@ def add_recipe():
 
     if form.validate_on_submit():
         file = form.recipe_image.data
-        filename = ''
-        if file == '':
+        if file.filename == '':
             flash('No selected file')
             return redirect(request.url)
-        if file and allowed_file(file):
-            filename = secure_filename(file)
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
             imageFile = app.config['UPLOAD_FOLDER']
+            a=type(file)
             file.save(os.path.join(imageFile, filename))
         recipe = Recipe(
             title=form.title.data,
@@ -122,26 +115,40 @@ def add_recipe():
 
 @app.route('/<recipe_id>/update_recipe', methods=['GET', 'POST'])
 def update_recipe(recipe_id):
-    
     categories = [(c.id, c.name) for c in Tag.query.all()]
     recipe = Recipe.query.filter_by(id=recipe_id).first_or_404()
-    form = AddRecipe(obj=recipe)
+    form = UpdateRecipe(obj=recipe)
+
     form.tags.choices = categories
-
     if form.validate_on_submit():
-        recipe.title = form.title.data
-        recipe.author = form.author.data
-        recipe.link = form.link.data
-        recipe.ingredients = form.ingredients.data
-        recipe.rating = request.form.get('rating')
-        if not recipe.rating:
-            recipe.rating = 0
+        # file = form.recipe_image
+        # if file.data == '':
+        #     flash('No selected file')
+        #     return redirect(request.url)
+        # if file and allowed_file(file.data):
+        #     filename = secure_filename(file.data)
+        #     imageFile = app.config['UPLOAD_FOLDER']
+        #     file.save(os.path.join(imageFile, filename))
+        if form.submit.data:
+            recipe.title = form.title.data
+            recipe.author = form.author.data
+            recipe.link = form.link.data
+            recipe.ingredients = form.ingredients.data
+            recipe.rating = request.form.get('rating')
+            if not recipe.rating:
+                recipe.rating = 0
 
-        tags = Tag.query.filter(Tag.id.in_(form.tags.data))
-        recipe.tags.extend(tags)
-        db.session.commit()
-        return redirect(url_for('recipe', recipe_id=recipe_id))
-    
+            tags = Tag.query.filter(Tag.id.in_(form.tags.data))
+            recipe.tags.extend(tags)
+            db.session.commit()
+            return redirect(url_for('recipe', recipe_id=recipe_id))
+        elif form.add.data:
+            add_tag(form.name.data)
+            form.name.data=""
+            categories = [(c.id, c.name) for c in Tag.query.all()]
+            form.tags.choices = categories
+            return render_template('edit_recipe.html', title='Update Recipe', form=form,recipes=recipe)
+
     return render_template('edit_recipe.html', title='Update Recipe', form=form,recipes=recipe)
 
 @app.route('/<recipe_id>/delete_recipe', methods=['GET', 'POST'])
@@ -157,3 +164,12 @@ def allowed_file(filename):
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
+def add_tag(tag_name):
+    tag = Tag(
+        name=tag_name,
+    )
+    db.session.add(tag)
+    db.session.commit()
+    flash('Successfully added tag: {}'.format(
+        tag_name))
