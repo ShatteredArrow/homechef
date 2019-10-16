@@ -51,6 +51,10 @@ class Recipe(db.Model):
     def __repr__(self):
        return '{}'.format(self.id)
 
+class Image(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    image_name = db.Column(db.String(64))
+    image_url = db.Column(db.String(128))
 """ 
     def get_tags(self):
         return tag

@@ -1,5 +1,6 @@
 '''recipe Saver'''
 import os
+from datetime import datetime
 from flask import render_template, flash, redirect, url_for, request
 from sqlalchemy.orm import sessionmaker
 from app import app, db
@@ -92,7 +93,6 @@ def add_recipe():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             imageFile = app.config['UPLOAD_FOLDER']
-            a=type(file)
             file.save(os.path.join(imageFile, filename))
         recipe = Recipe(
             title=form.title.data,
@@ -121,20 +121,20 @@ def update_recipe(recipe_id):
 
     form.tags.choices = categories
     if form.validate_on_submit():
-        # file = form.recipe_image
-        # if file.data == '':
-        #     flash('No selected file')
-        #     return redirect(request.url)
-        # if file and allowed_file(file.data):
-        #     filename = secure_filename(file.data)
-        #     imageFile = app.config['UPLOAD_FOLDER']
-        #     file.save(os.path.join(imageFile, filename))
         if form.submit.data:
+            f=form.recipe_image.data
+
             recipe.title = form.title.data
             recipe.author = form.author.data
             recipe.link = form.link.data
             recipe.ingredients = form.ingredients.data
             recipe.rating = request.form.get('rating')
+
+            filename = secure_filename(str(datetime.now()) + f.filename )
+            imageFile = app.config['UPLOAD_FOLDER']
+            f.save(os.path.join(imageFile, filename))
+            recipe.recipe_image =filename
+
             if not recipe.rating:
                 recipe.rating = 0
 
