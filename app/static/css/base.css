@@ -171,6 +171,6 @@ body {
 
 @media (max-width: 600px) {
     .grid-container {
-        grid-template-areas: 'left left left left left left' 'middle middle middle middle middle middle' 'right right right right right right' 'footer footer footer footer footer footer';
+        grid-template-areas: 'nav nav nav nav nav nav' 'middle middle middle middle middle middle' 'footer footer footer footer footer footer';
     }
 }
