@@ -23,8 +23,35 @@ body {
     position: relative;
 }
 
+.content_container {
+    margin: 8px;
+}
+
+.page-container {
+    position: relative;
+    min-height: 100vh;
+}
+
+.content-wrap {
+    padding-bottom: 2.5rem;
+    /* Footer height */
+}
+
+/* The grid container */
+
+.grid-container {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows:  auto 1fr auto;
+    grid-template-areas:
+        'nav nav nav nav nav nav'
+        'left middle middle middle middle right'
+        'footer footer footer footer footer footer';
+}
+
 .navbar {
-    width: 100%;
+    grid-area: nav;
 }
 
 .navbar ul {
@@ -51,29 +78,6 @@ body {
     background-color: var(--blue);
     color: white;
 }
-
-.content_container {
-    margin: 8px;
-}
-
-.page-container {
-    position: relative;
-    min-height: 100vh;
-}
-
-.content-wrap {
-    padding-bottom: 2.5rem;
-    /* Footer height */
-}
-
-/* The grid container */
-
-.grid-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-    grid-template-areas: 'left middle middle middle middle right';
-}
-
 /* Style the left column */
 
 .left {
@@ -97,10 +101,9 @@ body {
 /* Style the footer */
 
 .footer {
+    grid-area: footer;
     background-color: var(--light_yellow);
     text-align: center;
-    position: absolute;
-    bottom: 0;
     width: 100%;
     height: 2.5em;
     margin-top: 5px

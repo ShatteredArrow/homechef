@@ -18,14 +18,15 @@
 
 <body>
     <div class="page-container">
-        <div class="navbar">
-            <ul>
-                <li><a class="active" href="{{ url_for('index') }}">Home</a></li>
-                <li><a class="active" href="{{ url_for('recipe_index') }}">Recipe Index</a></li>
-                <li><a class="active" href="{{ url_for('login') }}">Login</a></li>
-            </ul>
-        </div>
+        
         <div class="grid-container">
+            <div class="navbar">
+                <ul>
+                    <li><a class="active" href="{{ url_for('index') }}">Home</a></li>
+                    <li><a class="active" href="{{ url_for('recipe_index') }}">Recipe Index</a></li>
+                    <li><a class="active" href="{{ url_for('login') }}">Login</a></li>
+                </ul>
+            </div>
             <div class="left"></div>
             <div class="middle">
                 {% with messages = get_flashed_messages() %}
