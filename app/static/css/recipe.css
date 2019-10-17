@@ -1,31 +1,36 @@
 .recipe_details {
     display: grid;
     grid-template-columns: 50% 50%;
-    grid-template-areas: 'recipe_info  recipe_image' 'recipe_ingredients recipe_ingredients';
+    grid-template-areas: 
+        'title title' 
+        'recipe_info recipe_image '
+        'recipe_ingredients recipe_ingredients';
     background-color: var(--white);
     box-shadow: 0px 0px 4px 0px grey;
     border-radius: .5em;
     padding: 10px
+    
+}
+
+.recipe_title {
+    grid-area: title;
 }
 
 .recipe_info {
-    grid-column: 1;
-    grid-row: 1;
+    grid-area: recipe_info;
 }
 
 .recipe_image {
-    grid-column: 2;
-    grid-row: 1;
+    grid-area: recipe_image;
+    height: 350px;
+}
+
+.recipe_image img{
+    max-height: 100%;
+    max-width: 100%;
+    border-radius: .5em;
 }
 
 .recipe_ingredients {
-    grid-column-start: 1;
-    grid-column-end: -1;
-    grid-row: 2;
-}
-
-.recipe_image img {
-    object-fit: cover;
-    width: 100%;
-    border-radius: .5em;
+    grid-area: recipe_ingredients;
 }
