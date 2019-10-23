@@ -11,6 +11,26 @@ from werkzeug.utils import secure_filename
 from flask import send_from_directory
 
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
+imageFile = app.config['UPLOAD_FOLDER']
+
+
+
+
+
+
+
+
+def imageSave(recipeImageData):
+    if recipeImageData.filename == '':
+        flash('No selected file')
+        return redirect(request.url)
+    if recipeImageData and allowed_file(recipeImageData.filename):
+        filename = secure_filename(str(datetime.now()) + recipeImageData.filename)
+        recipeImageData.save(os.path.join(imageFile, filename))
+    imageSave.filename=filename
+    
+
+
 
 @app.route('/')
 @app.route('/index')
@@ -34,6 +54,8 @@ def login():
 def recipe_index():
     """Return URL for recipe_index.html"""
     categories = [(c.id, c.name) for c in Tag.query.all()]
+    AddForm = AddRecipe()
+    AddForm.tags.choices = categories
 
     TagForm = TagList(request.form)
     
@@ -52,7 +74,6 @@ def recipe_index():
                     recipes += match
                 return render_template('recipe_index.html', title='Recipe Index', form=TagForm, recipes=recipes)
             if TagForm.delete.data:
-                print("DeleteTag")
                 
                 tags_id = TagForm.tags.data
                 for tag_id in tags_id:
@@ -67,17 +88,35 @@ def recipe_index():
                 categories = [(c.id, c.name) for c in Tag.query.all()]
                 TagForm.tags.choices = categories
                 return render_template('recipe_index.html', title='Recipe Index', form=TagForm, recipes=recipes)
-
-
+        if AddForm.validate_on_submit():
+            a = AddForm
+            print("submitted add form")
+            imageSave(AddForm.recipe_image.data)
+            recipe = Recipe(
+            title=AddForm.title.data,
+            author=AddForm.author.data,
+            link=AddForm.link.data,
+            ingredients=AddForm.ingredients.data,
+            recipe_image=imageSave.filename,
+            rating = request.form.get('rating')
+            )     
+            if not recipe.rating:
+                recipe.rating = 0
+            tags = Tag.query.filter(Tag.id.in_(AddForm.tags.data))
+            recipe.tags.extend(tags)
+            db.session.add(recipe)
+            db.session.commit()
+            return render_template('recipe_index.html', title='Recipe Index', form=TagForm, recipes=recipes,addform=AddForm)
         else:
-            return render_template('recipe_index.html', title='Recipe Index', form=TagForm, recipes=recipes)
+            return render_template('recipe_index.html', title='Recipe Index', form=TagForm, recipes=recipes,addform=AddForm)
 
-    return render_template('recipe_index.html', title='Recipe Index', form=TagForm, recipes=recipes)
+    return render_template('recipe_index.html', title='Recipe Index', form=TagForm, recipes=recipes,addform=AddForm)
 
 @app.route('/recipe/<recipe_id>',methods=['GET', 'POST'])
 def recipe(recipe_id):
     recipe = Recipe.query.filter_by(id=recipe_id).first_or_404()
     return render_template('recipe.html', title='Recipe', recipe=recipe, recipe_image=recipe.recipe_image)
+
 
 @app.route('/add_recipe', methods=['GET', 'POST'])
 def add_recipe():
@@ -86,20 +125,13 @@ def add_recipe():
     form.tags.choices = categories
 
     if form.validate_on_submit():
-        file = form.recipe_image.data
-        if file.filename == '':
-            flash('No selected file')
-            return redirect(request.url)
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            imageFile = app.config['UPLOAD_FOLDER']
-            file.save(os.path.join(imageFile, filename))
+        imageSave(form.recipe_image.data)
         recipe = Recipe(
             title=form.title.data,
             author=form.author.data,
             link=form.link.data,
             ingredients=form.ingredients.data,
-            recipe_image=filename,
+            recipe_image=imageSave.filename,
             rating = request.form.get('rating')
         )     
         if not recipe.rating:
@@ -122,18 +154,13 @@ def update_recipe(recipe_id):
     form.tags.choices = categories
     if form.validate_on_submit():
         if form.submit.data:
-            f=form.recipe_image.data
-
+            imageSave(form.recipe_image.data)
             recipe.title = form.title.data
             recipe.author = form.author.data
             recipe.link = form.link.data
             recipe.ingredients = form.ingredients.data
             recipe.rating = request.form.get('rating')
-
-            filename = secure_filename(str(datetime.now()) + f.filename )
-            imageFile = app.config['UPLOAD_FOLDER']
-            f.save(os.path.join(imageFile, filename))
-            recipe.recipe_image =filename
+            recipe.recipe_image = imageSave.filename
 
             if not recipe.rating:
                 recipe.rating = 0
@@ -173,3 +200,37 @@ def add_tag(tag_name):
     db.session.commit()
     flash('Successfully added tag: {}'.format(
         tag_name))
+
+@app.route('/modal_add_recipe', methods=['GET', 'POST'])
+def modal_add_recipe():
+    categories = [(c.id, c.name) for c in Tag.query.all()]
+    form = AddRecipe()
+    form.tags.choices = categories
+
+    if form.validate_on_submit():
+        file = form.recipe_image.data
+        if file.filename == '':
+            flash('No selected file')
+            return redirect(request.url)
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(imageFile, filename))
+        recipe = Recipe(
+            title=form.title.data,
+            author=form.author.data,
+            link=form.link.data,
+            ingredients=form.ingredients.data,
+            recipe_image=filename,
+            rating = request.form.get('rating')
+        )     
+        if not recipe.rating:
+            recipe.rating = 0
+        tags = Tag.query.filter(Tag.id.in_(form.tags.data))
+        recipe.tags.extend(tags)
+        db.session.add(recipe)
+        db.session.commit()
+        flash('Successfully added recipe: {}'.format(
+            form.title.data))
+        return redirect(url_for('recipe_index'))
+    return render_template('modal_add_recipe.html', title='Add Recipe', form=form)
+

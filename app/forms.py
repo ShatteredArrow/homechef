@@ -1,6 +1,8 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired
+from flask_wtf.file import FileRequired
+
 from wtforms import SelectField, SelectMultipleField, FileField
 from app import app
 from app.models import Tag
@@ -29,10 +31,11 @@ class TagWithAdd(AddTag):
     
 class Recipe(TagWithAdd):
     title = StringField('Title', validators=[DataRequired()])
-    author = StringField('Author')
-    link = StringField('Link')
+    author = StringField('Author',validators=[DataRequired()])
+    link = StringField('Link',validators=[DataRequired()])
     ingredients = TextAreaField('Ingredients', render_kw={"rows": 10, "cols": 100}, validators=[DataRequired()])
     recipe_image = FileField('Image File')
+    #recipe_image = FileField('Image File', validators=[FileRequired()])
 
 class AddRecipe(Recipe):
     submit = SubmitField('Add Recipe')

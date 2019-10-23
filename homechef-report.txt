@@ -1,0 +1,22 @@
+#Validation for add tags button
+	=>Make sure to convert all tags to lower case
+	=>Check to see if tag already exists
+	=>Add tag field should not be able to submit empty field
+	=>Add tag field should not be able to take anything other than the english alphabets
+	=>Consider changing the refresh method for new added tag to be ajax, we do not want to reload entire page
+
+#Errors in SearchTag/DeleteTag button
+	=>SearchTag and DeleteTag button should not be clickable if no tags have been selected
+	=>If not tags has been selected and the button is pressed, should display message
+	  "please select a tag to search" or "please select a tag to delete"
+
+#Change Add Recipe button to be a modal
+	=>Modal submission should cause an auto refresh on page submission to display the new recipe
+	=>Consider using Ajax calls instead of POST/GET we do not want to reload entire web page
+
+#Current add_recipe.html has errors when just trying to add a new Tag on the page
+#Validation for title of recipe
+	=>Always convert everything to lower case before saving to db
+	=>On rendering you should change the 1st letter of each word after a space to a capital letter
+#Validation for add tags:
+	=>tags should always be in lower case in saving them to db, and in rendering them
