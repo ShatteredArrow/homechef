@@ -89,7 +89,6 @@ def recipe_index():
                 TagForm.tags.choices = categories
                 return render_template('recipe_index.html', title='Recipe Index', form=TagForm, recipes=recipes)
         if AddForm.validate_on_submit():
-            a = AddForm
             print("submitted add form")
             imageSave(AddForm.recipe_image.data)
             recipe = Recipe(

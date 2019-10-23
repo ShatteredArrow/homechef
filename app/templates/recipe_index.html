@@ -23,91 +23,11 @@
     </div>
 </form>
 
-<a class="button" href="{{ url_for('add_recipe')}}">Add Recipe</a>
-<button id="myBtn">Open Modal</button>
+
+<button class="button" id="myBtn">Add Recipe</button>
 
 <div id="myModal" class="modal">
-
-        <!-- Modal content -->
-        <div class="modal-content">
-          <span class="close">&times;</span>
-          <div name="demo" >
-
-            <form action="" method="post" novalidate enctype=multipart/form-data> {{ form.hidden_tag() }} <p>
-              {{ addform.title.label }}<br>
-              {{ addform.title(size = 32) }}
-              {% for error in addform.title.errors %}
-              <span style="color: red;">[{{ error }}]</span>
-              {% endfor %}
-              </p>
-              <p>
-                  {{ addform.author.label }}<br>
-                  {{ addform.author(size=32) }}
-                  {% for error in addform.author.errors %}
-                  <span style="color: red;">[{{ error }}]</span>
-                  {% endfor %}
-              </p>
-              <p>
-                  {{ addform.link.label }}<br>
-                  {{ addform.link(size=32) }}
-                  {% for error in addform.link.errors %}
-                  <span style="color: red;">[{{ error }}]</span>
-                  {% endfor %}
-              </p>
-              <p>
-                  {{ addform.ingredients.label }}<br>
-                  {{ addform.ingredients }}
-                  {% for error in addform.ingredients.errors %}
-                  <span style="color: red;">[{{ error }}]</span>
-                  {% endfor %}
-              </p>
-              <div>
-                  <p>Rating:</p>
-                  <div class="star_rating">
-                      <input type="radio" id="star5" name="rating" value="5" />
-                      <label class="fa fa-star" for="star5"></label>
-                      <input type="radio" id="star4" name="rating" value="4" />
-                      <label class="fa fa-star" for="star4"></label>
-                      <input type="radio" id="star3" name="rating" value="3" />
-                      <label class="fa fa-star" for="star3"></label>
-                      <input type="radio" id="star2" name="rating" value="2" />
-                      <label class="fa fa-star"for="star2"></label>
-                      <input type="radio" id="star1" name="rating" value="1" />
-                      <label class="fa fa-star" for="star1"></label>
-                  </div>
-              </div>
-          
-              <div>
-                  {{ addform.add(class_="button") }}
-                  {{ addform.name.label }}
-                  {{ addform.name(size = 32) }}
-                  {% for error in addform.name.errors %}
-                  <span style="color: red;">[{{ error }}]</span>
-                  {% endfor %}
-              </div>
-          
-              <div class="bloc">
-                  {{ addform.hidden_tag() }}
-                  {{ addform.tags(size = 5) }}
-              </div>
-          
-              <div class="image_upload">
-                  {{ addform.recipe_image.label }}<br>
-                  {{ addform.recipe_image }}
-                  {% for error in addform.recipe_image.errors %}
-                  <span style="color: red;">[{{ error }}]</span>
-                  {% endfor %}
-              </div>
-          
-              <div>
-                  {{ addform.submit(class_="button") }}
-              </div>
-          </form>
-
-          </div>
-
-        </div>
-      
+    {% include 'add_recipe.html' with context %}
 </div>
     
     

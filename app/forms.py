@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField,RadioField
 from wtforms.validators import DataRequired
 from flask_wtf.file import FileRequired
 
@@ -33,7 +33,8 @@ class Recipe(TagWithAdd):
     title = StringField('Title', validators=[DataRequired()])
     author = StringField('Author',validators=[DataRequired()])
     link = StringField('Link',validators=[DataRequired()])
-    ingredients = TextAreaField('Ingredients', render_kw={"rows": 10, "cols": 100}, validators=[DataRequired()])
+    ingredients = TextAreaField('Ingredients', render_kw={"rows": 10, "cols": 60}, validators=[DataRequired()])
+    rating = RadioField('Rating',choices=[('1',''),('2','2'),('3','3'),('4','4'),('5','5')],id="rating")
     recipe_image = FileField('Image File')
     #recipe_image = FileField('Image File', validators=[FileRequired()])
 
