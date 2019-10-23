@@ -167,6 +167,14 @@ body {
     color: #c59b08;
 }
 
+.external_link:visited, .external_link:link {
+text-decoration: none;
+}
+
+.external_link:hover {
+    color: var(--yellow);
+}
+
 /* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
 
 @media (max-width: 600px) {
