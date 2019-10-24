@@ -116,34 +116,6 @@ def recipe(recipe_id):
     recipe = Recipe.query.filter_by(id=recipe_id).first_or_404()
     return render_template('recipe.html', title='Recipe', recipe=recipe, recipe_image=recipe.recipe_image)
 
-
-@app.route('/add_recipe', methods=['GET', 'POST'])
-def add_recipe():
-    categories = [(c.id, c.name) for c in Tag.query.all()]
-    form = AddRecipe()
-    form.tags.choices = categories
-
-    if form.validate_on_submit():
-        imageSave(form.recipe_image.data)
-        recipe = Recipe(
-            title=form.title.data,
-            author=form.author.data,
-            link=form.link.data,
-            ingredients=form.ingredients.data,
-            recipe_image=imageSave.filename,
-            rating = request.form.get('rating')
-        )     
-        if not recipe.rating:
-            recipe.rating = 0
-        tags = Tag.query.filter(Tag.id.in_(form.tags.data))
-        recipe.tags.extend(tags)
-        db.session.add(recipe)
-        db.session.commit()
-        flash('Successfully added recipe: {}'.format(
-            form.title.data))
-        return redirect(url_for('recipe_index'))
-    return render_template('add_recipe.html', title='Add Recipe', form=form)
-
 @app.route('/<recipe_id>/update_recipe', methods=['GET', 'POST'])
 def update_recipe(recipe_id):
     categories = [(c.id, c.name) for c in Tag.query.all()]
