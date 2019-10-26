@@ -14,8 +14,8 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Sign In')
     
 class AddTag(FlaskForm):
-    name = StringField('Name')
-    add = SubmitField('Add Tag')
+    name = StringField('Name', validators=[DataRequired()])
+    submit = SubmitField('Add Tag')
 
 class SelectTag(FlaskForm):
     search = SubmitField("Search Tag")
@@ -23,10 +23,10 @@ class SelectTag(FlaskForm):
 class DeleteTag(FlaskForm):
     delete = SubmitField("Delete Tag")
 
-class TagList(AddTag, SelectTag, DeleteTag):
+class TagList(SelectTag, DeleteTag):
     tags = SelectMultipleField('Tag', choices=[], coerce=int,)
 
-class TagWithAdd(AddTag):
+class TagWithAdd(FlaskForm):
     tags = SelectMultipleField('Tag', choices=[], coerce=int,)
     
 class Recipe(TagWithAdd):

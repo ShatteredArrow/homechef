@@ -4,7 +4,7 @@ from datetime import datetime
 from flask import render_template, flash, redirect, url_for, request
 from sqlalchemy.orm import sessionmaker
 from app import app, db
-from app.forms import LoginForm, AddRecipe, TagList, UpdateRecipe
+from app.forms import LoginForm, AddRecipe, TagList, UpdateRecipe, AddTag
 from app.models import Recipe, Tag, recipeTag
 from app import Config
 from werkzeug.utils import secure_filename
@@ -57,8 +57,9 @@ def recipe_index():
     AddForm = AddRecipe()
     AddForm.tags.choices = categories
 
-    TagForm = TagList(request.form)
+    AddTagForm = AddTag()
     
+    TagForm = TagList(request.form)  
     TagForm.tags.choices = categories
     
     
@@ -72,7 +73,6 @@ def recipe_index():
                 for tag_id in tags_id:
                     match = db.session.query(Recipe).filter(Recipe.tags.any(id=tag_id)).all()
                     recipes += match
-                return render_template('recipe_index.html', title='Recipe Index', form=TagForm, recipes=recipes)
             if TagForm.delete.data:
                 
                 tags_id = TagForm.tags.data
@@ -81,13 +81,6 @@ def recipe_index():
                 db.session.commit() 
                 categories = [(c.id, c.name) for c in Tag.query.all()]
                 TagForm.tags.choices = categories
-                return render_template('recipe_index.html', title='Recipe Index', form=TagForm, recipes=recipes)
-            if TagForm.add.data:
-                add_tag(TagForm.name.data)
-                TagForm.name.data=""
-                categories = [(c.id, c.name) for c in Tag.query.all()]
-                TagForm.tags.choices = categories
-                return render_template('recipe_index.html', title='Recipe Index', form=TagForm, recipes=recipes)
         if AddForm.validate_on_submit():
             print("submitted add form")
             imageSave(AddForm.recipe_image.data)
@@ -105,11 +98,12 @@ def recipe_index():
             recipe.tags.extend(tags)
             db.session.add(recipe)
             db.session.commit()
-            return render_template('recipe_index.html', title='Recipe Index', form=TagForm, recipes=recipes,addform=AddForm)
-        else:
-            return render_template('recipe_index.html', title='Recipe Index', form=TagForm, recipes=recipes,addform=AddForm)
-
-    return render_template('recipe_index.html', title='Recipe Index', form=TagForm, recipes=recipes,addform=AddForm)
+        if AddTagForm.validate_on_submit():
+            add_tag(AddTagForm.name.data)
+            AddTagForm.name.data=""
+            categories = [(c.id, c.name) for c in Tag.query.all()]
+            TagForm.tags.choices = categories
+    return render_template('recipe_index.html', title='Recipe Index', form=TagForm, recipes=recipes, addform=AddForm, addTagForm=AddTagForm)
 
 @app.route('/recipe/<recipe_id>',methods=['GET', 'POST'])
 def recipe(recipe_id):
@@ -121,6 +115,7 @@ def update_recipe(recipe_id):
     categories = [(c.id, c.name) for c in Tag.query.all()]
     recipe = Recipe.query.filter_by(id=recipe_id).first_or_404()
     form = UpdateRecipe(obj=recipe)
+    AddTagForm = AddTag()
 
     form.tags.choices = categories
     if form.validate_on_submit():
@@ -140,14 +135,12 @@ def update_recipe(recipe_id):
             recipe.tags.extend(tags)
             db.session.commit()
             return redirect(url_for('recipe', recipe_id=recipe_id))
-        elif form.add.data:
-            add_tag(form.name.data)
-            form.name.data=""
-            categories = [(c.id, c.name) for c in Tag.query.all()]
-            form.tags.choices = categories
-            return render_template('edit_recipe.html', title='Update Recipe', form=form,recipes=recipe)
-
-    return render_template('edit_recipe.html', title='Update Recipe', form=form,recipes=recipe)
+    elif AddTagForm.validate_on_submit():
+        add_tag(AddTagForm.name.data)
+        AddTagForm.name.data=""
+        categories = [(c.id, c.name) for c in Tag.query.all()]
+        form.tags.choices = categories
+    return render_template('edit_recipe.html', title='Update Recipe', form=form, recipes=recipe, addTagForm=AddTagForm)
 
 @app.route('/<recipe_id>/delete_recipe', methods=['GET', 'POST'])
 def delete_recipe(recipe_id):
