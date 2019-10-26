@@ -157,13 +157,18 @@ def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 def add_tag(tag_name):
-    tag = Tag(
-        name=tag_name,
-    )
-    db.session.add(tag)
-    db.session.commit()
-    flash('Successfully added tag: {}'.format(
-        tag_name))
+    tag_name = tag_name.lower();
+    if Tag.query.filter_by(name=tag_name).first():
+        flash('Tag "{}" already exists'.format(
+            tag_name))
+    else:
+        tag = Tag(
+            name=tag_name,
+        )
+        db.session.add(tag)
+        db.session.commit()
+        flash('Successfully added tag: {}'.format(
+            tag_name))
 
 @app.route('/modal_add_recipe', methods=['GET', 'POST'])
 def modal_add_recipe():

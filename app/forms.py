@@ -1,8 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField,RadioField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, Regexp
 from flask_wtf.file import FileRequired
-
 from wtforms import SelectField, SelectMultipleField, FileField
 from app import app
 from app.models import Tag
@@ -14,7 +13,7 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Sign In')
     
 class AddTag(FlaskForm):
-    name = StringField('Name', validators=[DataRequired()])
+    name = StringField('Name', validators=[DataRequired(), Regexp('^[A-Za-z]+$')])
     submit = SubmitField('Add Tag')
 
 class SelectTag(FlaskForm):
