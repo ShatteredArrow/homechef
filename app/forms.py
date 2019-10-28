@@ -30,12 +30,11 @@ class TagWithAdd(FlaskForm):
     
 class Recipe(TagWithAdd):
     title = StringField('Title', validators=[DataRequired()])
-    author = StringField('Author',validators=[DataRequired()])
-    link = StringField('Link',validators=[DataRequired()])
-    ingredients = TextAreaField('Ingredients', render_kw={"rows": 10, "cols": 60}, validators=[DataRequired()])
-    rating = RadioField('Rating',choices=[('1',''),('2','2'),('3','3'),('4','4'),('5','5')],id="rating")
+    author = StringField('Author')
+    link = StringField('Link')
+    ingredients = TextAreaField('Ingredients', render_kw={"rows": 10, "cols": 60})
+    rating = RadioField('Rating', choices=[('5',''),('4',''),('3',''),('2',''),('1','')], id="rating")
     recipe_image = FileField('Image File')
-    #recipe_image = FileField('Image File', validators=[FileRequired()])
 
 class AddRecipe(Recipe):
     submit = SubmitField('Add Recipe')

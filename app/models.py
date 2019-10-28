@@ -51,21 +51,3 @@ class Recipe(db.Model):
     def __repr__(self):
        return '{}'.format(self.id)
 
-
-""" 
-    def get_tags(self):
-        return tag
-
-    def tag(self, tag):
-        if not self.is_tagged(tag):
-            self.taged.append(tag)
-
-    def untag(self, tag):
-        if self.is_tagged(tag):
-            self.tagged.remove(tag)
-
-    def is_tagged(self,tag):
-        return self.tagged.filter(
-            (recipeTag.c.tag_id == tag.id).count() > 0
-        ) """
-
