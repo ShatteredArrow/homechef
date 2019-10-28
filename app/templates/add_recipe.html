@@ -32,28 +32,19 @@
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
-        <div>
-            <p>Rating:</p>
-            <div class="star_rating">
-                <input type="radio" id="star5" name="rating" value="5" />
-                <label class="fa fa-star" for="star5"></label>
-                <input type="radio" id="star4" name="rating" value="4" />
-                <label class="fa fa-star" for="star4"></label>
-                <input type="radio" id="star3" name="rating" value="3" />
-                <label class="fa fa-star" for="star3"></label>
-                <input type="radio" id="star2" name="rating" value="2" />
-                <label class="fa fa-star"for="star2"></label>
-                <input type="radio" id="star1" name="rating" value="1" />
-                <label class="fa fa-star" for="star1"></label>
-            </div>
+        {{ addform.rating.label }}<br>
+        <div class="star_rating">
+            {% for subfield in addform.rating %}
+                {{ subfield }}
+                {{ subfield.label (class="fa fa-star") }}
+            {% endfor %}
         </div>
-    
 
         <div class="bloc">
             {{ addform.hidden_tag() }}
             {{ addform.tags(size = 5) }}
         </div>
-    
+        
         <div class="image_upload">
             {{ addform.recipe_image.label }}<br>
             {{ addform.recipe_image }}

@@ -13,13 +13,6 @@ from flask import send_from_directory
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 imageFile = app.config['UPLOAD_FOLDER']
 
-
-
-
-
-
-
-
 def imageSave(recipeImageData):
     if recipeImageData.filename == '':
         flash('No selected file')
@@ -28,9 +21,6 @@ def imageSave(recipeImageData):
         filename = secure_filename(str(datetime.now()) + recipeImageData.filename)
         recipeImageData.save(os.path.join(imageFile, filename))
     imageSave.filename=filename
-    
-
-
 
 @app.route('/')
 @app.route('/index')
@@ -62,7 +52,6 @@ def recipe_index():
     TagForm = TagList(request.form)  
     TagForm.tags.choices = categories
     
-    
     recipes = Recipe.query.all()
     if request.method  == 'POST':
         if TagForm.validate_on_submit():
@@ -74,7 +63,6 @@ def recipe_index():
                     match = db.session.query(Recipe).filter(Recipe.tags.any(id=tag_id)).all()
                     recipes += match
             if TagForm.delete.data:
-                
                 tags_id = TagForm.tags.data
                 for tag_id in tags_id:
                     Tag.query.filter_by(id=tag_id).delete()
@@ -82,15 +70,14 @@ def recipe_index():
                 categories = [(c.id, c.name) for c in Tag.query.all()]
                 TagForm.tags.choices = categories
         if AddForm.validate_on_submit():
-            print("submitted add form")
             imageSave(AddForm.recipe_image.data)
             recipe = Recipe(
-            title=AddForm.title.data,
-            author=AddForm.author.data,
-            link=AddForm.link.data,
-            ingredients=AddForm.ingredients.data,
-            recipe_image=imageSave.filename,
-            rating = request.form.get('rating')
+                title=AddForm.title.data.title(),
+                author=AddForm.author.data,
+                link=AddForm.link.data,
+                ingredients=AddForm.ingredients.data,
+                recipe_image=imageSave.filename,
+                rating = AddForm.rating.data
             )     
             if not recipe.rating:
                 recipe.rating = 0
@@ -98,6 +85,7 @@ def recipe_index():
             recipe.tags.extend(tags)
             db.session.add(recipe)
             db.session.commit()
+            recipes = Recipe.query.all()
         if AddTagForm.validate_on_submit():
             add_tag(AddTagForm.name.data)
             AddTagForm.name.data=""
@@ -121,7 +109,7 @@ def update_recipe(recipe_id):
     if form.validate_on_submit():
         if form.submit.data:
             imageSave(form.recipe_image.data)
-            recipe.title = form.title.data
+            recipe.title = form.title.data.title()
             recipe.author = form.author.data
             recipe.link = form.link.data
             recipe.ingredients = form.ingredients.data
