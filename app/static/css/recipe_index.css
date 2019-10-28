@@ -69,6 +69,7 @@ select:focus {
     color: black;
 }
 
+<<<<<<< Updated upstream
 /* The Modal (background) */
 .modal {
     display: none; /* Hidden by default */
@@ -112,3 +113,5 @@ select:focus {
       width: 100%;
       height:100%;   
   }
+=======
+>>>>>>> Stashed changes
