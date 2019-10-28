@@ -132,6 +132,9 @@ def update_recipe(recipe_id):
 
 @app.route('/<recipe_id>/delete_recipe', methods=['GET', 'POST'])
 def delete_recipe(recipe_id):
+    #Delete the image assosciated with the recipe 1st
+    os.remove(os.path.join(imageFile, Recipe.query.filter_by(id=recipe_id).first_or_404().recipe_image))
+    #Then delete the recipe item from the database
     Recipe.query.filter_by(id=recipe_id).delete()
     db.session.commit()
     return redirect(url_for('recipe_index'))
@@ -158,36 +161,4 @@ def add_tag(tag_name):
         flash('Successfully added tag: {}'.format(
             tag_name))
 
-@app.route('/modal_add_recipe', methods=['GET', 'POST'])
-def modal_add_recipe():
-    categories = [(c.id, c.name) for c in Tag.query.all()]
-    form = AddRecipe()
-    form.tags.choices = categories
-
-    if form.validate_on_submit():
-        file = form.recipe_image.data
-        if file.filename == '':
-            flash('No selected file')
-            return redirect(request.url)
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(imageFile, filename))
-        recipe = Recipe(
-            title=form.title.data,
-            author=form.author.data,
-            link=form.link.data,
-            ingredients=form.ingredients.data,
-            recipe_image=filename,
-            rating = request.form.get('rating')
-        )     
-        if not recipe.rating:
-            recipe.rating = 0
-        tags = Tag.query.filter(Tag.id.in_(form.tags.data))
-        recipe.tags.extend(tags)
-        db.session.add(recipe)
-        db.session.commit()
-        flash('Successfully added recipe: {}'.format(
-            form.title.data))
-        return redirect(url_for('recipe_index'))
-    return render_template('modal_add_recipe.html', title='Add Recipe', form=form)
 
