@@ -18,8 +18,7 @@
 </head>
 
 <body>
-    <div class="page-container">
-        
+    <div class="page-container">  
         <div class="container">
             <div class="navbar">
                 <ul>
@@ -28,7 +27,6 @@
                     <li><a class="active" href="{{ url_for('login') }}">Login</a></li>
                 </ul>
             </div>
-            <div class="left"></div>
             <div class="middle">
                 {% with messages = get_flashed_messages() %}
                 {% if messages %}
@@ -43,15 +41,12 @@
                     {% block content %}{% endblock %}
                 </div>
             </div>
-            <div class="right"></div>
             <div class="footer">
                 {% block footer %}
                 &copy; Copyright 2019 by <a href="http://domain.invalid/">Alpha Powers</a>.
                 {% endblock %}
             </div>
         </div>
- 
     </div>
 </body>
-
 </html>

@@ -3,7 +3,7 @@
 {% block head %}
     <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/recipe.css') }}">
 
-  {{ super() }}
+    {{ super() }}
   
 {% endblock %}
 {% block content %}
@@ -45,10 +45,7 @@
             {% endif %}
             </p>
         </div>
-        
-
     </div>
-    
     <div class='recipe_image'>
         {% if recipe_image %}
             <img src="{{ url_for('uploaded_file', filename=recipe_image) }}" alt="recipeImage">
