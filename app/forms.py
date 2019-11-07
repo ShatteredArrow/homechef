@@ -3,7 +3,7 @@ from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextA
 from wtforms.validators import DataRequired, Regexp
 from flask_wtf.file import FileRequired
 from wtforms import SelectField, SelectMultipleField, FileField
-from app import app
+#from app import app
 from app.models import Tag
 
 class LoginForm(FlaskForm):
@@ -32,7 +32,7 @@ class Recipe(TagWithAdd):
     title = StringField('Title', validators=[DataRequired()])
     author = StringField('Author')
     link = StringField('Link')
-    ingredients = TextAreaField('Ingredients', render_kw={"rows": 10, "cols": 60})
+    ingredients = TextAreaField('Ingredients')
     rating = RadioField('Rating', choices=[('5',''),('4',''),('3',''),('2',''),('1','')], id="rating")
     recipe_image = FileField('Image File')
 

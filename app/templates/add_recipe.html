@@ -1,26 +1,27 @@
+<link type="text/css" rel="stylesheet" href="static/css/add_recipe.css">
 
 <!-- Modal content -->
 <div class="modal-content">
     <span class="close" id="addRecipeClose">&times;</span>
     <div name="demo" >
 
-        <form action="" method="post" novalidate enctype=multipart/form-data> {{ form.hidden_tag() }} <p>
+        <form class="add-recipe-form" action="" method="post" novalidate enctype=multipart/form-data> {{ form.hidden_tag() }} <p>
         {{ addform.title.label }}<br>
-        {{ addform.title(size = 32) }}
+        {{ addform.title}}
         {% for error in addform.title.errors %}
         <span style="color: red;">[{{ error }}]</span>
         {% endfor %}
         </p>
         <p>
             {{ addform.author.label }}<br>
-            {{ addform.author(size=32) }}
+            {{ addform.author }}
             {% for error in addform.author.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
         <p>
             {{ addform.link.label }}<br>
-            {{ addform.link(size=32) }}
+            {{ addform.link }}
             {% for error in addform.link.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}

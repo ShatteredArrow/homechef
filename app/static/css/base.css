@@ -21,6 +21,9 @@ body {
     background-color: #f3f0e6;
     margin: 0px;
     position: relative;
+    
+  
+    
 }
 
 .content_container {
@@ -42,7 +45,7 @@ body {
 .grid-container {
     min-height: 100vh;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: repeat(6, 1fr);
     grid-template-rows:  auto 1fr auto;
     grid-template-areas:
         'nav nav nav nav nav nav'
@@ -50,9 +53,15 @@ body {
         'footer footer footer footer footer footer';
 }
 
+  
+
 .navbar {
     grid-area: nav;
+    width:100%
+
+
 }
+
 
 .navbar ul {
     list-style-type: none;
@@ -183,3 +192,20 @@ text-decoration: none;
         grid-template-areas: 'nav nav nav nav nav nav' 'middle middle middle middle middle middle' 'footer footer footer footer footer footer';
     }
 }
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+  
+  
