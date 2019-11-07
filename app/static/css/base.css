@@ -1,12 +1,13 @@
 @import "https://fonts.googleapis.com/css?family=Rancho&effect=fire-animation";
 :root {
-    --white: rgb(255, 255, 255);
-    --mist: #7A9D96;
+    --white: #f2f2f2;
+    --background: #f2f2f2;
+    --mist: #B2DBBF;
     --light_yellow: rgb(224, 199, 121);
-    --yellow: #DCAE1D;
-    --dark_blue: rgb(8, 71, 90);
-    --blue: rgb(20, 83, 102);
-    --light_blue: #CAE4DB;
+    --yellow: #F3FFBD;
+    --dark_blue: #247BA0;
+    --blue: #70C1B3;
+    --light_blue: #B2DBBF;
 }
 
 * {
