@@ -67,8 +67,7 @@ def recipe_index():
                 for tag_id in tags_id:
                     Tag.query.filter_by(id=tag_id).delete()
                 db.session.commit() 
-                categories = [(c.id, c.name) for c in Tag.query.all()]
-                TagForm.tags.choices = categories
+                return redirect(url_for('recipe_index'))
         if AddForm.validate_on_submit():
             imageSave(AddForm.recipe_image.data)
             recipe = Recipe(
@@ -85,12 +84,11 @@ def recipe_index():
             recipe.tags.extend(tags)
             db.session.add(recipe)
             db.session.commit()
-            recipes = Recipe.query.all()
+            return redirect(url_for('recipe_index'))
         if AddTagForm.validate_on_submit():
             add_tag(AddTagForm.name.data)
-            AddTagForm.name.data=""
-            categories = [(c.id, c.name) for c in Tag.query.all()]
-            TagForm.tags.choices = categories
+            return redirect(url_for('recipe_index'))
+
     return render_template('recipe_index.html', title='Recipe Index', form=TagForm, recipes=recipes, addform=AddForm, addTagForm=AddTagForm)
 
 @app.route('/recipe/<recipe_id>',methods=['GET', 'POST'])
