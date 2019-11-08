@@ -14,12 +14,11 @@ ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 imageFile = app.config['UPLOAD_FOLDER']
 
 def imageSave(recipeImageData):
-    if recipeImageData.filename == '':
-        flash('No selected file')
-        return redirect(request.url)
     if recipeImageData and allowed_file(recipeImageData.filename):
         filename = secure_filename(str(datetime.now()) + recipeImageData.filename)
         recipeImageData.save(os.path.join(imageFile, filename))
+    else:
+        filename = secure_filename("image-placeholder.png")
     imageSave.filename=filename
 
 @app.route('/')
@@ -106,13 +105,15 @@ def update_recipe(recipe_id):
     form.tags.choices = categories
     if form.validate_on_submit():
         if form.submit.data:
-            imageSave(form.recipe_image.data)
+            # If new image added, then update. Otherwise keep old image
+            if form.recipe_image.data:
+                imageSave(form.recipe_image.data)
+                recipe.recipe_image = imageSave.filename
             recipe.title = form.title.data.title()
             recipe.author = form.author.data
             recipe.link = form.link.data
             recipe.ingredients = form.ingredients.data
             recipe.rating = request.form.get('rating')
-            recipe.recipe_image = imageSave.filename
 
             if not recipe.rating:
                 recipe.rating = 0
