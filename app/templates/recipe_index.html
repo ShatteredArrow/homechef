@@ -33,7 +33,7 @@
     </div>
     <div class=recipe_image>
         {% if recipe.recipe_image %}
-            <a href="{{ url_for('recipe', recipe_id=recipe.id) }}"><img src="{{ url_for('uploaded_file', filename=recipe.recipe_image ) }}"></a>
+            <a href="{{ url_for('recipe', recipe_id=recipe.id) }}"><img src="{{ url_for('uploaded_file', filename=recipe.recipe_image ) }}" class="portrait"></a>
         {% else %}
             <img src="{{ url_for('uploaded_file', filename=image-placeholder.png ) }}">
         {% endif %}    
@@ -51,7 +51,7 @@
         width = image.naturalWidth;
         height = image.naturalHeight;
         if (width > height){
-            image.className += " landscape";
+            image.className = "landscape";
         }
     }
 </script>

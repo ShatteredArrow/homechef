@@ -71,7 +71,9 @@ select:focus {
 
 .recipe {
     float: left;
-    margin: 10px
+    margin: 20px;
+    box-shadow: 5px 10px 15px 2px #525252;
+    background-color: white;
 }
 
 .recipe_title a{
@@ -86,6 +88,7 @@ select:focus {
     white-space: nowrap;
     max-width: 100%;
     font-size: 20px;
+    padding-left: 10px;
 }
 
 .recipe_title{
@@ -99,7 +102,7 @@ select:focus {
     overflow: hidden;
  }
 
-.recipe_image img{
+.portrait{
     position: absolute;
     max-width: 100%;
     width: 100%;
@@ -109,9 +112,15 @@ select:focus {
     transform: translate( -50%, -50%);
 }
 
-img.landscape {
+.landscape {
+    position: absolute;
+    max-height: 100%;
     height: 100%;
     width: auto;
+    top: 50%;     
+    left: 50%;
+    transform: translate( -50%, -50%);
+
 }
 /* The Modal (background) */
 .modal {
