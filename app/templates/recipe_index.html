@@ -11,7 +11,10 @@
 <div id="addTagModal" class="addRecipeModal modal">
     {% include 'add_tag.html' with context %}
 </div>
-
+<button class="button" id="myBtn">Add Recipe</button>
+<div id="myModal" class="addRecipeModal modal">
+    {% include 'add_recipe.html' with context %}
+</div>
 <form method="post" novalidate>
     {{ form.search(class_="button") }}
     {{ form.delete(class_="button") }}
@@ -22,43 +25,34 @@
     </div>
 </form>
 
-<button class="button" id="myBtn">Add Recipe</button>
-<div id="myModal" class="addRecipeModal modal">
-    {% include 'add_recipe.html' with context %}
-</div>
-    
 {% if recipes %}
-<table id="recipe_table">
-    <tr>
-        <th>Recipe Title</th>
-        <th>Author</th>
-        <th>Link</th>
-        <th>Ingredients</td>
-        <th>Rating</th>
-        <th>Difficulty</th>
-        <th>Tried recipe</th>
-        <th>Tags</td>
-    </tr>
-    
-    {% for recipe in recipes %}
-    <tr>
-        <td><a href="{{ url_for('recipe', recipe_id=recipe.id) }}">{{ recipe.title }}</a></td>
-        <td>{{ recipe.author }}</td>
-        <td><a href="{{ recipe.link }}">URL</a></td>
-        <td>{{ recipe.ingredients }}</td>
-        <td>{{ recipe.rating }}</td>
-        <td>{{ recipe.difficulty }}</td>
-        <td>{{ recipe.tried_recipe }}</td>
-        <td>
-            {%for tags in recipe.tags%}
-            <span>{{tags.name}} </span>
-            {% endfor %}
-        </td>
-    </tr>
-    {% endfor %}
-</table>
+{% for recipe in recipes %}
+<div class=recipe>
+    <div class=recipe_title>
+        <a href="{{ url_for('recipe', recipe_id=recipe.id) }}"><p>{{ recipe.title }}</p></a>
+    </div>
+    <div class=recipe_image>
+        {% if recipe.recipe_image %}
+            <a href="{{ url_for('recipe', recipe_id=recipe.id) }}"><img src="{{ url_for('uploaded_file', filename=recipe.recipe_image ) }}" class="portrait"></a>
+        {% else %}
+            <img src="{{ url_for('uploaded_file', filename=image-placeholder.png ) }}">
+        {% endif %}    
+    </div>
+</div>
+{% endfor %}
 {% endif %}
 
 <script type="text/javascript" src="{{ url_for('static', filename='js/modal.js') }}"></script>
-
+<script>
+    // Gives landscape images a landscape class in order to get different css
+    images = document.getElementsByClassName("recipe_image");
+    for (i = 0; i < images.length; i++) {
+        image = images[i].querySelector("img");
+        width = image.naturalWidth;
+        height = image.naturalHeight;
+        if (width > height){
+            image.className = "landscape";
+        }
+    }
+</script>
 {% endblock %}

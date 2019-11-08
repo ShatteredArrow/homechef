@@ -69,7 +69,59 @@ select:focus {
     color: black;
 }
 
-<<<<<<< Updated upstream
+.recipe {
+    float: left;
+    margin: 20px;
+    box-shadow: 5px 10px 15px 2px #525252;
+    background-color: white;
+}
+
+.recipe_title a{
+    text-decoration: none;
+    color: #2d2d2d;
+    cursor: pointer;
+}
+
+.recipe_title p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+    font-size: 20px;
+    padding-left: 10px;
+}
+
+.recipe_title{
+    width: 300px;     
+
+}
+.recipe_image {
+    position: relative;
+    width: 350px;     
+    height: 350px;
+    overflow: hidden;
+ }
+
+.portrait{
+    position: absolute;
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+    top: 50%;     
+    left: 50%;
+    transform: translate( -50%, -50%);
+}
+
+.landscape {
+    position: absolute;
+    max-height: 100%;
+    height: 100%;
+    width: auto;
+    top: 50%;     
+    left: 50%;
+    transform: translate( -50%, -50%);
+
+}
 /* The Modal (background) */
 .modal {
     display: none; /* Hidden by default */
@@ -113,5 +165,3 @@ select:focus {
       width: 100%;
       height:100%;   
   }
-=======
->>>>>>> Stashed changes

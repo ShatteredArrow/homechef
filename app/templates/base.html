@@ -19,34 +19,19 @@
 
 <body>
     <div class="page-container">  
-        <div class="container">
-            <div class="navbar">
-                <ul>
-                    <li><a class="active" href="{{ url_for('index') }}">Home</a></li>
-                    <li><a class="active" href="{{ url_for('recipe_index') }}">Recipe Index</a></li>
-                    <li><a class="active" href="{{ url_for('login') }}">Login</a></li>
-                </ul>
-            </div>
-            <div class="middle">
-                {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                <ul>
-                    {% for message in messages %}
-                    <li>{{ message }}</li>
-                    {% endfor %}
-                </ul>
-                {% endif %}
-                {% endwith %}
-                <div class="content_container">
-                    {% block content %}{% endblock %}
-                </div>
-            </div>
-            <div class="footer">
-                {% block footer %}
-                &copy; Copyright 2019 by <a href="http://domain.invalid/">Alpha Powers</a>.
-                {% endblock %}
-            </div>
+        <div class="navbar">
+            <ul>
+                <li><a class="active" href="{{ url_for('index') }}">Home</a></li>
+                <li><a class="active" href="{{ url_for('recipe_index') }}">Recipe Index</a></li>
+                <li><a class="active" href="{{ url_for('login') }}">Login</a></li>
+            </ul>
+        </div>
+        <div class="content_container">
+            {% block content %}{% endblock %}
         </div>
     </div>
+    <footer>
+        Copyright 2019 by <a href="#">Alpha Powers</a>.
+    </footer>
 </body>
 </html>

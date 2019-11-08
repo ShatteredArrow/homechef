@@ -18,12 +18,9 @@ p {
 }
 
 body {
-    background-color: #f3f0e6;
+    background-color: #efefef;
     margin: 0px;
     position: relative;
-    
-  
-    
 }
 
 .content_container {
@@ -34,12 +31,6 @@ body {
     position: relative;
     min-height: 100vh;
 }
-
-.content-wrap {
-    padding-bottom: 2.5rem;
-    /* Footer height */
-}
-
 .navbar {
     width:100%;
 }
@@ -69,13 +60,12 @@ body {
     color: white;
 }
 
-/* Style the footer */
-.footer {
-   background-color: var(--light_yellow);
+/* footer not working */
+footer {
+   /* background-color: var(--light_yellow); */
     text-align: center;
     width: 100%;
-    height: 2.5em;
-    margin-top: 5px
+    height: 2.5rem; 
 }
 
 .button {
