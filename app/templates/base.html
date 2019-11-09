@@ -3,35 +3,30 @@
 
 <head>
     {%block head%}
-    <link type="text/css" rel="stylesheet" href="/static/css/base.css">
-    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.png') }}">
-    <link href="https://fonts.googleapis.com/css?family=Alegreya&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://kit.fontawesome.com/afc8923e11.js" crossorigin="anonymous"></script>
+        <link type="text/css" rel="stylesheet" href="/static/css/base.css">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.png') }}">
+        <link href="https://fonts.googleapis.com/css?family=Alegreya&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://kit.fontawesome.com/afc8923e11.js" crossorigin="anonymous"></script>
 
-    {% if title %}
-    <title>{{ title }} - Home Chef</title>
-    {% else %}
-    <title>Welcome to Home Chef</title>
-    {% endif %}
+        {% if title %}
+        <title>{{ title }} - Home Chef</title>
+        {% else %}
+        <title>Welcome to Home Chef</title>
+        {% endif %}
     {%endblock%}
 </head>
 
 <body>
-    <div class="page-container">  
-        <div class="navbar">
-            <ul>
-                <li><a class="active" href="{{ url_for('index') }}">Home</a></li>
-                <li><a class="active" href="{{ url_for('recipe_index') }}">Recipe Index</a></li>
-                <li><a class="active" href="{{ url_for('login') }}">Login</a></li>
-            </ul>
-        </div>
-        <div class="content_container">
-            {% block content %}{% endblock %}
-        </div>
+     
+    <div class="navbar">
+        <ul>
+            <li><a class="active" href="{{ url_for('index') }}">Home</a></li>
+            <li><a class="active" href="{{ url_for('recipe_index') }}">Recipe Index</a></li>
+            <li><a class="active" href="{{ url_for('login') }}">Login</a></li>
+        </ul>
     </div>
-    <footer>
-        Copyright 2019 by <a href="#">Alpha Powers</a>.
-    </footer>
+    <div class="content_container">{% block content %}{% endblock %} </div>
+    <footer>&copy; Copyright 2019 by <a href="#">Alpha Powers</a>.</footer>
 </body>
 </html>
