@@ -18,15 +18,26 @@
 </head>
 
 <body>
-     
-    <div class="navbar">
-        <ul>
-            <li><a class="active" href="{{ url_for('index') }}">Home</a></li>
-            <li><a class="active" href="{{ url_for('recipe_index') }}">Recipe Index</a></li>
-            <li><a class="active" href="{{ url_for('login') }}">Login</a></li>
-        </ul>
+    <div class="page-container">  
+        <div class="navbar">
+            <ul>
+                <li><a class="active" href="{{ url_for('index') }}">Home</a></li>
+                <li><a class="active" href="{{ url_for('recipe_index') }}">Recipe Index</a></li>
+                <li><a class="active" href="{{ url_for('login') }}">Login</a></li>
+            </ul>
+        </div>
+        <div class="header">
+            <img src="/static/heading1.jpg">
+            <div class="heading-text">
+                <h1 class="h1-heading">Homechef</h1>
+            </div>
+        </div>
+
+        <div class="content_container">
+            {% block content %}{% endblock %}
+        </div>
     </div>
-    <div class="content_container">{% block content %}{% endblock %} </div>
+
     <footer>&copy; Copyright 2019 by <a href="#">Alpha Powers</a>.</footer>
 </body>
 </html>

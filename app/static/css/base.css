@@ -1,12 +1,13 @@
 @import "https://fonts.googleapis.com/css?family=Rancho&effect=fire-animation";
 :root {
-    --white: rgb(255, 255, 255);
-    --mist: #7A9D96;
-    --light_yellow: rgb(224, 199, 121);
-    --yellow: #DCAE1D;
-    --dark_blue: rgb(8, 71, 90);
-    --blue: rgb(20, 83, 102);
-    --light_blue: #CAE4DB;
+    --white: #f2f2f2;
+    --background: #f2f2f2;
+    --mist: #CDC5B4;
+    --light_yellow: #a7816f;
+    --yellow: #7f5d4d;
+    --dark_blue: #1b3e21;
+    --blue: #2b5d34;
+    --light_blue: #B2DBBF;
 }
 
 * {
@@ -23,17 +24,41 @@ body {
     margin:0px;
 }
 
+.header {
+    position: relative;
+}
+
+.header img{
+    max-width: 100%;
+    height: auto;
+}
+
+.header-text {
+    position: absolute;
+}
+
+.h1-heading {
+    color: white; 
+    left: 30px;
+    top: 50px;
+    position: absolute;
+    font-size: 100px;
+}
+
 .content_container {
     margin: 8px;
     min-height: calc(100vh - 70px);
 }
 
-/* .page-container {
-    position: relative;
-    min-height: 20px;
-} */
+.page-container {
+
+    min-height: 100vh;
+}
+
 .navbar {
     width:100%;
+    position: fixed;
+    z-index: 1;
 }
 
 .navbar ul {
