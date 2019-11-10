@@ -9,28 +9,28 @@
         {{ addform.title.label }}<br>
         {{ addform.title}}
         {% for error in addform.title.errors %}
-        <span style="color: red;">[{{ error }}]</span>
+        <span style="color: var(--error);">[{{ error }}]</span>
         {% endfor %}
         </p>
         <p>
             {{ addform.author.label }}<br>
             {{ addform.author }}
             {% for error in addform.author.errors %}
-            <span style="color: red;">[{{ error }}]</span>
+            <span style="color: var(--error);">[{{ error }}]</span>
             {% endfor %}
         </p>
         <p>
             {{ addform.link.label }}<br>
             {{ addform.link }}
             {% for error in addform.link.errors %}
-            <span style="color: red;">[{{ error }}]</span>
+            <span style="color: var(--error);">[{{ error }}]</span>
             {% endfor %}
         </p>
         <p>
             {{ addform.ingredients.label }}<br>
             {{ addform.ingredients }}
             {% for error in addform.ingredients.errors %}
-            <span style="color: red;">[{{ error }}]</span>
+            <span style="color: var(--error);">[{{ error }}]</span>
             {% endfor %}
         </p>
         {{ addform.rating.label }}<br>

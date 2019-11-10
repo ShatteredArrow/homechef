@@ -1,6 +1,6 @@
 /* Modal Content */
 .modal-content {
-    background-color: #fefefe;
+    background-color: var(--background-2);
     margin: auto;
     padding: 20px;
     border: 1px solid #888;
@@ -10,7 +10,7 @@
   
   /* The Close Button */
   .close {
-    color: #aaaaaa;
+    color: var(--background-3);
     float: right;
     font-size: 28px;
     font-weight: bold;
@@ -18,7 +18,7 @@
   
   .close:hover,
   .close:focus {
-    color: #000;
+    color: var(--on-background);
     text-decoration: none;
     cursor: pointer;
   }

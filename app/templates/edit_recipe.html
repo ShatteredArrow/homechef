@@ -16,28 +16,28 @@
         {{ form.title.label }}<br>
         {{ form.title(size = 32) }}
         {% for error in form.title.errors %}
-        <span style="color: red;">[{{ error }}]</span>
+        <span style="color: var(--error);">[{{ error }}]</span>
         {% endfor %}
     </p>
     <p>
         {{ form.author.label }}<br>
         {{ form.author(size=32) }}
         {% for error in form.author.errors %}
-        <span style="color: red;">[{{ error }}]</span>
+        <span style="color: var(--error);">[{{ error }}]</span>
         {% endfor %}
     </p>
     <p>
         {{ form.link.label }}<br>
         {{ form.link(size=32) }}
         {% for error in form.link.errors %}
-        <span style="color: red;">[{{ error }}]</span>
+        <span style="color: var(--error)red;">[{{ error }}]</span>
         {% endfor %}
     </p>
     <p>
         {{ form.ingredients.label }}<br>
         {{ form.ingredients }}
         {% for error in form.ingredients.errors %}
-        <span style="color: red;">[{{ error }}]</span>
+        <span style="color: var(--error);">[{{ error }}]</span>
         {% endfor %}
     </p>
     {{ form.rating.label }}<br>

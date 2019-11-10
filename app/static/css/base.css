@@ -1,13 +1,16 @@
 @import "https://fonts.googleapis.com/css?family=Rancho&effect=fire-animation";
 :root {
-    --white: #f2f2f2;
-    --background: #f2f2f2;
-    --mist: #CDC5B4;
-    --light_yellow: #a7816f;
-    --yellow: #7f5d4d;
-    --dark_blue: #1b3e21;
-    --blue: #2b5d34;
-    --light_blue: #B2DBBF;
+    --yellow: #deb217;
+    --background: #222325;
+    --background-2: #2f3133;
+    --background-3: #404244;
+    --background-4: #515354;
+    --primary: #a8c19c;
+    --primary-variant: #4a6d35;
+    --secondary: #a8a2ba;
+    --error: #CF6679;
+    --on-primary: #000000;
+    --on-background: #ffffff;
 }
 
 * {
@@ -16,12 +19,30 @@
 
 p {
     font-size: 14px;
+    color: var(--on-background);
 }
 
-body {
-    background-color: #efefef;
+h1, h2, h3 {
+    color: var(--on-background);
+}
+
+body { 
+    background-color: var(--background);
     height: 100%;
     margin:0px;
+}
+
+input, textarea, label {
+    color: var(--on-background);
+    transition: background-color 0.3s cubic-bezier(0.57, 0.21, 0.69, 1.25),
+      transform 0.3s cubic-bezier(0.57, 0.21, 0.69, 1.25);
+}
+input, textarea {
+    border: 1px solid var( --background-4);
+}
+textarea, input {
+    background: var(--background-3);
+
 }
 
 .header {
@@ -38,9 +59,9 @@ body {
 }
 
 .h1-heading {
-    color: white; 
+    color: var(--on-background); 
     left: 30px;
-    top: 50px;
+    bottom: 10px;
     position: absolute;
     font-size: 100px;
 }
@@ -66,7 +87,8 @@ body {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: var(--dark_blue);
+    background-color: var(--background-2);
+    box-shadow: 0 1px 6px black;
 }
 
 .navbar li {
@@ -75,23 +97,20 @@ body {
 
 .navbar li a {
     display: block;
-    color: white;
+    color: var(--on-background);
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
 }
 
 .navbar li a:hover {
-    background-color: var(--blue);
-    color: white;
+    background-color: var(--background-3);
 }
 
-
-
 .button {
-    background-color: var(--yellow);
+    background-color: var(--primary);
     border: none;
-    color: black;
+    color: var(--on-primary);
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
@@ -99,11 +118,12 @@ body {
     font-size: 16px;
     margin: 4px 2px;
     cursor: pointer;
-    border-radius: .5em;
+    border-radius: 5px;
 }
 
 .button:hover {
-    background-color: var(--light_yellow);
+    background-color: var(--primary-variant);
+    color: var(--on-primary);
 }
 
 .button:active {
@@ -148,11 +168,12 @@ body {
 }
 
 .external_link:visited, .external_link:link {
-text-decoration: none;
+    text-decoration: none;
+    color: var(--primary);
 }
 
 .external_link:hover {
-    color: var(--yellow);
+    color: var(--primary-variant);
 }
 
 /* The Modal (background) */
@@ -166,13 +187,13 @@ text-decoration: none;
     width: 100%; /* Full width */
     height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
+    background-color:  var(--background); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
   }
   
   /* footer not working */
 footer {
-    background-color: var(--light_yellow);
+    background-color: var(--background-2);
      text-align: center;
      width: 100%;
      height: 50px;
