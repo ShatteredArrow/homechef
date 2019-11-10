@@ -33,7 +33,7 @@ class Recipe(TagWithAdd):
     author = StringField('Author')
     link = StringField('Link')
     ingredients = TextAreaField('Ingredients')
-    rating = RadioField('Rating', choices=[('5',''),('4',''),('3',''),('2',''),('1','')], id="rating")
+    rating = RadioField('Rating', choices=[('5',''),('4',''),('3',''),('2',''),('1',''),('0','')], id="rating",default='0')
     recipe_image = FileField('Image File')
 
 class AddRecipe(Recipe):

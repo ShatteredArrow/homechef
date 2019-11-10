@@ -43,9 +43,12 @@
     {{ form.rating.label }}<br>
     <div class="star_rating">
         {% for subfield in form.rating %}
-            {{ subfield }}
-            {{ subfield.label (class="fa fa-star") }}
+            {% if loop.index0 < 5%}
+                {{ subfield }}
+                {{ subfield.label (class="fa fa-star") }}
+            {%endif%}
         {% endfor %}
+        
     </div>
 
 

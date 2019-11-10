@@ -84,6 +84,8 @@ def recipe_index():
             db.session.add(recipe)
             db.session.commit()
             return redirect(url_for('recipe_index'))
+        else:
+            print("Nothing")
         if AddTagForm.validate_on_submit():
             add_tag(AddTagForm.name.data)
             return redirect(url_for('recipe_index'))
