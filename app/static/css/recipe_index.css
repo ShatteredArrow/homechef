@@ -70,10 +70,11 @@ select:focus {
 }
 
 .recipe {
-    float: left;
+    display:inline-block;
     margin: 20px;
     box-shadow: 5px 5px 7px 1px #525252;
     background-color: white;
+    border-radius: 10px;
 }
 
 .recipe_title a{
@@ -91,6 +92,7 @@ select:focus {
     padding-left: 10px;
 }
 
+
 .recipe_title{
     width: 300px;     
 
@@ -100,10 +102,14 @@ select:focus {
     width: 350px;     
     height: 350px;
     overflow: hidden;
+    border-bottom-left-radius: inherit;
+    border-bottom-right-radius: inherit;
+
  }
 
 .portrait{
     position: absolute;
+
     max-width: 100%;
     width: 100%;
     height: auto;
@@ -114,6 +120,7 @@ select:focus {
 
 .landscape {
     position: absolute;
+
     max-height: 100%;
     height: 100%;
     width: auto;
@@ -160,8 +167,4 @@ select:focus {
     color: #000;
     text-decoration: none;
     cursor: pointer;
-  }
-  iframe{
-      width: 100%;
-      height:100%;   
   }

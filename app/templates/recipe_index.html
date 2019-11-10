@@ -26,23 +26,25 @@
         {{ form.tags(size = 5) }}
     </div>
 </form>
-
-{% if recipes %}
-{% for recipe in recipes %}
-<div class=recipe>
-    <div class=recipe_title>
-        <a href="{{ url_for('recipe', recipe_id=recipe.id) }}"><p>{{ recipe.title }}</p></a>
+<div class="recipe-items">
+    {% if recipes %}
+    {% for recipe in recipes %}
+    <div class=recipe>
+        <div class=recipe_title>
+            <a href="{{ url_for('recipe', recipe_id=recipe.id) }}"><p>{{ recipe.title }}</p></a>
+        </div>
+        <div class=recipe_image>
+            {% if recipe.recipe_image %}
+                <a href="{{ url_for('recipe', recipe_id=recipe.id) }}"><img src="{{ url_for('uploaded_file', filename=recipe.recipe_image ) }}" class="portrait"></a>
+            {% else %}
+                <img src="{{ url_for('uploaded_file', filename=image-placeholder.png ) }}">
+            {% endif %}    
+        </div>
     </div>
-    <div class=recipe_image>
-        {% if recipe.recipe_image %}
-            <a href="{{ url_for('recipe', recipe_id=recipe.id) }}"><img src="{{ url_for('uploaded_file', filename=recipe.recipe_image ) }}" class="portrait"></a>
-        {% else %}
-            <img src="{{ url_for('uploaded_file', filename=image-placeholder.png ) }}">
-        {% endif %}    
-    </div>
+    {% endfor %}
+    {% endif %}
 </div>
-{% endfor %}
-{% endif %}
+
 
 <script type="text/javascript" src="{{ url_for('static', filename='js/modal.js') }}"></script>
 <script>
