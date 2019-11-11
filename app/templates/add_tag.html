@@ -7,7 +7,7 @@
         {{ addTagForm.name.label }}<br>
         {{ addTagForm.name(size=32) }}
         {% for error in addTagForm.name.errors %}
-        <span style="color: red;">[{{ error }}]</span>
+        <span style="color: var(--error);">[{{ error }}]</span>
         {% endfor %}
 
         {{ addTagForm.submit(class_="button") }}

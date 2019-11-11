@@ -1,7 +1,7 @@
 .recipe_details {
-    background-color: var(--white);
-    box-shadow: 0px 0px 4px 0px grey;
-    border-radius: .5em;
+    background-color: var(--background-2);
+    box-shadow: 0px 0px 4px 0px black;
+    border-radius: 5px;
     padding: 10px
     
 }
@@ -9,5 +9,5 @@
 .recipe_image img{
     max-height: 100%;
     max-width: 100%;
-    border-radius: .5em;
+    border-radius: 5px;
 }
