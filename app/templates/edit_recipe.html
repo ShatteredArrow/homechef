@@ -2,6 +2,7 @@
 {% block head %}
 {{ super() }}
 <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/recipe_index.css') }}">
+<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/recipe.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -9,65 +10,64 @@
 <div id="addTagModal" class="addTagModal modal">
     {% include 'add_tag.html' with context %}
 </div>
-<h1>Update Recipe</h1>
-<form action="" method="post" enctype="multipart/form-data" novalidate>
-    {{ form.hidden_tag() }}
-    <p>
-        {{ form.title.label }}<br>
-        {{ form.title(size = 32) }}
-        {% for error in form.title.errors %}
-        <span style="color: var(--error);">[{{ error }}]</span>
-        {% endfor %}
-    </p>
-    <p>
-        {{ form.author.label }}<br>
-        {{ form.author(size=32) }}
-        {% for error in form.author.errors %}
-        <span style="color: var(--error);">[{{ error }}]</span>
-        {% endfor %}
-    </p>
-    <p>
-        {{ form.link.label }}<br>
-        {{ form.link(size=32) }}
-        {% for error in form.link.errors %}
-        <span style="color: var(--error)red;">[{{ error }}]</span>
-        {% endfor %}
-    </p>
-    <p>
-        {{ form.ingredients.label }}<br>
-        {{ form.ingredients }}
-        {% for error in form.ingredients.errors %}
-        <span style="color: var(--error);">[{{ error }}]</span>
-        {% endfor %}
-    </p>
-    {{ form.rating.label }}<br>
-    <div class="star_rating">
-        {% for subfield in form.rating %}
-            {% if loop.index0 < 5%}
-                {{ subfield }}
-                {{ subfield.label (class="fa fa-star") }}
-            {%endif%}
-        {% endfor %}
-        
-    </div>
-
-
-        
-    <div class="bloc">
+<div class="recipe_details">
+    <h1>Update Recipe</h1>
+    <form action="" method="post" enctype="multipart/form-data" novalidate>
         {{ form.hidden_tag() }}
-        {{ form.tags(size = 5) }}
-    </div>
-
-    <div class="image_upload">
-        {{ form.recipe_image.label }}<br>
-        {{ form.recipe_image }}
-    </div>
-
-    <div>
-        {{ form.submit(class_="button") }}
-    </div>
-
-</form>
+        <p>
+            {{ form.title.label }}<br>
+            {{ form.title(size = 32) }}
+            {% for error in form.title.errors %}
+            <span style="color: var(--error);">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.author.label }}<br>
+            {{ form.author(size=32) }}
+            {% for error in form.author.errors %}
+            <span style="color: var(--error);">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.link.label }}<br>
+            {{ form.link(size=32) }}
+            {% for error in form.link.errors %}
+            <span style="color: var(--error)red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.ingredients.label }}<br>
+            {{ form.ingredients }}
+            {% for error in form.ingredients.errors %}
+            <span style="color: var(--error);">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        {{ form.rating.label }}<br>
+        <div class="star_rating">
+            {% for subfield in form.rating %}
+                {% if loop.index0 < 5%}
+                    {{ subfield }}
+                    {{ subfield.label (class="fa fa-star") }}
+                {%endif%}
+            {% endfor %}
+            
+        </div>     
+        <div class="bloc">
+            {{ form.hidden_tag() }}
+            {{ form.tags(size = 5) }}
+        </div>
+    
+        <div class="image_upload">
+            {{ form.recipe_image.label }}<br>
+            {{ form.recipe_image }}
+        </div>
+    
+        <div>
+            {{ form.submit(class_="button") }}
+        </div>
+    
+    </form>
+</div>
 
 <script type="text/javascript" src="{{ url_for('static', filename='js/modal.js') }}"></script>
 
