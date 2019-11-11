@@ -134,7 +134,9 @@ def update_recipe(recipe_id):
 @app.route('/<recipe_id>/delete_recipe', methods=['GET', 'POST'])
 def delete_recipe(recipe_id):
     #Delete the image assosciated with the recipe 1st
-    os.remove(os.path.join(imageFile, Recipe.query.filter_by(id=recipe_id).first_or_404().recipe_image))
+    image = os.path.join(imageFile, Recipe.query.filter_by(id=recipe_id).first_or_404().recipe_image)
+    if os.path.exists(image):
+        os.remove(image)
     #Then delete the recipe item from the database
     Recipe.query.filter_by(id=recipe_id).delete()
     db.session.commit()
@@ -146,7 +148,11 @@ def allowed_file(filename):
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+    img_path = os.path.join(imageFile, filename)
+
+    if not os.path.exists(img_path):
+        return send_from_directory(imageFile, 'image-placeholder.png')
+    return send_from_directory(imageFile, filename)
 
 def add_tag(tag_name):
     tag_name = tag_name.lower();
