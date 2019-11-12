@@ -35,7 +35,7 @@
         </div>
         <div class=recipe_image>
             {% if recipe.recipe_image %}
-                <a href="{{ url_for('recipe', recipe_id=recipe.id) }}"><img src="{{ url_for('uploaded_file', filename=recipe.recipe_image ) }}" class="portrait"></a>
+                <a href="{{ url_for('recipe', recipe_id=recipe.id) }}"><img src="{{ url_for('uploaded_file', filename=recipe.recipe_image ) }}" class="image"></a>
             {% else %}
                 <img src="{{ url_for('uploaded_file', filename=image-placeholder.png ) }}">
             {% endif %}    
@@ -46,18 +46,4 @@
 </div>
 
 
-<script type="text/javascript" src="{{ url_for('static', filename='js/modal.js') }}"></script>
-<script>
-    // Gives landscape images a landscape class in order to get different css
-    // Super hacky solution that sometimes requires a extra refresh to display properly
-    images = document.getElementsByClassName("recipe_image");
-    for (i = 0; i < images.length; i++) {
-        image = images[i].querySelector("img");
-        width = image.naturalWidth;
-        height = image.naturalHeight;
-        if (width > height){
-            image.className = "landscape";
-        }
-    }
-</script>
 {% endblock %}
