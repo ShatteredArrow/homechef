@@ -145,8 +145,11 @@ def update_recipe(recipe_id):
 
 @app.route('/<recipe_id>/delete_recipe', methods=['GET', 'POST'])
 def delete_recipe(recipe_id):
-    #Delete the image assosciated with the recipe 1st
-    os.remove(os.path.join(imageFile, Recipe.query.filter_by(id=recipe_id).first_or_404().recipe_image))
+    try:
+        #Delete the image assosciated with the recipe 1st
+        os.remove(os.path.join(imageFile, Recipe.query.filter_by(id=recipe_id).first_or_404().recipe_image))
+    except:
+        pass
     #Then delete the recipe item from the database
     Recipe.query.filter_by(id=recipe_id).delete()
     db.session.commit()
