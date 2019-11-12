@@ -9,6 +9,7 @@ from app.models import Recipe, Tag, recipeTag
 from app import Config
 from werkzeug.utils import secure_filename
 from flask import send_from_directory
+from PIL import Image
 
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 imageFile = app.config['UPLOAD_FOLDER']
@@ -16,7 +17,18 @@ imageFile = app.config['UPLOAD_FOLDER']
 def imageSave(recipeImageData):
     if recipeImageData and allowed_file(recipeImageData.filename):
         filename = secure_filename(str(datetime.now()) + recipeImageData.filename)
-        recipeImageData.save(os.path.join(imageFile, filename))
+        path = os.path.join(imageFile, filename)
+        recipeImageData.save(path)
+
+        # crop image into square
+        img = Image.open(path)
+        img_width, img_height = img.size
+        crop = min(img.size)
+        square_img = img.crop(((img_width - crop) // 2,
+                         (img_height - crop) // 2,
+                         (img_width + crop) // 2,
+                         (img_height + crop) // 2))
+        square_img.save(path)
     else:
         filename = secure_filename("image-placeholder.png")
     imageSave.filename=filename
