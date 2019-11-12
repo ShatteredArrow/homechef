@@ -40,21 +40,25 @@ select:focus {
     color: var(--on-background);
     outline: none;
 }
+.recipe-items{
+    
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
 
+}
 .recipe {
-    display:inline-block;
-    margin: 20px;
+    margin:5px;
     box-shadow: 5px 5px 8px 2px black;
     background-color: var(--background-2);
     border-radius: 5px;
+
+    position: relative;
 }
 
 .recipe:hover {
-    display:inline-block;
-    margin: 20px;
     box-shadow: 2px 2px 7px 1px black;
     background-color: var(--background-2);
-    border-radius: 5px;
 }
 
 .recipe_title a{
