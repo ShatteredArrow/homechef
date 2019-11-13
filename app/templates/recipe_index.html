@@ -39,7 +39,7 @@
         </div>
         <div class=recipe_image>
             {% if recipe.recipe_image %}
-                <a href="{{ url_for('recipe', recipe_id=recipe.id) }}"><img src="{{ url_for('uploaded_file', filename=recipe.recipe_image ) }}" class="portrait"></a>
+                <a href="{{ url_for('recipe', recipe_id=recipe.id) }}"><img src="{{ url_for('uploaded_file', filename=recipe.recipe_image ) }}" class="image"></a>
             {% else %}
                 <img src="{{ url_for('uploaded_file', filename=image-placeholder.png ) }}">
             {% endif %}    
