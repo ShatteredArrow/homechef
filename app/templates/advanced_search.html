@@ -1,0 +1,14 @@
+<div class="modal-content">
+    <span class="close" id="advancedSearchClose">&times;</span>
+    <h2>Advanced Recipe Search</h2>
+    <form method="post" novalidate>
+    
+        {{ form.search(class_="button") }}
+        {{ form.delete(class_="button") }}
+    
+        <div class="bloc">
+            {{ form.hidden_tag() }}
+            {{ form.tags(size = 5) }}
+        </div>
+    </form>
+</div>

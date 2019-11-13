@@ -133,7 +133,8 @@ select:focus {
     padding: 20px;
     border: 1px solid #888;
     width: 30%;
-    max-height:80%;
+    border-radius: 5px;
+
   }
   
   /* The Close Button */

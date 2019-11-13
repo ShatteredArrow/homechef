@@ -2,30 +2,34 @@
 {% block head %}
 {{ super() }}
 <link type="text/css" rel="stylesheet" href="static/css/recipe_index.css">
-<!-- <link type="text/css" rel="stylesheet" href="static/css/modal.css"> -->
 
 {% endblock %}
+
+{% block navbar %}
+{{super()}}
+        
+<div  class="navbar-right-aligned">
+
+        <li><button class="button" id="addTagButton">Add Tag</button></li>
+        <li><button class="button" id="myBtn">Add Recipe</button></li>
+        <li><button class="button" id="advancedSearchButton">Advanced Search</button></li>
+        
+        <div id="addTagModal" class="addRecipeModal modal">
+            {% include 'add_tag.html' with context %}
+        </div>
+        <div id="myModal" class="addRecipeModal modal">
+                {% include 'add_recipe.html' with context %}
+        </div>
+        <div id="advancedSearchModal" class="addRecipeModal modal">
+            {% include 'advanced_search.html' with context %}
+    </div>
+</div>
+{% endblock  %}
+
 {% block content %}
 
-<button class="button" id="addTagButton">Add Tag</button>
-<div id="addTagModal" class="addRecipeModal modal">
-    {% include 'add_tag.html' with context %}
-</div>
-<button class="button" id="myBtn">Add Recipe</button>
-<div id="myModal" class="addRecipeModal modal">
-    {% include 'add_recipe.html' with context %}
-</div>
 
-<form method="post" novalidate>
-    
-    {{ form.search(class_="button") }}
-    {{ form.delete(class_="button") }}
 
-    <div class="bloc">
-        {{ form.hidden_tag() }}
-        {{ form.tags(size = 5) }}
-    </div>
-</form>
 <div class="recipe-items">
     {% if recipes %}
     {% for recipe in recipes %}
