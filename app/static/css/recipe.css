@@ -1,13 +1,36 @@
+.recipe_container{
+
+    max-width: 1100px;
+
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .recipe_details {
     background-color: var(--background-2);
     box-shadow: 0px 0px 4px 0px black;
     border-radius: 5px;
-    padding: 10px
-    
+    height: auto;
+    overflow: auto;
+    padding: 10px;
+
 }
 
 .recipe_image img{
     max-height: 100%;
     max-width: 100%;
     border-radius: 5px;
+}
+
+.recipe_column_left{
+    width: 49.99999%; 
+    float: left;
+    position: relative;
+}
+
+.recipe_column_right
+{
+    width: 49.99999%; 
+    float: right;
+    position: relative;
 }
