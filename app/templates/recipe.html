@@ -51,7 +51,9 @@
             {% if recipe.ingredients %}
             <div class='recipe_ingredients'>
                 <h2>Ingredients</h2>
-                <p>{{ recipe.ingredients }}</p>
+                {% for ingredient in recipe.ingredients %}
+                    <p>{{ ingredient }}</p>
+                {% endfor %}
             </div>
             {% endif %}
         </div>

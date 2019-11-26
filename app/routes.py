@@ -107,6 +107,7 @@ def recipe_index():
 @app.route('/recipe/<recipe_id>',methods=['GET', 'POST'])
 def recipe(recipe_id):
     recipe = Recipe.query.filter_by(id=recipe_id).first_or_404()
+    recipe.ingredients = recipe.ingredients.split('\n')
     return render_template('recipe.html', title='Recipe', recipe=recipe, recipe_image=recipe.recipe_image)
 
 @app.route('/<recipe_id>/update_recipe', methods=['GET', 'POST'])
