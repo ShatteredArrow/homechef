@@ -10,28 +10,8 @@ from app import Config
 from werkzeug.utils import secure_filename
 from flask import send_from_directory
 from PIL import Image
+from app.image import image
 
-ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
-imageFile = app.config['UPLOAD_FOLDER']
-
-def imageSave(recipeImageData):
-    if recipeImageData and allowed_file(recipeImageData.filename):
-        filename = secure_filename(str(datetime.now()) + recipeImageData.filename)
-        path = os.path.join(imageFile, filename)
-        recipeImageData.save(path)
-
-        # crop image into square
-        img = Image.open(path)
-        img_width, img_height = img.size
-        crop = min(img.size)
-        square_img = img.crop(((img_width - crop) // 2,
-                         (img_height - crop) // 2,
-                         (img_width + crop) // 2,
-                         (img_height + crop) // 2))
-        square_img.save(path)
-    else:
-        filename = secure_filename("image-placeholder.png")
-    imageSave.filename=filename
 
 @app.route('/')
 @app.route('/index')
@@ -45,8 +25,7 @@ def login():
     """Return URL for login.html"""
     form = LoginForm()
     if form.validate_on_submit():
-        flash('Login requested for user={}, remember_me={}'.format(
-            form.username.data, form.remember_me.data))
+        flash('Login requested for user={}, remember_me={}'.format(form.username.data, form.remember_me.data))
         return redirect(url_for('index'))
     return render_template('login.html', title='Sign In', form=form)
 
@@ -80,27 +59,14 @@ def recipe_index():
                 db.session.commit() 
                 return redirect(url_for('recipe_index'))
         if AddForm.validate_on_submit():
-            imageSave(AddForm.recipe_image.data)
-            recipe = Recipe(
-                title=AddForm.title.data.title(),
-                author=AddForm.author.data,
-                link=AddForm.link.data,
-                ingredients=AddForm.ingredients.data,
-                recipe_image=imageSave.filename,
-                rating = AddForm.rating.data
-            )     
-            if not recipe.rating:
-                recipe.rating = 0
-            tags = Tag.query.filter(Tag.id.in_(AddForm.tags.data))
-            recipe.tags.extend(tags)
-            db.session.add(recipe)
-            db.session.commit()
+            add_new_recipe(AddForm)
             return redirect(url_for('recipe_index'))
-        else:
-            print("Nothing")
         if AddTagForm.validate_on_submit():
             add_tag(AddTagForm.name.data)
             return redirect(url_for('recipe_index'))
+        else:
+            print("Nothing")
+
 
     return render_template('recipe_index.html', title='Recipe Index', form=TagForm, recipes=recipes, addform=AddForm, addTagForm=AddTagForm)
 
@@ -147,7 +113,7 @@ def update_recipe(recipe_id):
 @app.route('/<recipe_id>/delete_recipe', methods=['GET', 'POST'])
 def delete_recipe(recipe_id):
     #Delete the image assosciated with the recipe 1st
-    image = os.path.join(imageFile, Recipe.query.filter_by(id=recipe_id).first_or_404().recipe_image)
+    image = os.path.join(app.config['UPLOAD_FOLDER'], Recipe.query.filter_by(id=recipe_id).first_or_404().recipe_image)
     if os.path.exists(image):
         os.remove(image)
     #Then delete the recipe item from the database
@@ -155,17 +121,13 @@ def delete_recipe(recipe_id):
     db.session.commit()
     return redirect(url_for('recipe_index'))
 
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
-    img_path = os.path.join(imageFile, filename)
+    img_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
 
     if not os.path.exists(img_path):
-        return send_from_directory(imageFile, 'image-placeholder.png')
-    return send_from_directory(imageFile, filename)
+        return send_from_directory(app.config['UPLOAD_FOLDER'], 'image-placeholder.png')
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 def add_tag(tag_name):
     tag_name = tag_name.lower();
@@ -182,3 +144,21 @@ def add_tag(tag_name):
             tag_name))
 
 
+def add_new_recipe(AddForm):
+    imageObj=image(AddForm.recipe_image.data)
+    #imageSave(AddForm.recipe_image.data)
+    recipe = Recipe(
+        title=AddForm.title.data.title(),
+        author=AddForm.author.data,
+        link=AddForm.link.data,
+        ingredients=AddForm.ingredients.data,
+        recipe_image=imageObj.filename,
+        rating = AddForm.rating.data
+    )     
+    if not recipe.rating:
+        recipe.rating = 0
+    tags = Tag.query.filter(Tag.id.in_(AddForm.tags.data))
+    recipe.tags.extend(tags)
+
+    db.session.add(recipe)
+    db.session.commit()

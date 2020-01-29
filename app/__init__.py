@@ -6,11 +6,14 @@ from flask_login import LoginManager
 from os.path import join, dirname, realpath
 
 UPLOAD_FOLDER = join(dirname(realpath(__file__)), *['static', 'recipe_images'])
+ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
 
 app = Flask(__name__)
 app.config.from_object(Config)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['ALLOWED_EXTENSIONS'] = ALLOWED_EXTENSIONS
+
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 login = LoginManager(app)
