@@ -11,7 +11,7 @@ from werkzeug.utils import secure_filename
 from flask import send_from_directory
 from PIL import Image
 from app.image import image
-
+import requests
 
 @app.route('/')
 @app.route('/index')
@@ -121,6 +121,8 @@ def delete_recipe(recipe_id):
     db.session.commit()
     return redirect(url_for('recipe_index'))
 
+
+#Create Links to the recipe Image file path or imgurl
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
     img_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
@@ -128,6 +130,9 @@ def uploaded_file(filename):
     if not os.path.exists(img_path):
         return send_from_directory(app.config['UPLOAD_FOLDER'], 'image-placeholder.png')
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
+
+
 
 def add_tag(tag_name):
     tag_name = tag_name.lower();
@@ -146,7 +151,8 @@ def add_tag(tag_name):
 
 def add_new_recipe(AddForm):
     imageObj=image(AddForm.recipe_image.data)
-    #imageSave(AddForm.recipe_image.data)
+
+    
     recipe = Recipe(
         title=AddForm.title.data.title(),
         author=AddForm.author.data,
