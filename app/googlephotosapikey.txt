@@ -1,0 +1,6 @@
+clientid = 468672651698-ks5kmfa4sckdmrjs7rj7j0e5igkhsqqs.apps.googleusercontent.com
+clientsecret = 3qjHZVlAoxD5kBYQ3KUJsx_H
+
+
+
+postman api key = PMAK-5e41cd632c38c50042d0a0f8-f75b7298e870c1a1ce2f1198ae98ed4fffS
