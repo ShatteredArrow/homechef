@@ -9,8 +9,7 @@ from app.models import Recipe, Tag, recipeTag
 from app import Config
 from werkzeug.utils import secure_filename
 from flask import send_from_directory
-from PIL import Image
-from app.image import image
+from app.image import Image
 import requests
 
 @app.route('/')
@@ -150,7 +149,7 @@ def add_tag(tag_name):
 
 
 def add_new_recipe(AddForm):
-    imageObj=image(AddForm.recipe_image.data)
+    imageObj=Image(AddForm.recipe_image.data)
 
     
     recipe = Recipe(

@@ -7,7 +7,7 @@ import os
 #ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
 
-class image():
+class Image():
 
     def __init__(self,imagedata):
         #self.image = imagedata
