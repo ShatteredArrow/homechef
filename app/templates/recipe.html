@@ -60,7 +60,7 @@
         <div class="recipe_column_right">
             <div class='recipe_image'>
                 {% if recipe_image %}
-                    <img src="{{ url_for('uploaded_file', filename=recipe_image) }}" alt="recipeImage">
+                    <img src="{{recipe_image}}" alt="recipeImage">
                 {% endif %}
             </div> 
         </div>   
