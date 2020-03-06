@@ -10,7 +10,6 @@ from app import Config
 from werkzeug.utils import secure_filename
 from flask import send_from_directory
 from app.image import Image
-import requests
 
 @app.route('/')
 @app.route('/index')
