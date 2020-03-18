@@ -40,13 +40,17 @@ class Recipe(db.Model):
     author = db.Column(db.String(64))
     link = db.Column(db.String(128))
     ingredients = db.Column(db.String(254))
-    rating = db.Column(db.Integer)
+    rating = db.Column(db.Integer,default=0)
     difficulty = db.Column(db.Integer)
     tried_recipe = db.Column(db.Boolean)
     recipe_image = db.Column(db.String(128))
     tags = db.relationship('Tag', 
                             secondary=recipeTag, 
                             back_populates='recipes')
+
+       
+
+
 
     def __repr__(self):
        return '{}'.format(self.id)

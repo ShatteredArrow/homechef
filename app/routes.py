@@ -85,17 +85,29 @@ def update_recipe(recipe_id):
     if form.validate_on_submit():
         if form.submit.data:
             # If new image added, then update. Otherwise keep old image
-            if form.recipe_image.data:
-                imageSave(form.recipe_image.data)
-                recipe.recipe_image = imageSave.filename
+            '''
+            if form.image_source_file.data:
+                imageSave(form.image_source_file.data)
+                recipe.image_source_file = imageSave.filename
+            '''
+            formDict = form.data
+            imageObj=Image(form.image_source_link.data)
+            formDict.update(image_source_link=imageObj.imgur_url)
+            formDict['recipe_image'] = formDict.pop('image_source_link') 
+
+            for key, value in formDict.items():
+                try:
+                    setattr(recipe, key, value)
+                except AttributeError:
+                    pass
+
+            '''
             recipe.title = form.title.data.title()
             recipe.author = form.author.data
             recipe.link = form.link.data
             recipe.ingredients = form.ingredients.data
             recipe.rating = request.form.get('rating')
-
-            if not recipe.rating:
-                recipe.rating = 0
+            '''
 
             tags = Tag.query.filter(Tag.id.in_(form.tags.data))
             recipe.tags.extend(tags)
@@ -121,8 +133,8 @@ def delete_recipe(recipe_id):
 
 
 #Create Links to the recipe Image file path or imgurl
-@app.route('/uploads/<filename>')
-def uploaded_file(filename):
+@app.route('/uploads/<link>')
+def uploaded_file(link):
     img_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
 
     if not os.path.exists(img_path):
@@ -148,15 +160,16 @@ def add_tag(tag_name):
 
 
 def add_new_recipe(AddForm):
-    imageObj=Image(AddForm.recipe_image.data)
-
+    #returns the imgur hashed url
+    imageObj=Image(AddForm.image_source_link.data)
+    fomrDict = AddForm.data
     
     recipe = Recipe(
         title=AddForm.title.data.title(),
         author=AddForm.author.data,
         link=AddForm.link.data,
         ingredients=AddForm.ingredients.data,
-        recipe_image=imageObj.filename,
+        recipe_image=imageObj.imgur_url,
         rating = AddForm.rating.data
     )     
     if not recipe.rating:
@@ -166,3 +179,4 @@ def add_new_recipe(AddForm):
 
     db.session.add(recipe)
     db.session.commit()
+

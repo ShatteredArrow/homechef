@@ -50,9 +50,9 @@
         </div>
         
         <div class="image_upload">
-            {{ addform.recipe_image.label }}<br>
-            {{ addform.recipe_image }}
-            {% for error in addform.recipe_image.errors %}
+            {{ addform.image_source_link.label }}<br>
+            {{ addform.image_source_link }}
+            {% for error in addform.image_source_link.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </div>

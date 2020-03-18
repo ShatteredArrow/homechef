@@ -1,4 +1,5 @@
 from flask_wtf import FlaskForm
+from wtforms.fields.html5 import URLField
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField,RadioField
 from wtforms.validators import DataRequired, Regexp
 from flask_wtf.file import FileRequired
@@ -34,7 +35,8 @@ class Recipe(TagWithAdd):
     link = StringField('Link')
     ingredients = TextAreaField('Ingredients')
     rating = RadioField('Rating', choices=[('5',''),('4',''),('3',''),('2',''),('1',''),('0','')], id="rating",default='0')
-    recipe_image = FileField('Image File')
+    image_source_link = StringField('URL for Image')
+    image_source_file = FileField('Image File')
 
 class AddRecipe(Recipe):
     submit = SubmitField('Add Recipe')

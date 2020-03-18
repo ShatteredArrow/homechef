@@ -15,7 +15,7 @@ app = Flask(__name__)
 app.config.from_object(Config)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['ALLOWED_EXTENSIONS'] = ALLOWED_EXTENSIONS
-
+app.config['IMGUR_UPLOAD_ULR'] = "https://api.imgur.com/3/image"
 
 
 db = SQLAlchemy(app)
