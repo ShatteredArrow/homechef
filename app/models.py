@@ -34,6 +34,7 @@ class Tag(db.Model):
     def __repr__(self):
         return '{}'.format(self.id)
 
+#Recipes Needs a new column called image hash
 class Recipe(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(64))

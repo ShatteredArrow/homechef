@@ -11,7 +11,8 @@ from werkzeug.utils import secure_filename
 from flask import send_from_directory
 from app.image import Image
 
-@app.route('/')
+'''
+#Not Used
 @app.route('/index')
 def index():
     """Return URL for index.html"""
@@ -26,8 +27,9 @@ def login():
         flash('Login requested for user={}, remember_me={}'.format(form.username.data, form.remember_me.data))
         return redirect(url_for('index'))
     return render_template('login.html', title='Sign In', form=form)
+'''
 
-
+@app.route('/')
 @app.route('/recipe_index', methods=['GET', 'POST'])
 def recipe_index():
     """Return URL for recipe_index.html"""
@@ -66,7 +68,7 @@ def recipe_index():
             print("Nothing")
 
 
-    return render_template('recipe_index.html', title='Recipe Index', form=TagForm, recipes=recipes, addform=AddForm, addTagForm=AddTagForm)
+    return render_template('recipe_index.html', title='Home Chef', form=TagForm, recipes=recipes, addform=AddForm, addTagForm=AddTagForm)
 
 @app.route('/recipe/<recipe_id>',methods=['GET', 'POST'])
 def recipe(recipe_id):
@@ -85,30 +87,16 @@ def update_recipe(recipe_id):
     if form.validate_on_submit():
         if form.submit.data:
             # If new image added, then update. Otherwise keep old image
-            '''
-            if form.image_source_file.data:
-                imageSave(form.image_source_file.data)
-                recipe.image_source_file = imageSave.filename
-            '''
             formDict = form.data
-            imageObj=Image(form.image_source_link.data)
-            formDict.update(image_source_link=imageObj.imgur_url)
-            formDict['recipe_image'] = formDict.pop('image_source_link') 
-
+            if form.image_source_link.data:
+                imageObj=Image(form.image_source_link.data)
+                formDict.update(image_source_link=imageObj.imgur_url)
+                formDict['recipe_image'] = formDict.pop('image_source_link') 
             for key, value in formDict.items():
                 try:
                     setattr(recipe, key, value)
                 except AttributeError:
                     pass
-
-            '''
-            recipe.title = form.title.data.title()
-            recipe.author = form.author.data
-            recipe.link = form.link.data
-            recipe.ingredients = form.ingredients.data
-            recipe.rating = request.form.get('rating')
-            '''
-
             tags = Tag.query.filter(Tag.id.in_(form.tags.data))
             recipe.tags.extend(tags)
             db.session.commit()
@@ -120,6 +108,8 @@ def update_recipe(recipe_id):
         form.tags.choices = categories
     return render_template('edit_recipe.html', title='Update Recipe', form=form, recipes=recipe, addTagForm=AddTagForm)
 
+
+#Delete recipe needs fixing
 @app.route('/<recipe_id>/delete_recipe', methods=['GET', 'POST'])
 def delete_recipe(recipe_id):
     #Delete the image assosciated with the recipe 1st
@@ -132,6 +122,8 @@ def delete_recipe(recipe_id):
     return redirect(url_for('recipe_index'))
 
 
+'''
+#Not used
 #Create Links to the recipe Image file path or imgurl
 @app.route('/uploads/<link>')
 def uploaded_file(link):
@@ -141,7 +133,7 @@ def uploaded_file(link):
         return send_from_directory(app.config['UPLOAD_FOLDER'], 'image-placeholder.png')
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
-
+'''
 
 
 def add_tag(tag_name):
@@ -162,7 +154,7 @@ def add_tag(tag_name):
 def add_new_recipe(AddForm):
     #returns the imgur hashed url
     imageObj=Image(AddForm.image_source_link.data)
-    fomrDict = AddForm.data
+    formDict = AddForm.data
     
     recipe = Recipe(
         title=AddForm.title.data.title(),
@@ -172,8 +164,7 @@ def add_new_recipe(AddForm):
         recipe_image=imageObj.imgur_url,
         rating = AddForm.rating.data
     )     
-    if not recipe.rating:
-        recipe.rating = 0
+
     tags = Tag.query.filter(Tag.id.in_(AddForm.tags.data))
     recipe.tags.extend(tags)
 
