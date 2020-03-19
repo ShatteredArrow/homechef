@@ -3,3 +3,4 @@ env
 .pyc
 activate.bat
 __pycache__
+.vs
