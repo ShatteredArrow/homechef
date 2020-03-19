@@ -6,8 +6,8 @@
     <h2>Add Recipe</h2>
     <div name="demo" >
 
-        <form class="add-recipe-form" action="" method="post" novalidate enctype=multipart/form-data> {{ form.hidden_tag() }} 
-            <p>
+        <form class="add-recipe-form" action="" method="post" novalidate enctype=multipart/form-data> 
+            {{ addform.hidden_tag() }} 
         {{ addform.title.label }}
         {{ addform.title}}
         {% for error in addform.title.errors %}

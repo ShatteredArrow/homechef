@@ -24,10 +24,14 @@ class DeleteTag(FlaskForm):
     delete = SubmitField("Delete Tag")
 
 class TagList(SelectTag, DeleteTag):
-    tags = SelectMultipleField('Tag', choices=[], coerce=int,)
+    categories = [(c.id, c.name) for c in Tag.query.all()]
+
+    tags = SelectMultipleField('Tag', choices=categories, coerce=int,validators=[DataRequired()])
 
 class TagWithAdd(FlaskForm):
-    tags = SelectMultipleField('Tag', choices=[], coerce=int,)
+    categories = [(c.id, c.name) for c in Tag.query.all()]
+
+    tags = SelectMultipleField('Tag', choices=categories, coerce=int,)
     
 class Recipe(TagWithAdd):
     title = StringField('Title', validators=[DataRequired()])

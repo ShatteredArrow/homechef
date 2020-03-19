@@ -12,39 +12,39 @@
 </div>
 <div class="recipe_details">
     <h1>Update Recipe</h1>
-    <form action="" method="post" enctype="multipart/form-data" novalidate>
-        {{ form.hidden_tag() }}
+    <form action="" method="post" enctype="multipart/form-data" >
+        {{ UpdateRecipeform.hidden_tag() }}
         <p>
-            {{ form.title.label }}<br>
-            {{ form.title(size = 32) }}
-            {% for error in form.title.errors %}
+            {{ UpdateRecipeform.title.label }}<br>
+            {{ UpdateRecipeform.title(size = 32) }}
+            {% for error in UpdateRecipeform.title.errors %}
             <span style="color: var(--error);">[{{ error }}]</span>
             {% endfor %}
         </p>
         <p>
-            {{ form.author.label }}<br>
-            {{ form.author(size=32) }}
-            {% for error in form.author.errors %}
+            {{ UpdateRecipeform.author.label }}<br>
+            {{ UpdateRecipeform.author(size=32) }}
+            {% for error in UpdateRecipeform.author.errors %}
             <span style="color: var(--error);">[{{ error }}]</span>
             {% endfor %}
         </p>
         <p>
-            {{ form.link.label }}<br>
-            {{ form.link(size=32) }}
-            {% for error in form.link.errors %}
+            {{ UpdateRecipeform.link.label }}<br>
+            {{ UpdateRecipeform.link(size=32) }}
+            {% for error in UpdateRecipeform.link.errors %}
             <span style="color: var(--error)red;">[{{ error }}]</span>
             {% endfor %}
         </p>
         <p>
-            {{ form.ingredients.label }}<br>
-            {{ form.ingredients }}
-            {% for error in form.ingredients.errors %}
+            {{ UpdateRecipeform.ingredients.label }}<br>
+            {{ UpdateRecipeform.ingredients }}
+            {% for error in UpdateRecipeform.ingredients.errors %}
             <span style="color: var(--error);">[{{ error }}]</span>
             {% endfor %}
         </p>
-        {{ form.rating.label }}<br>
+        {{ UpdateRecipeform.rating.label }}<br>
         <div class="star_rating">
-            {% for subfield in form.rating %}
+            {% for subfield in UpdateRecipeform.rating %}
                 {% if loop.index0 < 5%}
                     {{ subfield }}
                     {{ subfield.label (class="fa fa-star") }}
@@ -53,17 +53,17 @@
             
         </div>     
         <div class="bloc">
-            {{ form.hidden_tag() }}
-            {{ form.tags(size = 5) }}
+            {{ UpdateRecipeform.hidden_tag() }}
+            {{ UpdateRecipeform.tags(size = 5) }}
         </div>
     
         <div class="image_upload">
-            {{ form.image_source_link.label }}<br>
-            {{ form.image_source_link }}
+            {{ UpdateRecipeform.image_source_link.label }}<br>
+            {{ UpdateRecipeform.image_source_link }}
         </div>
     
         <div>
-            {{ form.submit(class_="button") }}
+            {{ UpdateRecipeform.submit(class_="button") }}
         </div>
     
     </form>

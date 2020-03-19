@@ -3,6 +3,7 @@ from app import db, login
 from hashlib import md5
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
+from app.image import Image
 
 
 class User(UserMixin, db.Model):
@@ -55,4 +56,33 @@ class Recipe(db.Model):
 
     def __repr__(self):
        return '{}'.format(self.id)
+
+    def update_recipe(self,formDict):
+        if formDict.get("image_source_link"):
+            imageObj=Image(formDict.get("image_source_link"))
+            formDict.update(image_source_link=imageObj.imgur_url)
+            formDict['recipe_image'] = formDict.pop('image_source_link') 
+        for key, value in formDict.items():
+            try:
+                setattr(self, key, value)
+            except AttributeError:
+                pass
+        tags = Tag.query.filter(Tag.id.in_(formDict.get("tags")))
+        self.tags.extend(tags)
+        db.session.commit()
+
+    def add_recipe(self,formDict):
+        if formDict.get("image_source_link"):
+            imageObj=Image(formDict.get("image_source_link"))
+            formDict.update(image_source_link=imageObj.imgur_url)
+            formDict['recipe_image'] = formDict.pop('image_source_link') 
+        for key, value in formDict.items():
+            try:
+                setattr(self, key, value)
+            except AttributeError:
+                pass
+        tags = Tag.query.filter(Tag.id.in_(formDict.get("tags")))
+        self.tags.extend(tags)
+        db.session.add(self)
+        db.session.commit()
 
