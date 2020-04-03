@@ -1,54 +1,128 @@
 {% extends "base.html" %}
 {% block head %}
 {{ super() }}
-<link type="text/css" rel="stylesheet" href="static/css/recipe_index.css">
 
 {% endblock %}
-
+<!-- 
 {% block navbar %}
 {{super()}}
-        
-<div  class="navbar-right-aligned">
 
-        <li><button class="button" id="addTagButton">Add Tag</button></li>
-        <li><button class="button" id="myBtn">Add Recipe</button></li>
-        <li><button class="button" id="advancedSearchButton">Advanced Search</button></li>
-        
-        <div id="addTagModal" class="addRecipeModal modal">
-            {% include 'add_tag.html' with context %}
-        </div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
-        <div id="advancedSearchModal" class="addRecipeModal modal">
-            {% include 'advanced_search.html' with context %}
+    <li><button class="button" id="addTagButton">Add Tag</button></li>
+    <li><button class="button" id="myBtn">Add Recipe</button></li>
+    <li><button class="button" id="advancedSearchButton">Advanced Search</button></li>
+
+    <div id="addTagModal" class="addRecipeModal modal">
+        {% include 'add_tag.html' with context %}
+    </div>
+    <div id="myModal" class="addRecipeModal modal">
+        {% include 'add_recipe.html' with context %}
+    </div>
+    <div id="advancedSearchModal" class="addRecipeModal modal">
+        {% include 'advanced_search.html' with context %}
     </div>
 </div>
-{% endblock  %}
+{% endblock  %} -->
 
 {% block content %}
+{% if recipes %}
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addRecipeModal">Add Recipe</button>
+<!-- Modal content -->
+<div class="modal fade" id="addRecipeModal" tabindex="-1" role="dialog" aria-labelledby="addRecipe" aria-hidden="true">
+    <div class="modal-dialog modal-lg bg-dark">
+        <div class="modal-content  bg-dark">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Recipe</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="formGroupExampleInput">{{ addform.title.label }}</label>
+                        <input type="text" class="form-control" id="formGroupExampleInput">
+
+                    </div>
+                    <p>
+                        {{ addform.author.label }}<br>
+                        {{ addform.author }}
+                        {% for error in addform.author.errors %}
+                        <span style="color: var(--error);">[{{ error }}]</span>
+                        {% endfor %}
+                    </p>
+                    <p>
+                        {{ addform.link.label }}<br>
+                        {{ addform.link }}
+                        {% for error in addform.link.errors %}
+                        <span style="color: var(--error);">[{{ error }}]</span>
+                        {% endfor %}
+                    </p>
+                    <p>
+                        {{ addform.ingredients.label }}<br>
+                        {{ addform.ingredients }}
+                        {% for error in addform.ingredients.errors %}
+                        <span style="color: var(--error);">[{{ error }}]</span>
+                        {% endfor %}
+                    </p>
+                    {{ addform.rating.label }}<br>
+                    <div class="star_rating">
+                        {% for subfield in addform.rating %}
+                        {% if loop.index0 < 5%}
+                        {{ subfield }}
+                        {{ subfield.label (class="fa fa-star") }}
+                        {%endif%}
+                        {% endfor %}
+                    </div>
+
+                    <div class="bloc">
+                        {{ addform.hidden_tag() }}
+                        {{ addform.tags(size = 5) }}
+                    </div>
+
+                    <div class="image_upload">
+                        {{ addform.recipe_image.label }}<br>
+                        {{ addform.recipe_image }}
+                        {% for error in addform.recipe_image.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </div>
 
 
+                    <div>
+                        {{ addform.submit(class_="button") }}
+                    </div>
+                </form>
 
-<div class="recipe-items">
-    {% if recipes %}
-    {% for recipe in recipes %}
-    <div class=recipe>
-        <div class=recipe_title>
-            <a href="{{ url_for('recipe', recipe_id=recipe.id) }}"><p>{{ recipe.title }}</p></a>
-        </div>
-        <div class=recipe_image>
-            {% if recipe.recipe_image %}
-                <a href="{{ url_for('recipe', recipe_id=recipe.id) }}"><img src="{{recipe.recipe_image}}" class="image"></a>
-            {% else %}
-                <h1>hey</h1>
-            {% endif %}    
+            </div>
         </div>
     </div>
-    {% endfor %}
-    {% endif %}
 </div>
-<div id="myModal" class="addRecipeModal modal">
-    {% include 'add_recipe.html' with context %}
+
+
+<div class="card-deck">
+    <div class="row row-cols-1 row-cols-md-4  no-gutters">
+
+        {% for recipe in recipes %}
+        <div class="col mb-4">
+            <div class="card bg-dark h-100">
+                <div class="card-header">
+                    <a href="{{ url_for('recipe', recipe_id=recipe.id) }}">
+                        <p class="card-text text-light">{{ recipe.title }}</p>
+                    </a>
+                </div>
+                <a href="{{ url_for('recipe', recipe_id=recipe.id) }}"><img class="card-img-bottom"
+                        src="{{recipe.recipe_image}}"></a>
+
+            </div>
+        </div>
+
+        {% endfor %}
+    </div>
 </div>
-<script type="text/javascript" src="{{ url_for('static', filename='js/modal.js') }}"></script>
+
+{% endif %}
+
 
 {% endblock %}

@@ -6,53 +6,69 @@
     <meta charset="utf-8">
     <meta name="referrer" content="no-referrer" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link type="text/css" rel="stylesheet" href="/static/css/base.css">
-        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.png') }}">
-        <link href="https://fonts.googleapis.com/css?family=Alegreya&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <script src="https://kit.fontawesome.com/afc8923e11.js" crossorigin="anonymous"></script>
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap_override.css">
 
-     
-        {% if title %}
-        <title>{{ title }}</title>
-        {% else %}
-        <title>Welcome to Home Chef</title>
-        {% endif %}
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.png') }}">
+    <link href="https://fonts.googleapis.com/css?family=Alegreya&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/afc8923e11.js" crossorigin="anonymous"></script>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+        <meta name="referrer" content="no-referrer" />
+
+    {% if title %}
+    <title>{{ title }} - Home Chef</title>
+    {% else %}
+    <title>Welcome to Home Chef</title>
+    {% endif %}
     {%endblock%}
 </head>
 
-<body>
-    <div class="page-container"> 
-
-            <div class="navbar">
-                <ul >
-                    {% block navbar %}
-                        <div class="navbar-left-aligned">
-                                {#<li><a class="active" href="{{ url_for('index') }}">Home</a></li>#}
-                                <li><a class="active" href="{{ url_for('recipe_index') }}">Home Chef</a>
-                                </li>
-                                {#<li><a class="active" href="{{ url_for('login') }}">Login</a></li>#}
-
-                        </div>
-
-                    {% endblock  %} 
-                </ul>
-    
-            </div>
-
-
-        <div class="header">
-            <img src="/static/heading1.jpg">
-            <div class="heading-text">
-                <h1 class="h1-heading">Homechef</h1>
+<body class="bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="{{ url_for('index') }}">Home</a>
+                <a class="nav-item nav-link" href="{{ url_for('recipe_index') }}">Recipe Index</a>
+                <a class="nav-item nav-link" href="{{ url_for('login') }}">Login</a>
             </div>
         </div>
+    </nav>
 
-        <div class="content_container">
-            {% block content %}{% endblock %}
+    <header class="masthead bg-dark">
+        <div class="container h-100">
+          <div class="row h-100 align-items-center">
+            <div class="col-12 text-left">
+              <h1 class="display-1 text-light">HomeChef</h1>
+            </div>
+          </div>
         </div>
+      </header>
     </div>
-
-    <footer><p>&copy; Copyright 2019 by <a href="#" class="external_link">Alpha Powers</a>.</p></footer>
+    <div class="container-fluid bg-dark">
+        {% block content %}{% endblock %}
+        <hr>
+    </div>
+    <footer class="container bg-dark mt-auto">
+        <p class="text-light">&copy; Copyright 2019 by <a href="#" class="link">Alpha Powers</a>.</p>
+    </footer>
 </body>
+
 </html>
