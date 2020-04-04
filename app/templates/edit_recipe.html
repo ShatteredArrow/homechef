@@ -4,66 +4,53 @@
 {% endblock %}
 
 {% block content %}
-<button class="button" id="addTagButton">Add Tag</button>
-<div id="addTagModal" class="addTagModal modal">
-    {% include 'add_tag.html' with context %}
-</div>
-<div class="recipe_details">
+<div class="container bg-dark-grey py-2">
+    <button class="btn btn-primary" id="addTagButton">Add Tag</button>
+    <div id="addTagModal" class="addTagModal modal">
+        {% include 'add_tag.html' with context %}
+    </div>
     <h1>Update Recipe</h1>
-    <form action="" method="post" enctype="multipart/form-data" >
-        {{ UpdateRecipeform.hidden_tag() }}
-        <p>
-            {{ UpdateRecipeform.title.label }}<br>
-            {{ UpdateRecipeform.title(size = 32) }}
-            {% for error in UpdateRecipeform.title.errors %}
-            <span style="color: var(--error);">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ UpdateRecipeform.author.label }}<br>
-            {{ UpdateRecipeform.author(size=32) }}
-            {% for error in UpdateRecipeform.author.errors %}
-            <span style="color: var(--error);">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ UpdateRecipeform.link.label }}<br>
-            {{ UpdateRecipeform.link(size=32) }}
-            {% for error in UpdateRecipeform.link.errors %}
-            <span style="color: var(--error)red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ UpdateRecipeform.ingredients.label }}<br>
-            {{ UpdateRecipeform.ingredients }}
-            {% for error in UpdateRecipeform.ingredients.errors %}
-            <span style="color: var(--error);">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        {{ UpdateRecipeform.rating.label }}<br>
-        <div class="star_rating">
-            {% for subfield in UpdateRecipeform.rating %}
-                {% if loop.index0 < 5%}
-                    {{ subfield }}
-                    {{ subfield.label (class="fa fa-star") }}
-                {%endif%}
-            {% endfor %}
-            
-        </div>     
-        <div class="bloc">
-            {{ UpdateRecipeform.hidden_tag() }}
-            {{ UpdateRecipeform.tags(size = 5) }}
+    <form class="needs-validation" method="post" enctype="multipart/form-data" novalidate>
+        {{ form.hidden_tag() }}
+        <div class="row">
+                <div class="col form-group">
+                    {{ form.title.label }}
+                    {{ form.title (class="form-control")}}
+                </div>
+                <div class="col form-group">
+                    {{ form.author.label }}
+                    {{ form.author (class="form-control")}}
+                </div>
         </div>
-    
-        <div class="image_upload">
-            {{ UpdateRecipeform.image_source_link.label }}<br>
-            {{ UpdateRecipeform.image_source_link }}
+        
+        <div class="form-group">
+            {{ form.link.label }}
+            {{ form.link (class="form-control")}}
         </div>
-    
-        <div>
-            {{ UpdateRecipeform.submit(class_="button") }}
+        <div class="form-group">
+            {{ form.ingredients.label }}
+            {{ form.ingredients (class="form-control")}}
         </div>
-    
+        <div class="form-group">
+            {{ form.rating.label }}<br>
+            <div class="star_rating">
+                {% for subfield in form.rating %}
+                    {% if loop.index0 < 5%}
+                        {{ subfield }}
+                        {{ subfield.label (class="fa fa-star") }}
+                    {%endif%}
+                {% endfor %}
+            </div>  
+        </div>
+        <div class="form-group">
+            {{ form.hidden_tag() }}
+            {{ form.tags(size=5,  class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.recipe_image.label }}<br>
+            {{ form.recipe_image (type="text", class="form-control")}}
+        </div>
+        {{ form.submit (class="btn btn-primary")}}
     </form>
 </div>
 </div>
