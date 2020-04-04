@@ -33,11 +33,11 @@ def login():
 @app.route('/recipe_index', methods=['GET', 'POST'])
 def recipe_index():
     """Return URL for recipe_index.html"""
-    #categories = [(c.id, c.name) for c in Tag.query.all()]
-    AddForm = AddRecipe()
-    #AddForm.tags.choices = categories
+    categories = [(c.id, c.name) for c in Tag.query.all()]
+    recipeForm = AddRecipe()
+    recipeForm.tags.choices = categories
 
-    AddTagForm = AddTag()
+    tagForm = AddTag()
     
     TagForm = TagList()  
     #TagForm.tags.choices = categories
@@ -69,7 +69,7 @@ def recipe_index():
         print("Nothing")
 
 
-    return render_template('recipe_index.html', title='Home Chef', TagForm=TagForm, recipes=recipes, addform=AddForm, addTagForm=AddTagForm)
+    return render_template('recipe_index.html', title='Recipe Index', form=TagForm, recipes=recipes, recipeForm=recipeForm, tagForm=tagForm)
 
 @app.route('/recipe/<recipe_id>',methods=['GET', 'POST'])
 def recipe(recipe_id):
@@ -81,18 +81,18 @@ def recipe(recipe_id):
 def update_recipe(recipe_id):
     #categories = [(c.id, c.name) for c in Tag.query.all()]
     recipe = Recipe.query.filter_by(id=recipe_id).first_or_404()
-    UpdateRecipeform = UpdateRecipe(obj=recipe)
-    AddTagForm = AddTag()
+    recipeForm = UpdateRecipe(obj=recipe)
+    tagForm = AddTag()
 
     #form.tags.choices = categories
-    if UpdateRecipeform.validate_on_submit():
+    if recipeForm.validate_on_submit():
         # If new image added, then update. Otherwise keep old image
-        recipe.update_recipe(UpdateRecipeform.data)
+        recipe.update_recipe(recipeForm.data)
         return redirect(url_for('recipe', recipe_id=recipe_id))
-    elif AddTagForm.validate_on_submit():
-        add_tag(AddTagForm.name.data)
+    elif tagForm.validate_on_submit():
+        add_tag(tagForm.name.data)
         return redirect(url_for('update_recipe'))
-    return render_template('edit_recipe.html', title='Update Recipe', UpdateRecipeform=UpdateRecipeform, recipes=recipe, addTagForm=AddTagForm)
+    return render_template('edit_recipe.html', title='Update Recipe', recipeForm=recipeForm, recipes=recipe, tagForm=tagForm)
 
 
 #Delete recipe needs fixing
