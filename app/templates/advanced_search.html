@@ -7,14 +7,14 @@
             </button>
         </div>
         <form class="needs-validation" method="post" enctype="multipart/form-data" novalidate>
-            {{ recipeForm.hidden_tag() }}
+            {{ tagListForm.hidden_tag() }}
             <div class="form-group">
-                {{ recipeForm.hidden_tag() }}
-                {{ recipeForm.tags(size=5,  class="form-control") }}
+                {{ tagListForm.hidden_tag() }}
+                {{ tagListForm.tags(size=5,  class="form-control") }}
             </div>
             <div class="form-group">
-                {{ form.search(class="btn btn-primary") }}
-                {{ form.delete(class="btn btn-danger") }}
+                {{ tagListForm.search(class="btn btn-primary") }}
+                {{ tagListForm.delete(class="btn btn-danger") }}
             </div>
         </form>
     </div>

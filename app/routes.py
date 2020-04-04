@@ -30,46 +30,45 @@ def login():
 '''
 
 @app.route('/')
-@app.route('/recipe_index', methods=['GET', 'POST'])
-def recipe_index():
-    """Return URL for recipe_index.html"""
+@app.route('/index', methods=['GET', 'POST'])
+def index():
+    """Return URL for index.html"""
     categories = [(c.id, c.name) for c in Tag.query.all()]
     recipeForm = AddRecipe()
     recipeForm.tags.choices = categories
 
     tagForm = AddTag()
     
-    TagForm = TagList()  
-    #TagForm.tags.choices = categories
+    tagListForm = TagList()  
+    tagListForm.tags.choices = categories
     
     recipes = Recipe.query.all()
-    if TagForm.validate_on_submit():
-        if TagForm.search.data:
-            print("TagForm submitted")
-            tags_id = TagForm.tags.data
+    if tagListForm.validate_on_submit():
+        if tagListForm.search.data:
+            print("tagListForm submitted")
+            tags_id = tagListForm.tags.data
             recipes = []
             for tag_id in tags_id:
                 match = db.session.query(Recipe).filter(Recipe.tags.any(id=tag_id)).all()
                 recipes += match
-        if TagForm.delete.data:
-            tags_id = TagForm.tags.data
+        if tagListForm.delete.data:
+            tags_id = tagListForm.tags.data
             for tag_id in tags_id:
                 Tag.query.filter_by(id=tag_id).delete()
             db.session.commit() 
-            return redirect(url_for('recipe_index'))
-    if AddForm.validate_on_submit():
+            return redirect(url_for('index'))
+    if recipeForm.validate_on_submit():
         recipe = Recipe()
-        recipe.add_recipe(AddForm.data)
-        #add_new_recipe(AddForm)
-        return redirect(url_for('recipe_index'))
-    if AddTagForm.validate_on_submit():
-        add_tag(AddTagForm.name.data)
-        return redirect(url_for('recipe_index'))
+        recipe.add_recipe(recipeForm.data)
+        #add_new_recipe(recipeForm)
+        return redirect(url_for('index'))
+    if tagForm.validate_on_submit():
+        add_tag(tagForm.name.data)
+        return redirect(url_for('index'))
     else:
         print("Nothing")
 
-
-    return render_template('recipe_index.html', title='Recipe Index', form=TagForm, recipes=recipes, recipeForm=recipeForm, tagForm=tagForm)
+    return render_template('index.html', title='Recipe Index', tagListForm=tagListForm, recipes=recipes, recipeForm=recipeForm, tagForm=tagForm)
 
 @app.route('/recipe/<recipe_id>',methods=['GET', 'POST'])
 def recipe(recipe_id):
@@ -105,7 +104,7 @@ def delete_recipe(recipe_id):
     #Then delete the recipe item from the database
     Recipe.query.filter_by(id=recipe_id).delete()
     db.session.commit()
-    return redirect(url_for('recipe_index'))
+    return redirect(url_for('index'))
 
 
 '''
