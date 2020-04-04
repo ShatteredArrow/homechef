@@ -1,5 +1,65 @@
 {% extends "base.html" %}
+{% block head %}
+{{ super() }}
+
+{% endblock %}
+
+{% block navbar %}
+{{super()}}
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link" href="{{ url_for('index') }}">Recipe Index</a>
+        </div>
+    </div>
+    <button type="button" class="btn btn-primary mr-sm-2" data-toggle="modal" data-target="#addTagModal">Add Tag</button>
+    <button type="button" class="btn btn-primary mr-sm-2" data-toggle="modal" data-target="#addRecipeModal">Add Recipe</button>
+    <button type="button" class="btn btn-primary mr-sm-2" data-toggle="modal" data-target="#advancedSearchModal">Advanced Search</button>
+
+</nav>
+
+<div id="addTagModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="addTag" aria-hidden="true">
+    {% include 'add_tag.html' with context %}
+</div>
+<div id="addRecipeModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="addRecipe" aria-hidden="true">
+    {% include 'add_recipe.html' with context %}
+</div>
+<div id="advancedSearchModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="advancedSearch"
+    aria-hidden="true">
+    {% include 'advanced_search.html' with context %}
+</div>
+</div>
+{% endblock %}
 
 {% block content %}
-<h1 class="font-effect-fire-animation">All Hail the Alpha Powers!!!</h1>
+{% if recipes %}
+<div class="card-deck p-2">
+    <div class="row row-cols-1 row-cols-md-4 no-gutters">
+
+        {% for recipe in recipes %}
+        <div class="col mb-4">
+            <div class="card bg-dark h-100">
+                <div class="card-header">
+                    <a href="{{ url_for('recipe', recipe_id=recipe.id) }}">
+                        <p class="card-text text-light">{{ recipe.title }}</p>
+                    </a>
+                </div>
+                <a href="{{ url_for('recipe', recipe_id=recipe.id) }}"><img class="card-img-bottom"
+                        src="{{recipe.recipe_image}}"></a>
+
+            </div>
+        </div>
+
+        {% endfor %}
+    </div>
+</div>
+
+{% endif %}
+
+
 {% endblock %}

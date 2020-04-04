@@ -1,14 +1,21 @@
-<div class="modal-content">
-    <span class="close" id="advancedSearchClose">&times;</span>
-    <h2>Advanced Recipe Search</h2>
-    <form method="post" novalidate>
-    
-        {{ TagForm.search(class_="button") }}
-        {{ TagForm.delete(class_="button") }}
-    
-        <div class="bloc">
-            {{ TagForm.hidden_tag() }}
-            {{ TagForm.tags(size = 5) }}
+<div class="modal-dialog modal-lg">
+    <div class="modal-content bg-dark p-3">
+        <div class="modal-header">
+            <h2 class="modal-title">Advanced Recipe Search</h2>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
-    </form>
+        <form class="needs-validation" method="post" enctype="multipart/form-data" novalidate>
+            {{ tagListForm.hidden_tag() }}
+            <div class="form-group">
+                {{ tagListForm.hidden_tag() }}
+                {{ tagListForm.tags(size=5,  class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ tagListForm.search(class="btn btn-primary") }}
+                {{ tagListForm.delete(class="btn btn-danger") }}
+            </div>
+        </form>
+    </div>
 </div>

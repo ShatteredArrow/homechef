@@ -1,74 +1,61 @@
 {% extends "base.html" %}
 {% block head %}
 {{ super() }}
-<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/recipe_index.css') }}">
-<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/recipe.css') }}">
 {% endblock %}
 
 {% block content %}
-<button class="button" id="addTagButton">Add Tag</button>
-<div id="addTagModal" class="addTagModal modal">
-    {% include 'add_tag.html' with context %}
-</div>
-<div class="recipe_details">
-    <h1>Update Recipe</h1>
-    <form action="" method="post" enctype="multipart/form-data" >
-        {{ UpdateRecipeform.hidden_tag() }}
-        <p>
-            {{ UpdateRecipeform.title.label }}<br>
-            {{ UpdateRecipeform.title(size = 32) }}
-            {% for error in UpdateRecipeform.title.errors %}
-            <span style="color: var(--error);">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ UpdateRecipeform.author.label }}<br>
-            {{ UpdateRecipeform.author(size=32) }}
-            {% for error in UpdateRecipeform.author.errors %}
-            <span style="color: var(--error);">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ UpdateRecipeform.link.label }}<br>
-            {{ UpdateRecipeform.link(size=32) }}
-            {% for error in UpdateRecipeform.link.errors %}
-            <span style="color: var(--error)red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ UpdateRecipeform.ingredients.label }}<br>
-            {{ UpdateRecipeform.ingredients }}
-            {% for error in UpdateRecipeform.ingredients.errors %}
-            <span style="color: var(--error);">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        {{ UpdateRecipeform.rating.label }}<br>
-        <div class="star_rating">
-            {% for subfield in UpdateRecipeform.rating %}
-                {% if loop.index0 < 5%}
+<div class="container bg-dark p-2">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addTagModal">Add Tag</button>
+    <div id="addTagModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="addTag" aria-hidden="true">
+        {% include 'add_tag.html' with context %}
+    </div>
+
+    <div class="container-fluid bg-dark-grey py-2">
+
+        <h1>Update Recipe</h1>
+        <form class="needs-validation" method="post" enctype="multipart/form-data" novalidate>
+            {{ recipeForm.hidden_tag() }}
+            <div class="row">
+                <div class="col form-group">
+                    {{ recipeForm.title.label }}
+                    {{ recipeForm.title (class="form-control")}}
+                </div>
+                <div class="col form-group">
+                    {{ recipeForm.author.label }}
+                    {{ recipeForm.author (class="form-control")}}
+                </div>
+            </div>
+
+            <div class="form-group">
+                {{ recipeForm.link.label }}
+                {{ recipeForm.link (class="form-control")}}
+            </div>
+            <div class="form-group">
+                {{ recipeForm.ingredients.label }}
+                {{ recipeForm.ingredients (class="form-control")}}
+            </div>
+            <div class="form-group">
+                {{ recipeForm.rating.label }}<br>
+                <div class="star_rating">
+                    {% for subfield in recipeForm.rating %}
+                    {% if loop.index0 < 5%}
                     {{ subfield }}
                     {{ subfield.label (class="fa fa-star") }}
-                {%endif%}
-            {% endfor %}
-            
-        </div>     
-        <div class="bloc">
-            {{ UpdateRecipeform.hidden_tag() }}
-            {{ UpdateRecipeform.tags(size = 5) }}
-        </div>
-    
-        <div class="image_upload">
-            {{ UpdateRecipeform.image_source_link.label }}<br>
-            {{ UpdateRecipeform.image_source_link }}
-        </div>
-    
-        <div>
-            {{ UpdateRecipeform.submit(class_="button") }}
-        </div>
-    
-    </form>
+                    {%endif%}
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="form-group">
+                {{ recipeForm.hidden_tag() }}
+                {{ recipeForm.tags(size=5,  class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ recipeForm.image_source_link.label }}<br>
+                {{ recipeForm.image_source_link (type="text", class="form-control")}}
+            </div>
+            {{ recipeForm.submit (class="btn btn-primary")}}
+        </form>
+    </div>
 </div>
-
-<script type="text/javascript" src="{{ url_for('static', filename='js/modal.js') }}"></script>
 
 {% endblock %}

@@ -1,68 +1,61 @@
-<link type="text/css" rel="stylesheet" href="static/css/add_recipe.css">
-
 <!-- Modal content -->
-<div class="modal-content">
-    <span class="close" id="addRecipeClose">&times;</span>
-    <h2>Add Recipe</h2>
-    <div name="demo" >
+<div class="modal-dialog modal-lg">
 
-        <form class="add-recipe-form" action="" method="post" novalidate enctype=multipart/form-data> 
-            {{ addform.hidden_tag() }} 
-        {{ addform.title.label }}
-        {{ addform.title}}
-        {% for error in addform.title.errors %}
-        <span style="color: var(--error);">[{{ error }}]</span>
-        {% endfor %}
-        </p>
-        <p>
-            {{ addform.author.label }}<br>
-            {{ addform.author }}
-            {% for error in addform.author.errors %}
-            <span style="color: var(--error);">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ addform.link.label }}<br>
-            {{ addform.link }}
-            {% for error in addform.link.errors %}
-            <span style="color: var(--error);">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ addform.ingredients.label }}<br>
-            {{ addform.ingredients }}
-            {% for error in addform.ingredients.errors %}
-            <span style="color: var(--error);">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        {{ addform.rating.label }}<br>
-        <div class="star_rating">
-            {% for subfield in addform.rating %}
-                {% if loop.index0 < 5%}
-                    {{ subfield }}
-                    {{ subfield.label (class="fa fa-star") }}
-                {%endif%}
-            {% endfor %}
+    <div class="modal-content bg-dark p-3">
+        <div class="modal-header">
+            <h2 class="modal-title">Add Recipe</h2>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
+        <div name="modal-body">
 
-        <div class="bloc">
-            {{ addform.hidden_tag() }}
-            {{ addform.tags(size = 5) }}
-        </div>
-        
-        <div class="image_upload">
-            {{ addform.image_source_link.label }}<br>
-            {{ addform.image_source_link }}
-            {% for error in addform.image_source_link.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </div>
-    
-        <div>
-            {{ addform.submit(class_="button") }}
-        </div>
-    </form>
+            <form class="needs-validation" method="post" enctype="multipart/form-data" novalidate>
+                {{ recipeForm.hidden_tag() }}
+                <div class="row">
+                    <div class="col form-group">
+                        {{ recipeForm.title.label }}
+                        {{ recipeForm.title (class="form-control")}}
+                    </div>
+                    <div class="col form-group">
+                        {{ recipeForm.author.label }}
+                        {{ recipeForm.author (class="form-control")}}
+                    </div>
+                </div>
 
+                <div class="form-group">
+                    {{ recipeForm.link.label }}
+                    {{ recipeForm.link (class="form-control")}}
+                </div>
+                <div class="form-group">
+                    {{ recipeForm.ingredients.label }}
+                    {{ recipeForm.ingredients (class="form-control")}}
+                </div>
+                <div class="form-group">
+                    {{ recipeForm.rating.label }}<br>
+                    <div class="star_rating">
+                        {% for subfield in recipeForm.rating %}
+                        {% if loop.index0 < 5%}
+                        {{ subfield }}
+                        {{ subfield.label (class="fa fa-star") }}
+                        {%endif%}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{ recipeForm.hidden_tag() }}
+                    {{ recipeForm.tags(size=5,  class="form-control") }}
+                </div>
+                <div class="form-group">
+                    {{ recipeForm.image_source_link.label }}<br>
+                    {{ recipeForm.image_source_link (type="text", class="form-control")}}
+                </div>
+                <div class="modal-footer">
+
+                    {{ recipeForm.submit (class="btn btn-primary")}}
+                </div>
+            </form>
+
+        </div>
     </div>
 </div>
-            

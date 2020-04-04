@@ -1,69 +1,76 @@
-
 {% extends "base.html" %}
 {% block head %}
-    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/recipe.css') }}">
 
-    {{ super() }}
-  
+{{ super() }}
+
 {% endblock %}
 {% block content %}
-<div class="recipe_container">
-    <a class="button" href="{{ url_for('update_recipe', recipe_id=recipe.id) }}">Update Recipe</a>
-    <a class="button" href="{{ url_for('delete_recipe',recipe_id=recipe.id) }}">Delete Recipe</a> 
-    <div class="recipe_details">
-        <div class="recipe_column_left">
-        <div class="recipe_title">
-                <h2>{{ recipe.title }}</h2>
-                <p>Author: {{ recipe.author }}</p>
-            </div>
-            <div class='recipe_info'>
-        
-                <a href="{{ recipe.link }}" class="external_link">Go to site <span class="fas fa-external-link-alt"></span></a>
-                <div>
-                    <p>Rating:
-                    {% if recipe.rating %}
-                        {% for i in range(0, recipe.rating) %}
-                        <i class="fa fa-star" style="color: var(--yellow)"></i>
-                        {% endfor %}
-                        {% for i in range(0, 5-recipe.rating) %}
-                            <span class="fa fa-star"></span>
-                        {% endfor %}
-                    {% else %}
-                        N/a
-                    {% endif %}
-                    </p>
-                </div>
-                <div>
-                    <p>Difficulty: 
-                    {% if recipe.difficulty %}
-                        {% for i in range(0, recipe.difficulty) %}
-                        <i class="fas fa-utensils" style="color: var(--yellow)"></i>
-                        {% endfor %}
-                        {% for i in range(0, 5-recipe.rating) %}
-                            <span class="fa fa-star"></span>
-                        {% endfor %}
-                    {% else %}
-                        N/a
-                    {% endif %}
-                    </p>
+<div class="container bg-dark p-2">
+    <a class="btn btn-primary" role="button" href="{{ url_for('update_recipe', recipe_id=recipe.id) }}">Update Recipe</a>
+    <a class="btn btn-danger" role="button" href="{{ url_for('delete_recipe',recipe_id=recipe.id) }}">Delete Recipe</a>
+    <div class="container-fluid bg-dark-grey py-2">
+        <div class="row">
+            <div class=col>
+                <div class="recipe_title">
+                    <h2>{{ recipe.title }}</h2>
+                    <p>Author: {{ recipe.author }}</p>
                 </div>
             </div>
-            {% if recipe.ingredients %}
-            <div class='recipe_ingredients_new'>
-                <h2>Ingredients</h2>
-                {% for ingredient in recipe.ingredients %}
-                    <p>{{ ingredient }}</p>
-                {% endfor %}
-            </div>
-            {% endif %}
         </div>
-        <div class="recipe_column_right">
-            <div class='recipe_image'>
-                {% if recipe_image %}
-                    <img src="{{recipe_image}}" alt="recipeImage">
-                {% endif %}
-            </div> 
-        </div>   
-    </div>
+        <div class="row">
+           
+           <div class="col-md-6">
+
+               <div class='recipe_info'>
+   
+                   <a href="{{ recipe.link }}" class="link">Go to site <span
+                           class="fas fa-external-link-alt"></span></a>
+                   <div>
+                       <p>Rating:
+                           {% if recipe.rating %}
+                           {% for i in range(0, recipe.rating) %}
+                           <i class="fa fa-star" style="color: var(--yellow)"></i>
+                           {% endfor %}
+                           {% for i in range(0, 5-recipe.rating) %}
+                           <span class="fa fa-star"></span>
+                           {% endfor %}
+                           {% else %}
+                           N/a
+                           {% endif %}
+                       </p>
+                   </div>
+                   <div>
+                       <p>Difficulty:
+                           {% if recipe.difficulty %}
+                           {% for i in range(0, recipe.difficulty) %}
+                           <i class="fas fa-utensils" style="color: var(--yellow)"></i>
+                           {% endfor %}
+                           {% for i in range(0, 5-recipe.rating) %}
+                           <span class="fa fa-star"></span>
+                           {% endfor %}
+                           {% else %}
+                           N/a
+                           {% endif %}
+                       </p>
+                   </div>
+               </div>
+               {% if recipe.ingredients %}
+               <div class='recipe_ingredients_new'>
+                   <h2>Ingredients</h2>
+                   {% for ingredient in recipe.ingredients %}
+                   <p>{{ ingredient }}</p>
+                   {% endfor %}
+               </div>
+               {% endif %}
+           </div>
+           <div class="col-md-6">
+               {% if recipe_image %}
+               <img src="{{recipe_image}}" class="img-fluid" alt="recipeImage">
+               {% endif %}
+           </div>
+       </div>
+   
+   </div>
 </div>
+
 {% endblock %}
