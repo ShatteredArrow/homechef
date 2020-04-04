@@ -6,6 +6,8 @@
     border: 1px solid #888;
     width: 50%;
     border-radius: 5px;
+    max-height: min-content;
+
   }
   
   /* The Close Button */

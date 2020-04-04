@@ -1,4 +1,5 @@
 from flask_wtf import FlaskForm
+from wtforms.fields.html5 import URLField
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField,RadioField
 from wtforms.validators import DataRequired, Regexp
 from flask_wtf.file import FileRequired
@@ -23,10 +24,14 @@ class DeleteTag(FlaskForm):
     delete = SubmitField("Delete Tag")
 
 class TagList(SelectTag, DeleteTag):
-    tags = SelectMultipleField('Tag', choices=[], coerce=int,)
+    categories = [(c.id, c.name) for c in Tag.query.all()]
+
+    tags = SelectMultipleField('Tag', choices=categories, coerce=int,validators=[DataRequired()])
 
 class TagWithAdd(FlaskForm):
-    tags = SelectMultipleField('Tag', choices=[], coerce=int,)
+    categories = [(c.id, c.name) for c in Tag.query.all()]
+
+    tags = SelectMultipleField('Tag', choices=categories, coerce=int,)
     
 class Recipe(TagWithAdd):
     title = StringField('Title', validators=[DataRequired()])
@@ -34,7 +39,8 @@ class Recipe(TagWithAdd):
     link = StringField('Link')
     ingredients = TextAreaField('Ingredients')
     rating = RadioField('Rating', choices=[('5',''),('4',''),('3',''),('2',''),('1',''),('0','')], id="rating",default='0')
-    recipe_image = FileField('Image File')
+    image_source_link = StringField('URL for Image')
+    image_source_file = FileField('Image File')
 
 class AddRecipe(Recipe):
     submit = SubmitField('Add Recipe')

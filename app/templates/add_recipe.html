@@ -6,8 +6,9 @@
     <h2>Add Recipe</h2>
     <div name="demo" >
 
-        <form class="add-recipe-form" action="" method="post" novalidate enctype=multipart/form-data> {{ form.hidden_tag() }} <p>
-        {{ addform.title.label }}<br>
+        <form class="add-recipe-form" action="" method="post" novalidate enctype=multipart/form-data> 
+            {{ addform.hidden_tag() }} 
+        {{ addform.title.label }}
         {{ addform.title}}
         {% for error in addform.title.errors %}
         <span style="color: var(--error);">[{{ error }}]</span>
@@ -50,9 +51,9 @@
         </div>
         
         <div class="image_upload">
-            {{ addform.recipe_image.label }}<br>
-            {{ addform.recipe_image }}
-            {% for error in addform.recipe_image.errors %}
+            {{ addform.image_source_link.label }}<br>
+            {{ addform.image_source_link }}
+            {% for error in addform.image_source_link.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </div>

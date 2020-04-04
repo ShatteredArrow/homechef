@@ -11,7 +11,8 @@ from werkzeug.utils import secure_filename
 from flask import send_from_directory
 from app.image import Image
 
-@app.route('/')
+'''
+#Not Used
 @app.route('/index')
 def index():
     """Return URL for index.html"""
@@ -26,47 +27,49 @@ def login():
         flash('Login requested for user={}, remember_me={}'.format(form.username.data, form.remember_me.data))
         return redirect(url_for('index'))
     return render_template('login.html', title='Sign In', form=form)
+'''
 
-
+@app.route('/')
 @app.route('/recipe_index', methods=['GET', 'POST'])
 def recipe_index():
     """Return URL for recipe_index.html"""
-    categories = [(c.id, c.name) for c in Tag.query.all()]
+    #categories = [(c.id, c.name) for c in Tag.query.all()]
     AddForm = AddRecipe()
-    AddForm.tags.choices = categories
+    #AddForm.tags.choices = categories
 
     AddTagForm = AddTag()
     
-    TagForm = TagList(request.form)  
-    TagForm.tags.choices = categories
+    TagForm = TagList()  
+    #TagForm.tags.choices = categories
     
     recipes = Recipe.query.all()
-    if request.method  == 'POST':
-        if TagForm.validate_on_submit():
-            if TagForm.search.data:
-                print("TagForm submitted")
-                tags_id = TagForm.tags.data
-                recipes = []
-                for tag_id in tags_id:
-                    match = db.session.query(Recipe).filter(Recipe.tags.any(id=tag_id)).all()
-                    recipes += match
-            if TagForm.delete.data:
-                tags_id = TagForm.tags.data
-                for tag_id in tags_id:
-                    Tag.query.filter_by(id=tag_id).delete()
-                db.session.commit() 
-                return redirect(url_for('recipe_index'))
-        if AddForm.validate_on_submit():
-            add_new_recipe(AddForm)
+    if TagForm.validate_on_submit():
+        if TagForm.search.data:
+            print("TagForm submitted")
+            tags_id = TagForm.tags.data
+            recipes = []
+            for tag_id in tags_id:
+                match = db.session.query(Recipe).filter(Recipe.tags.any(id=tag_id)).all()
+                recipes += match
+        if TagForm.delete.data:
+            tags_id = TagForm.tags.data
+            for tag_id in tags_id:
+                Tag.query.filter_by(id=tag_id).delete()
+            db.session.commit() 
             return redirect(url_for('recipe_index'))
-        if AddTagForm.validate_on_submit():
-            add_tag(AddTagForm.name.data)
-            return redirect(url_for('recipe_index'))
-        else:
-            print("Nothing")
+    if AddForm.validate_on_submit():
+        recipe = Recipe()
+        recipe.add_recipe(AddForm.data)
+        #add_new_recipe(AddForm)
+        return redirect(url_for('recipe_index'))
+    if AddTagForm.validate_on_submit():
+        add_tag(AddTagForm.name.data)
+        return redirect(url_for('recipe_index'))
+    else:
+        print("Nothing")
 
 
-    return render_template('recipe_index.html', title='Recipe Index', form=TagForm, recipes=recipes, addform=AddForm, addTagForm=AddTagForm)
+    return render_template('recipe_index.html', title='Home Chef', TagForm=TagForm, recipes=recipes, addform=AddForm, addTagForm=AddTagForm)
 
 @app.route('/recipe/<recipe_id>',methods=['GET', 'POST'])
 def recipe(recipe_id):
@@ -76,38 +79,23 @@ def recipe(recipe_id):
 
 @app.route('/<recipe_id>/update_recipe', methods=['GET', 'POST'])
 def update_recipe(recipe_id):
-    categories = [(c.id, c.name) for c in Tag.query.all()]
+    #categories = [(c.id, c.name) for c in Tag.query.all()]
     recipe = Recipe.query.filter_by(id=recipe_id).first_or_404()
-    form = UpdateRecipe(obj=recipe)
+    UpdateRecipeform = UpdateRecipe(obj=recipe)
     AddTagForm = AddTag()
 
-    form.tags.choices = categories
-    if form.validate_on_submit():
-        if form.submit.data:
-            # If new image added, then update. Otherwise keep old image
-            if form.recipe_image.data:
-                imageSave(form.recipe_image.data)
-                recipe.recipe_image = imageSave.filename
-            recipe.title = form.title.data.title()
-            recipe.author = form.author.data
-            recipe.link = form.link.data
-            recipe.ingredients = form.ingredients.data
-            recipe.rating = request.form.get('rating')
-
-            if not recipe.rating:
-                recipe.rating = 0
-
-            tags = Tag.query.filter(Tag.id.in_(form.tags.data))
-            recipe.tags.extend(tags)
-            db.session.commit()
-            return redirect(url_for('recipe', recipe_id=recipe_id))
+    #form.tags.choices = categories
+    if UpdateRecipeform.validate_on_submit():
+        # If new image added, then update. Otherwise keep old image
+        recipe.update_recipe(UpdateRecipeform.data)
+        return redirect(url_for('recipe', recipe_id=recipe_id))
     elif AddTagForm.validate_on_submit():
         add_tag(AddTagForm.name.data)
-        AddTagForm.name.data=""
-        categories = [(c.id, c.name) for c in Tag.query.all()]
-        form.tags.choices = categories
-    return render_template('edit_recipe.html', title='Update Recipe', form=form, recipes=recipe, addTagForm=AddTagForm)
+        return redirect(url_for('update_recipe'))
+    return render_template('edit_recipe.html', title='Update Recipe', UpdateRecipeform=UpdateRecipeform, recipes=recipe, addTagForm=AddTagForm)
 
+
+#Delete recipe needs fixing
 @app.route('/<recipe_id>/delete_recipe', methods=['GET', 'POST'])
 def delete_recipe(recipe_id):
     #Delete the image assosciated with the recipe 1st
@@ -120,16 +108,18 @@ def delete_recipe(recipe_id):
     return redirect(url_for('recipe_index'))
 
 
+'''
+#Not used
 #Create Links to the recipe Image file path or imgurl
-@app.route('/uploads/<filename>')
-def uploaded_file(filename):
+@app.route('/uploads/<link>')
+def uploaded_file(link):
     img_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
 
     if not os.path.exists(img_path):
         return send_from_directory(app.config['UPLOAD_FOLDER'], 'image-placeholder.png')
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
-
+'''
 
 
 def add_tag(tag_name):
@@ -146,23 +136,3 @@ def add_tag(tag_name):
         flash('Successfully added tag: {}'.format(
             tag_name))
 
-
-def add_new_recipe(AddForm):
-    imageObj=Image(AddForm.recipe_image.data)
-
-    
-    recipe = Recipe(
-        title=AddForm.title.data.title(),
-        author=AddForm.author.data,
-        link=AddForm.link.data,
-        ingredients=AddForm.ingredients.data,
-        recipe_image=imageObj.filename,
-        rating = AddForm.rating.data
-    )     
-    if not recipe.rating:
-        recipe.rating = 0
-    tags = Tag.query.filter(Tag.id.in_(AddForm.tags.data))
-    recipe.tags.extend(tags)
-
-    db.session.add(recipe)
-    db.session.commit()

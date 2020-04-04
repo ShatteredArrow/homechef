@@ -106,7 +106,7 @@ select:focus {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
-    padding-top: 100px; /* Location of the box */
+    padding-top: 50px; /* Location of the box */
     left: 0;
     top: 0;
     width: 100%; /* Full width */
@@ -124,6 +124,7 @@ select:focus {
     border: 1px solid #888;
     width: 30%;
     border-radius: 5px;
+    height: 100%;
 
   }
   

@@ -17,9 +17,7 @@
         <div id="addTagModal" class="addRecipeModal modal">
             {% include 'add_tag.html' with context %}
         </div>
-        <div id="myModal" class="addRecipeModal modal">
-                {% include 'add_recipe.html' with context %}
-        </div>
+
         <div id="advancedSearchModal" class="addRecipeModal modal">
             {% include 'advanced_search.html' with context %}
     </div>
@@ -41,14 +39,16 @@
             {% if recipe.recipe_image %}
                 <a href="{{ url_for('recipe', recipe_id=recipe.id) }}"><img src="{{recipe.recipe_image}}" class="image"></a>
             {% else %}
-                <img src="{{ url_for('uploaded_file', filename=image-placeholder.png ) }}">
+                <h1>hey</h1>
             {% endif %}    
         </div>
     </div>
     {% endfor %}
     {% endif %}
 </div>
-
+<div id="myModal" class="addRecipeModal modal">
+    {% include 'add_recipe.html' with context %}
+</div>
 <script type="text/javascript" src="{{ url_for('static', filename='js/modal.js') }}"></script>
 
 {% endblock %}

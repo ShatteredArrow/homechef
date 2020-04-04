@@ -4,6 +4,7 @@
 <head>
     {%block head%}
     <meta charset="utf-8">
+    <meta name="referrer" content="no-referrer" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link type="text/css" rel="stylesheet" href="/static/css/base.css">
         <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.png') }}">
@@ -13,7 +14,7 @@
 
      
         {% if title %}
-        <title>{{ title }} - Home Chef</title>
+        <title>{{ title }}</title>
         {% else %}
         <title>Welcome to Home Chef</title>
         {% endif %}
@@ -27,9 +28,11 @@
                 <ul >
                     {% block navbar %}
                         <div class="navbar-left-aligned">
-                                <li><a class="active" href="{{ url_for('index') }}">Home</a></li>
-                                <li><a class="active" href="{{ url_for('recipe_index') }}">Recipe Index</a></li>
-                                <li><a class="active" href="{{ url_for('login') }}">Login</a></li>
+                                {#<li><a class="active" href="{{ url_for('index') }}">Home</a></li>#}
+                                <li><a class="active" href="{{ url_for('recipe_index') }}">Home Chef</a>
+                                </li>
+                                {#<li><a class="active" href="{{ url_for('login') }}">Login</a></li>#}
+
                         </div>
 
                     {% endblock  %} 
