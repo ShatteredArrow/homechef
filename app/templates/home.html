@@ -14,7 +14,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-            <a class="nav-item nav-link" href="{{ url_for('index') }}">Recipe Index</a>
+            <a class="nav-item nav-link" href="{{ url_for('home') }}">Home</a>
         </div>
     </div>
     <button type="button" class="btn btn-primary mr-sm-2" data-toggle="modal" data-target="#addTagModal">Add Tag</button>
@@ -29,8 +29,7 @@
 <div id="addRecipeModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="addRecipe" aria-hidden="true">
     {% include 'add_recipe.html' with context %}
 </div>
-<div id="advancedSearchModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="advancedSearch"
-    aria-hidden="true">
+<div id="advancedSearchModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="advancedSearch" aria-hidden="true">
     {% include 'advanced_search.html' with context %}
 </div>
 </div>
@@ -58,8 +57,5 @@
         {% endfor %}
     </div>
 </div>
-
 {% endif %}
-
-
 {% endblock %}
