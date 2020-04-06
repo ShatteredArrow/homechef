@@ -8,7 +8,7 @@
 <div class="container bg-dark p-2">
     <a class="btn btn-primary" role="button" href="{{ url_for('update_recipe', recipe_id=recipe.id) }}">Update Recipe</a>
     <a class="btn btn-danger" role="button" href="{{ url_for('delete_recipe',recipe_id=recipe.id) }}">Delete Recipe</a>
-    <div class="container-fluid bg-dark-grey py-2">
+    <div class="container-fluid bg-secondary py-2">
         <div class="row">
             <div class=col>
                 <div class="recipe_title">
@@ -26,10 +26,10 @@
                        <p>Rating:
                            {% if recipe.rating %}
                            {% for i in range(0, recipe.rating) %}
-                           <i class="fa fa-star" style="color: var(--yellow)"></i>
+                           <i class="fas fa-star" style="color: var(--yellow)"></i>
                            {% endfor %}
                            {% for i in range(0, 5-recipe.rating) %}
-                           <span class="fa fa-star"></span>
+                           <span class="fas fa-star"></span>
                            {% endfor %}
                            {% else %}
                            N/a
@@ -43,7 +43,7 @@
                            <i class="fas fa-utensils" style="color: var(--yellow)"></i>
                            {% endfor %}
                            {% for i in range(0, 5-recipe.rating) %}
-                           <span class="fa fa-star"></span>
+                           <span class="fas fa-star"></span>
                            {% endfor %}
                            {% else %}
                            N/a
