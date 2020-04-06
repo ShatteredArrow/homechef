@@ -33,11 +33,11 @@
                 </div>
                 <div class="form-group">
                     {{ recipeForm.rating.label }}<br>
-                    <div class="star_rating">
+                    <div class="rating">
                         {% for subfield in recipeForm.rating %}
                         {% if loop.index0 < 5%}
                         {{ subfield }}
-                        {{ subfield.label (class="fa fa-star") }}
+                        {{ subfield.label (class="fas fa-star") }}
                         {%endif%}
                         {% endfor %}
                     </div>

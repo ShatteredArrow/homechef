@@ -6,7 +6,6 @@
     <meta charset="utf-8">
     <meta name="referrer" content="no-referrer" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap_override.css">
 
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.png') }}">
     <link href="https://fonts.googleapis.com/css?family=Alegreya&display=swap" rel="stylesheet">
@@ -28,6 +27,8 @@
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
         <meta name="referrer" content="no-referrer" />
+    
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap_override.css">
 
     {% if title %}
     <title>{{ title }} - Home Chef</title>
@@ -67,7 +68,7 @@
         {% block content %}{% endblock %}
         <hr>
     </div>
-    <footer class="container bg-dark mt-auto">
+    <footer class="container bg-dark mt-auto text-center">
         <p class="text-light">&copy; Copyright 2019 by <a href="#" class="link">Alpha Powers</a>.</p>
     </footer>
 </body>
